@@ -703,7 +703,7 @@ public class UIHelper {
         share.setType("text/plain");
         share.putExtra(Intent.EXTRA_TEXT, text);
 
-        context.startActivity(Intent.createChooser(share, "Share Reservation"));
+        context.startActivity(Intent.createChooser(share, "Share App"));
 
     }
     public static  boolean isNetworkAvailable(Context context) {
@@ -712,4 +712,9 @@ public class UIHelper {
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
+    public static void openLink(Context context){
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.google.com"));
+        context.startActivity(browserIntent);
+    }
+
 }

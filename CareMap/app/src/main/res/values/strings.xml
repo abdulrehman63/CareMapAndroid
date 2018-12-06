@@ -5,6 +5,7 @@
     <string name="match_password">%1$s does not match</string>
     <string name="email">Email</string>
     <string name="phone">Phone</string>
+    <string name="password">Password</string>
     <string name="user_name">Username</string>
     <string name="first_name">First name</string>
     <string name="last_name">Last name</string>
@@ -17,4 +18,18 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_home">HomeActivity</string>
+    <string name="title_home">Marketplace</string>
+    <string name="title_dashboard">Messages</string>
+    <string name="title_notifications">Profile</string>
+
+
+    <string name="name">Name</string>
+    <string name="enter_valid_address">Please enter valid email address.</string>
+    <string name="camera_select_option">Select Option</string>
+    <string name="camera_take_photo">Take Photo</string>
+    <string name="camera_cancel">Cancel</string>
+    <string name="camera_gallery">Choose From Gallery</string>
+    <string name="error_some_thing_went_wrong">Some Thing Went Wrong</string>
+    <string name="email_field_error">%1$s address is not valid</string>
 </resources>

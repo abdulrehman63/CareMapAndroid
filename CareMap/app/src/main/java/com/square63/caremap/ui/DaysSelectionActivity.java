@@ -6,6 +6,8 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.square63.caremap.R;
 import com.square63.caremap.listeners.RecyclerItemClickListener;
@@ -13,6 +15,9 @@ import com.square63.caremap.models.DayModel;
 import com.square63.caremap.models.LanguageModel;
 import com.square63.caremap.ui.adapters.DaysAdpater;
 import com.square63.caremap.ui.adapters.LanguagesAdapater;
+import com.square63.caremap.ui.providerModule.PersonalInfoActivity;
+import com.square63.caremap.utils.UIHelper;
+import com.square63.caremap.utils.Validations;
 
 import java.util.ArrayList;
 
@@ -20,6 +25,8 @@ public class DaysSelectionActivity extends AppCompatActivity {
 
     private DaysAdpater daysAdapter;
     private RecyclerView recyclerView;
+    private ImageButton imgBack;
+    private TextView titileToolbar,toolbarTitleRight;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,5 +54,28 @@ public class DaysSelectionActivity extends AppCompatActivity {
                 startActivity(intent);*/
             }
         }));
+        initToolBar();
+    }
+    private void initToolBar(){
+
+        imgBack =(ImageButton) findViewById(R.id.imgBackbtn);
+        imgBack.setVisibility(View.VISIBLE);
+        imgBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+        titileToolbar = (TextView)findViewById(R.id.toolbarTittle);
+        toolbarTitleRight = (TextView)findViewById(R.id.toolbarTitleRight);
+        titileToolbar.setText("Availability");
+        toolbarTitleRight.setText("Next");
+        toolbarTitleRight.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UIHelper.openActivity(DaysSelectionActivity.this,SkillsActivity.class);
+            }
+        });
     }
 }

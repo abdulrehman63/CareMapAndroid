@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.square63.caremap.R;
@@ -20,14 +22,14 @@ public class LanguagesAdapater extends RecyclerView.Adapter<LanguagesAdapater.Vi
     private Context context;
     private Context SkillsAdapater;
     private ArrayList<LanguageModel> data;
-    private ISkills iSkills;
+    private ISelectedLanguages iSelectedLanguages;
     private ArrayList<LanguageModel> filteredData;
 
-    public LanguagesAdapater(Context context, ArrayList<LanguageModel> data) {
+    public LanguagesAdapater(Context context, ArrayList<LanguageModel> data,ISelectedLanguages iSelectedLanguages) {
         this.context = context;
         this.data = data;
         this.filteredData = data;
-        this.iSkills=iSkills;
+        this.iSelectedLanguages=iSelectedLanguages;
     }
 
     @Override
@@ -41,21 +43,27 @@ public class LanguagesAdapater extends RecyclerView.Adapter<LanguagesAdapater.Vi
             final LanguageModel agent = this.filteredData.get(position);
             holder.txtSkill.setText(agent.getName());
             if (agent.isSelected()) {
-                holder.cbSkills.setChecked(true);
+                holder.imgLanguage.setVisibility(View.VISIBLE);
 
             } else {
-                holder.cbSkills.setChecked(false);
+                holder.imgLanguage.setVisibility(View.GONE);
             }
 
-            holder.cbSkills.setOnClickListener(new View.OnClickListener() {
+            holder.relMain.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    CheckBox cb = (CheckBox) v;
-                    filteredData.get(position).setSelected(cb.isChecked());
+                   if(filteredData.get(position).isSelected()){
+                       filteredData.get(position).setSelected(false);
+                   }else {
+                       filteredData.get(position).setSelected(true);
+                   }
+                   iSelectedLanguages.selectedLanguages(filteredData);
+                    notifyDataSetChanged();
                    // iSkills.selectedSkills(filteredData);
 
                 }
             });
+
         }
     }
 
@@ -66,11 +74,13 @@ public class LanguagesAdapater extends RecyclerView.Adapter<LanguagesAdapater.Vi
 
     class Viewholder extends RecyclerView.ViewHolder {
         TextView txtSkill;
-        CheckBox cbSkills;
+        ImageView imgLanguage;
+        RelativeLayout relMain;
 
         public Viewholder(View itemView) {
             super(itemView);
-             cbSkills = (CheckBox) itemView.findViewById(R.id.cb_Skills);
+            relMain = (RelativeLayout) itemView.findViewById(R.id.relMain);
+            imgLanguage = (ImageView) itemView.findViewById(R.id.imgLanguage);
             txtSkill = (TextView) itemView.findViewById(R.id.txtSkill);
 
 
@@ -115,8 +125,8 @@ public class LanguagesAdapater extends RecyclerView.Adapter<LanguagesAdapater.Vi
             }
         };
     }
-    public interface ISkills{
-        public void selectedSkills(ArrayList<String> policies);
+    public interface ISelectedLanguages{
+        public void selectedLanguages(ArrayList<LanguageModel> languageModels);
 
     }
 }

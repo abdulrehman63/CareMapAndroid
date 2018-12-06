@@ -15,7 +15,7 @@
     android:orientation="vertical">
     <include
         android:id="@+id/toolbar"
-        layout="@layout/toolbar"
+        layout="@layout/colored_tool_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
@@ -79,6 +79,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:max="100"
+            android:min="1"
             android:thumbTint="@color/colorPrimary" />
 
         <TextView
@@ -88,7 +89,8 @@
             android:layout_gravity="center"
             android:layout_marginStart="5dp"
             android:layout_marginTop="8dp"
-            android:text="20KM"
+            android:text="0KM"
+            android:textSize="14sp"
             android:textColor="@android:color/darker_gray" />
 
         <View
@@ -106,6 +108,7 @@
             android:layout_marginTop="16dp"
             android:background="@android:color/darker_gray"
             android:padding="8dp"
+            android:onClick="onLanguageSelectionClick"
             android:text="Language(s)" />
     </LinearLayout>
 
@@ -117,6 +120,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
         android:padding="8dp"
+        android:onClick="onAddEducationClick"
         android:text="Add Education"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
@@ -128,6 +132,7 @@
         android:layout_marginEnd="24dp"
         android:layout_marginTop="16dp"
         android:padding="8dp"
+        android:onClick="onAddLicenseClick"
         android:text="Add License"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout" />

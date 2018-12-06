@@ -19,7 +19,7 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:background="@android:color/transparent"
-
+            android:src="@drawable/arrow_blue_right"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -31,7 +31,7 @@
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:text=""
-            android:textColor="@android:color/white"
+            android:textColor="@android:color/black"
 
             style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
             android:textSize="@dimen/textlarge"

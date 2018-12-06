@@ -21,7 +21,7 @@
         tools:context=".ui.providerModule.CreateProviderProfileActivity">
         <include
             android:id="@+id/toolbar"
-            layout="@layout/toolbar"
+            layout="@layout/colored_tool_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
@@ -37,7 +37,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             style="@style/profile_margin"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="16dp"
             android:orientation="vertical"
             >
             <TextView

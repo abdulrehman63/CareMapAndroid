@@ -23,5 +23,14 @@
         <item name="android:textSize">14sp</item>
 
     </style>
+    <style name="setting_text_style">
+        <item name="android:textSize">14sp</item>
+
+    </style>
+    <style name="profile_text_style">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/white</item>
+
+    </style>
 
 </resources>

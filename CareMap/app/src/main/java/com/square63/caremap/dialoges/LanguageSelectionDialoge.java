@@ -18,34 +18,32 @@ import com.square63.caremap.R;
 import com.square63.caremap.listeners.RecyclerItemClickListener;
 import com.square63.caremap.models.LanguageModel;
 import com.square63.caremap.ui.adapters.LanguagesAdapater;
+import com.square63.caremap.utils.Validations;
 
 
 import java.util.ArrayList;
 
 
 public class LanguageSelectionDialoge extends DialogFragment implements View.OnClickListener{
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+
     private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-    private ImageButton imgCross;
-    private TextView txtTitle,txtSubmit,txtCancel;
+
     private RecyclerView recyclerView;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
-    private OnFragmentInteractionListener mListener;
-    private ArrayList<LanguageModel> skillsModelArrayList=new ArrayList<>();
     private LanguagesAdapater skillsAdapter;
-    private IGetSkills iGetSkills;
+    private LanguagesAdapater.ISelectedLanguages iSelectedLanguages;
     private ArrayList<LanguageModel> data = new ArrayList<>();
     private SearchView searchView;
+    private ImageButton imgBack;
+    private TextView titileToolbar,toolbarTitleRight;
+    private ArrayList<LanguageModel> languageModelArrayList = new ArrayList<>();
+
 
     public LanguageSelectionDialoge() {
         // Required empty public constructor
     }
+
 
 
     public static LanguageSelectionDialoge newInstance(ArrayList<LanguageModel> skillsModel) {
@@ -56,20 +54,46 @@ public class LanguageSelectionDialoge extends DialogFragment implements View.OnC
         fragment.setArguments(args);
         return fragment;
     }
-    public void setISkills( IGetSkills iGetSkills){
-        this.iGetSkills = iGetSkills;
+    public void setSelectedLanguages( LanguagesAdapater.ISelectedLanguages iSelectedLanguages){
+        this.iSelectedLanguages = iSelectedLanguages;
 
     }
+    private void initToolBar(View view){
 
+        imgBack =(ImageButton) view.findViewById(R.id.imgBackbtn);
+        imgBack.setVisibility(View.VISIBLE);
+        imgBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
+            }
+        });
+
+        titileToolbar = (TextView)view.findViewById(R.id.toolbarTittle);
+        toolbarTitleRight = (TextView)view.findViewById(R.id.toolbarTitleRight);
+        titileToolbar.setText("Languages");
+        toolbarTitleRight.setText("Done");
+        toolbarTitleRight.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                iSelectedLanguages.selectedLanguages(languageModelArrayList);
+                dismiss();
+
+            }
+        });
+    }
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setStyle(android.support.v4.app.DialogFragment.STYLE_NO_TITLE, R.style.AppTheme);
         if (getArguments() != null) {
             ArrayList<LanguageModel> skillsModels= (ArrayList<LanguageModel>)getArguments().getSerializable(ARG_PARAM1);
-            skillsModelArrayList.clear();
-            skillsModelArrayList.addAll(skillsModels);
+
+            languageModelArrayList.clear();
+            languageModelArrayList.addAll(skillsModels);
           //  mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
     }
 
     @Override
@@ -79,7 +103,8 @@ public class LanguageSelectionDialoge extends DialogFragment implements View.OnC
 
         recyclerView= (RecyclerView)view.findViewById(R.id.recyclerView);
 
-        setRecyclerViewBudgetAdapter(skillsModelArrayList);
+        setRecyclerViewBudgetAdapter(languageModelArrayList);
+        initToolBar(view);
         searchView = (SearchView) view.findViewById(R.id.searchView);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -105,7 +130,13 @@ public class LanguageSelectionDialoge extends DialogFragment implements View.OnC
         return view;
     }
     private void setRecyclerViewBudgetAdapter(ArrayList<LanguageModel> data) {
-        skillsAdapter=new LanguagesAdapater(getContext(), data);
+        skillsAdapter=new LanguagesAdapater(getContext(), data, new LanguagesAdapater.ISelectedLanguages() {
+            @Override
+            public void selectedLanguages(ArrayList<LanguageModel> languageModels) {
+                LanguageSelectionDialoge.this.languageModelArrayList = languageModels;
+
+            }
+        });
         recyclerView.setAdapter(skillsAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getContext(), new RecyclerItemClickListener.OnItemClickListener() {
@@ -118,31 +149,6 @@ public class LanguageSelectionDialoge extends DialogFragment implements View.OnC
             }
         }));
     }
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-       // mListener = null;
-    }
-
-   /* @Override
-    public void selectedSkills(ArrayList<LanguageModel> data) {
-        this.data.clear();
-        this.data.addAll(data);
-
-    }*/
 
     @Override
     public void onClick(View view) {
@@ -164,10 +170,7 @@ public class LanguageSelectionDialoge extends DialogFragment implements View.OnC
     }
 
 
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
-    }
+
     public interface IGetSkills{
         void getSkills(ArrayList<LanguageModel> skillsModelArrayList);
     }

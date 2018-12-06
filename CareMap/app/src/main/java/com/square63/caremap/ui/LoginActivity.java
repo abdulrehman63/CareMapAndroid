@@ -23,12 +23,12 @@ public class LoginActivity extends AppCompatActivity {
     public void onLoginClicked(View view){
         Validations validations = new Validations(this);
         if(validations.validateLogin(binding.textView2,binding.textView3) == Constants.SUCCESS ){
-            UIHelper.openActivity(LoginActivity.this,RegistrationActivity.class);
+            UIHelper.openActivity(LoginActivity.this,WelcomeActivity.class);
         }
 
     }
     public void onSignupClicked(View view){
-             UIHelper.openActivity(LoginActivity.this,DaysSelectionActivity.class);
+             UIHelper.openActivity(LoginActivity.this,RegistrationActivity.class);
 
     }
     public void onForgotPasswordClick(View view){

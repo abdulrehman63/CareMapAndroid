@@ -30,8 +30,32 @@ public class Validations {
             return Constants.EMPTY_EMAIL_FIELD;
         }
         if (edtPassword.getText().toString().trim().length() == 0) {
-            text = String.format(res.getString(R.string.empty_field_error), context.getString(R.string.phone));
+            text = String.format(res.getString(R.string.empty_field_error), context.getString(R.string.password));
             edtPassword.setError(Html.fromHtml("<font color='red'>" + text + "</font>"));
+            return Constants.EMPTY_EMAIL_FIELD;
+        }
+        if (!UIHelper.isValidEmail(edtEmail.getText().toString())) {
+            text = String.format(res.getString(R.string.email_field_error), context.getString(R.string.email));
+            edtEmail.setError(Html.fromHtml("<font color='red'>" + text + "</font>"));
+            return Constants.EMPTY_EMAIL_FIELD;
+        }
+
+        return Constants.SUCCESS;
+    }
+    public int validateForgotPassword(EditText edtEmail){
+
+        Resources res = context.getResources();
+        String text;
+
+        if (edtEmail.getText().toString().trim().length() == 0) {
+            text = String.format(res.getString(R.string.empty_field_error), context.getString(R.string.email));
+            edtEmail.setError(Html.fromHtml("<font color='red'>" + text + "</font>"));
+            return Constants.EMPTY_EMAIL_FIELD;
+        }
+
+        if (!UIHelper.isValidEmail(edtEmail.getText().toString())) {
+            text = String.format(res.getString(R.string.email_field_error), context.getString(R.string.email));
+            edtEmail.setError(Html.fromHtml("<font color='red'>" + text + "</font>"));
             return Constants.EMPTY_EMAIL_FIELD;
         }
 
@@ -54,8 +78,13 @@ public class Validations {
             return Constants.EMPTY_EMAIL_FIELD;
         }
         if (edtPassword.getText().toString().trim().length() == 0) {
-            text = String.format(res.getString(R.string.empty_field_error), context.getString(R.string.phone));
+            text = String.format(res.getString(R.string.empty_field_error), context.getString(R.string.password));
             edtPassword.setError(Html.fromHtml("<font color='red'>" + text + "</font>"));
+            return Constants.EMPTY_EMAIL_FIELD;
+        }
+        if (!UIHelper.isValidEmail(edtEmail.getText().toString())) {
+            text = String.format(res.getString(R.string.email_field_error), context.getString(R.string.email));
+            edtEmail.setError(Html.fromHtml("<font color='red'>" + text + "</font>"));
             return Constants.EMPTY_EMAIL_FIELD;
         }
 

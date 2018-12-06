@@ -6,16 +6,26 @@
     android:layout_height="match_parent"
     tools:context=".ui.WelcomeActivity">
 
-
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="visible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
     <TextView
         android:id="@+id/textView8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:text="TextView"
+        android:text="Welcome To"
+        android:textStyle="bold"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
     <ImageView
         android:id="@+id/imageView2"
@@ -32,7 +42,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="TextView"
+        android:text="by uCarenet"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView2" />
@@ -53,6 +63,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="I am a Care Provider"
+            android:textColor="@color/blue_title"
+            android:textSize="14sp"
             android:layout_gravity="center"
             android:layout_marginTop="8dp"/>
         <TextView
@@ -84,6 +96,8 @@
             android:layout_height="wrap_content"
             android:text="I am a Care Seeker"
             android:layout_gravity="center"
+            android:textColor="@color/blue_title"
+            android:textSize="14sp"
             android:layout_marginTop="8dp"/>
         <TextView
             android:layout_width="wrap_content"
