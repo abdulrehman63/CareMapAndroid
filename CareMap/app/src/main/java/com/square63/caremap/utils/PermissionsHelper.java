@@ -95,9 +95,12 @@ public class PermissionsHelper {
             else{
                 iPermissionsCallback.onPermissionsGranted();
             }
+        }else {
+            iPermissionsCallback.onPermissionsGranted();
         }
 
     }
+
 
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults, IPermissionsCallback iPermissionsCallback) {
         switch (requestCode) {

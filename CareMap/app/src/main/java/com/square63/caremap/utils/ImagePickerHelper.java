@@ -262,13 +262,13 @@ public class ImagePickerHelper {
                 Uri imgUri = data.getData();
                 bitmap = MediaStore.Images.Media.getBitmap(context.getContentResolver(), imgUri);
                 ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 50, bytes);
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 10, bytes);
                 Log.e("Activity", "Pick from Gallery::>>> ");
-                picUri = getImageUri(context, bitmap);
-                imgPath = getRealPathFromURI(picUri);
-                destination = new File(imgPath.toString());
+                //picUri = getImageUri(context, bitmap);
+                //imgPath = getRealPathFromURI(picUri);
+                //destination = new File(imgPath.toString());
                // profile_image.setImageBitmap(bitmap);
-                iPickerCallBack.onImageSelected(bitmap);
+                setImage(data);
 
             } catch (Exception e) {
                 e.printStackTrace();
