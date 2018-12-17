@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.square63.caremap.R;
 import com.square63.caremap.ui.providerModule.CreateProviderProfileActivity;
+import com.square63.caremap.ui.seekerModule.CreateSeekerProfileActivity;
 import com.square63.caremap.utils.UIHelper;
 
 public class WelcomeActivity extends AppCompatActivity {
@@ -29,6 +30,7 @@ public class WelcomeActivity extends AppCompatActivity {
         });
     }
     public void onSeekerClick(View view) {
+        UIHelper.openActivity(WelcomeActivity.this, CreateSeekerProfileActivity.class);
     }
 
     public void onProviderClick(View view) {

@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+        <variable
+            name="profileModel"
+            type="com.square63.caremap.models.seekerModels.CreateSeekerProfileModel">
+        </variable>
+    </data>
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        tools:context=".ui.providerModule.CreateProviderProfileActivity">
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/colored_tool_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:visibility="visible"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/black"
+                    android:orientation="vertical">
+                    <com.square63.caremap.utils.CircleImageView
+                        android:id="@+id/imgProfile"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="8dp"
+                        android:onClick="onPickImageClick"
+                        android:src="@color/red"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Add Photo"
+                        android:textColor="@color/white"
+                        android:layout_marginBottom="8dp"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="8dp"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/profile_margin"
+                    android:layout_marginTop="8dp"
+                    android:orientation="horizontal">
+                    <LinearLayout
+                        android:id="@+id/text_input_layout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        >
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            style="@style/generic_text_blue"
+                            android:text="@string/first_name"/>
+
+                        <EditText
+                            android:id="@+id/txtFirstName"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@={profileModel.firstName}"
+                            android:layout_marginEnd="5dp"
+                            android:hint=""/>
+                    </LinearLayout>
+                    <View
+                        android:layout_width="1px"
+                        android:layout_height="40dp"
+                        android:background="@android:color/darker_gray"/>
+                    <LinearLayout
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        >
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            style="@style/generic_text_blue"
+                            android:layout_marginStart="5dp"
+                            android:text="@string/last_name"/>
+
+                        <EditText
+
+                            android:id="@+id/edtLastName"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="5dp"
+                            android:text="@={profileModel.lastName}"
+                            android:hint=""/>
+                    </LinearLayout>
+                </LinearLayout>
+
+
+                <LinearLayout
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    style="@style/profile_margin"
+                    android:layout_marginTop="5dp"
+                    android:orientation="vertical"
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/generic_text_blue"
+                        android:layout_marginStart="5dp"
+                        android:text="@string/phone_number"/>
+
+                    <EditText
+                        android:id="@+id/edtPhone"
+                        style="@style/edit_text_style"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="5dp"
+                        android:inputType="numberDecimal"
+                        android:text="@={profileModel.phoneNumber}"
+                        android:hint=""/>
+                </LinearLayout>
+                <LinearLayout
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    style="@style/profile_margin"
+                    android:layout_marginTop="5dp"
+                    android:orientation="vertical"
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/generic_text_blue"
+                        android:layout_marginStart="5dp"
+                        android:text="@string/emergency_number"/>
+
+                    <EditText
+                        android:id="@+id/edtEmergencyNumber"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="5dp"
+                        style="@style/edit_text_style"
+                        android:text="@={profileModel.emergencyNumber}"
+                        android:hint=""/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/profile_margin"
+                    android:layout_marginTop="8dp"
+                    android:orientation="horizontal">
+                    <LinearLayout
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        >
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            style="@style/generic_text_blue"
+                            android:text="@string/number"/>
+
+                        <EditText
+                            android:id="@+id/txtNumber"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@={profileModel.number}"
+                            android:layout_marginEnd="5dp"
+                            android:hint=""/>
+                    </LinearLayout>
+                    <View
+                        android:layout_width="1px"
+                        android:layout_height="40dp"
+                        android:background="@android:color/darker_gray"/>
+                    <LinearLayout
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        >
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            style="@style/generic_text_blue"
+                            android:layout_marginStart="5dp"
+                            android:text="@string/unit_number"/>
+
+                        <EditText
+
+                            android:id="@+id/edtUnitNumber"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="5dp"
+                            android:text="@={profileModel.unitNumber}"
+                            android:hint=""/>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    style="@style/profile_margin"
+                    android:layout_marginTop="5dp"
+                    android:orientation="vertical"
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/generic_text_blue"
+                        android:layout_marginStart="5dp"
+                        android:text="@string/city"/>
+
+                    <EditText
+                        android:id="@+id/edtCity"
+                        style="@style/edit_text_style"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="5dp"
+                        android:text="@={profileModel.city}"
+                        android:hint=""/>
+                </LinearLayout>
+
+                <LinearLayout
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    style="@style/profile_margin"
+                    android:layout_marginTop="5dp"
+                    android:orientation="vertical"
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/generic_text_blue"
+                        android:layout_marginStart="5dp"
+                        android:text="@string/province"/>
+
+                    <EditText
+                        android:id="@+id/edtProvince"
+                        style="@style/edit_text_style"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="5dp"
+                        android:text="@={profileModel.province}"
+                        android:hint=""/>
+                </LinearLayout>
+
+                <LinearLayout
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    style="@style/profile_margin"
+                    android:layout_marginTop="5dp"
+                    android:orientation="vertical"
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/generic_text_blue"
+                        android:layout_marginStart="5dp"
+                        android:text="@string/address_1"/>
+
+                    <EditText
+                        android:id="@+id/edtAddress1"
+                        style="@style/edit_text_style"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="5dp"
+                        android:text="@={profileModel.address1}"
+                        android:hint=""/>
+                </LinearLayout>
+                <LinearLayout
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    style="@style/profile_margin"
+                    android:layout_marginTop="5dp"
+                    android:orientation="vertical"
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/generic_text_blue"
+                        android:layout_marginStart="5dp"
+                        android:text="@string/address_2"/>
+
+                    <EditText
+                        android:id="@+id/edtAddress2"
+                        android:text="@={profileModel.address2}"
+                        style="@style/edit_text_style"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="5dp"
+                        android:hint=""/>
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+
+</layout>

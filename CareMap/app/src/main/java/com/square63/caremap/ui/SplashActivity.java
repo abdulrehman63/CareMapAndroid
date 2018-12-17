@@ -51,8 +51,4 @@ public class SplashActivity extends FragmentActivity {
                 }
             }, SPLASH_TIME_OUT);
         }
-
-
-
-
 }

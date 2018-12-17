@@ -99,7 +99,7 @@ public class SkillsActivity extends AppCompatActivity {
         toolbarTitleRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UIHelper.openActivity(SkillsActivity.this,InterestsActivity.class);
+                UIHelper.openActivity(SkillsActivity.this,AboutActivity.class);
             }
         });
     }

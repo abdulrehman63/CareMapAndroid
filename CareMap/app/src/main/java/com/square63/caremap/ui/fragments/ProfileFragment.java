@@ -60,8 +60,8 @@ public class ProfileFragment extends Fragment {
         adapter.addFragment(new AvailabilityFragment(), "Availability");
         adapter.addFragment(new ExperienceFragment(), "Experience");
         adapterSkills = new TabAvailabilityAdapter(getActivity().getSupportFragmentManager());
-        adapterSkills.addFragment(new AvailabilityFragment(), "Skills");
-        adapterSkills.addFragment(new ExperienceFragment(), "Interests");
+        adapterSkills.addFragment(new SkillsFragment(), "Skills");
+        adapterSkills.addFragment(new InterestsFragment(), "Interests");
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
         viewPagerSkills.setAdapter(adapterSkills);

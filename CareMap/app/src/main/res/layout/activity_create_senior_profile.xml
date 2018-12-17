@@ -1,0 +1,141 @@
+<layout>
+
+    <data>
+
+        <variable
+            name="profileModel"
+            type="com.square63.caremap.models.seekerModels.CreateSeekerProfileModel"></variable>
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        tools:context=".ui.providerModule.CreateProviderProfileActivity">
+
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/colored_tool_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:orientation="vertical">
+
+                    <com.square63.caremap.utils.CircleImageView
+                        android:id="@+id/imgProfile"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="8dp"
+                        android:onClick="onPickImageClick"
+                        android:src="@color/red" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginTop="8dp"
+                        android:text="Add Photo"
+                        android:textColor="@color/black" />
+                </LinearLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/generic_text_blue"
+                        android:layout_marginStart="8dp"
+                        android:text="Senior Name"/>
+
+                    <EditText
+                        android:id="@+id/edtName"
+                        style="@style/edit_text_style"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="5dp"
+                        android:inputType="numberDecimal"
+                        android:text="@={profileModel.phoneNumber}"
+                        android:hint=""/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/generic_text_blue"
+                    android:layout_marginStart="8dp"
+                    android:text="Age"/>
+
+                <EditText
+                    android:id="@+id/edtAge"
+                    style="@style/edit_text_style"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
+                    android:inputType="numberDecimal"
+                    android:text="@={profileModel.phoneNumber}"
+                    android:hint=""/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Sex"
+                    android:gravity="center"
+                    android:textColor="@color/black"
+                    android:layout_marginTop="5dp"
+                    android:textSize="14sp"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:orientation="horizontal"
+                    android:background="@color/light_grey_background"
+                    android:weightSum="3">
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:text="Male"
+                        android:gravity="center|top"
+                        android:paddingTop="10dp"
+                        android:background="@color/line"
+                        android:layout_marginEnd="1dp"
+                        android:drawableTop="@drawable/ic_check"
+                        android:layout_weight="1"/>
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:text="Femail"
+                        android:background="@color/line"
+                        android:gravity="center|top"
+                        android:paddingTop="10dp"
+                        android:layout_marginEnd="1dp"
+                        android:drawableTop="@drawable/ic_check"
+                        android:layout_weight="1"/>
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:text="Non Binary"
+                        android:gravity="center|top"
+                        android:paddingTop="10dp"
+                        android:background="@color/line"
+                        android:drawableTop="@drawable/ic_check"
+                        android:layout_weight="1"/>
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+</layout>

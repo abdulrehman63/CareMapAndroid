@@ -75,9 +75,8 @@ public class InterestsActivity extends AppCompatActivity {
         toolbarTitleRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PreferenceHelper.getInstance().init(InterestsActivity.this);
-                PreferenceHelper.getInstance().setString(Constants.ID,"1");
-                UIHelper.openActivity(InterestsActivity.this,HomeActivity.class);
+
+                UIHelper.openActivity(InterestsActivity.this,ConfirmationActivity.class);
             }
         });
     }
