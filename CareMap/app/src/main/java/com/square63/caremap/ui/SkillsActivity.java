@@ -95,6 +95,7 @@ public class SkillsActivity extends AppCompatActivity {
         titileToolbar = (TextView)findViewById(R.id.toolbarTittle);
         toolbarTitleRight = (TextView)findViewById(R.id.toolbarTitleRight);
         titileToolbar.setText("Skills");
+        titileToolbar.setAllCaps(false);
         toolbarTitleRight.setText("Next");
         toolbarTitleRight.setOnClickListener(new View.OnClickListener() {
             @Override

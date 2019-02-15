@@ -69,7 +69,7 @@ public class DaysSelectionActivity extends AppCompatActivity {
 
         titileToolbar = (TextView)findViewById(R.id.toolbarTittle);
         toolbarTitleRight = (TextView)findViewById(R.id.toolbarTitleRight);
-        titileToolbar.setText("Availability");
+        titileToolbar.setText("Your Availability");
         toolbarTitleRight.setText("Next");
         toolbarTitleRight.setOnClickListener(new View.OnClickListener() {
             @Override

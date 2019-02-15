@@ -87,7 +87,7 @@
             android:layout_height="wrap_content"
             style="@style/day_text_style"
             android:layout_weight="1"
-            android:text="Thur"/>
+            android:text="Thu"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
