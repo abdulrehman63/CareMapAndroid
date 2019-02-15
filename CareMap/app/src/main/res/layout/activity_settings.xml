@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+
     tools:context=".ui.SettingsActivity">
     <include
         android:layout_width="match_parent"
@@ -13,20 +14,26 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp"
+        android:padding="12dp"
+        android:gravity="center|start"
+        android:onClick="onEditProfileClick"
         style="@style/setting_text_style"
+        android:drawableEnd="@drawable/ic_back_grey"
         android:text="Edit Profile"/>
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
-        android:background="@color/line"
-        android:layout_marginTop="5dp"/>
+        style="@style/line_style"
+        />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp"
+        android:padding="12dp"
+        android:gravity="center|start"
+        android:drawableEnd="@drawable/ic_back_grey"
+        android:onClick="onChangePasswordAppClick"
         style="@style/setting_text_style"
         android:text="Change Password"/>
     <View
@@ -34,26 +41,31 @@
         android:layout_height="1dp"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
-        android:background="@color/line"
-        android:layout_marginTop="5dp"/>
+        style="@style/line_style"
+        android:drawableEnd="@drawable/ic_back_grey"
+        />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp"
+        android:padding="12dp"
+        android:gravity="center|start"
         style="@style/setting_text_style"
         android:onClick="onShareAppClick"
+        android:drawableEnd="@drawable/ic_back_grey"
         android:text="Share this App"/>
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
-        android:background="@color/line"
-        android:layout_marginTop="5dp"/>
+        style="@style/line_style"
+        />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp"
+        android:padding="12dp"
+        android:gravity="center|start"
+        android:drawableEnd="@drawable/ic_back_grey"
         android:onClick="onTermsClick"
         style="@style/setting_text_style"
         android:text="Terms and Condition"/>
@@ -62,13 +74,15 @@
         android:layout_height="1dp"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
-        android:background="@color/line"
-        android:layout_marginTop="5dp"/>
+        style="@style/line_style"
+      />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp"
+        android:padding="12dp"
         android:onClick="onHelpClick"
+        android:gravity="center|start"
+        android:drawableEnd="@drawable/ic_back_grey"
         style="@style/setting_text_style"
         android:text="Help"/>
     <View
@@ -76,14 +90,22 @@
         android:layout_height="1dp"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
-        android:background="@color/line"
-        android:layout_marginTop="5dp"/>
+        style="@style/line_style"
+        />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp"
+        android:padding="12dp"
+        android:gravity="center|start"
         android:onClick="onLogoutClick"
         style="@style/setting_text_style"
+        android:drawableEnd="@drawable/ic_back_grey"
         android:text="Logout"/>
-
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        style="@style/line_style"
+        />
 </LinearLayout>

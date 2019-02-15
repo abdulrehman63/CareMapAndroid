@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.square63.caremap.R;
 import com.square63.caremap.constants.Constants;
+import com.square63.caremap.ui.seekerModule.CreateSeniorProfileActivity;
 import com.square63.caremap.utils.PreferenceHelper;
 
 import java.util.ArrayList;
@@ -43,7 +44,7 @@ public class SplashActivity extends FragmentActivity {
                         startActivity(intent);
                         finish();
                     }else {
-                        Intent intent = new Intent(SplashActivity.this, HomeActivity.class);
+                        Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
                         startActivity(intent);
                         finish();
                     }

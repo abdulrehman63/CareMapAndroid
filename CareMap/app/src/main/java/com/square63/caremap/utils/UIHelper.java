@@ -2,6 +2,7 @@ package com.square63.caremap.utils;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -17,6 +18,7 @@ import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.text.TextUtils.TruncateAt;
 import android.util.DisplayMetrics;
@@ -434,6 +436,22 @@ public class UIHelper {
             }
         }
         return sb.toString();
+    }
+    public static void showAlert( String titile, String msg, Context context){
+        AlertDialog.Builder builder;
+
+            builder = new AlertDialog.Builder(context);
+
+        builder.setTitle(titile)
+                .setMessage(msg)
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // continue with delete
+                        dialog.dismiss();
+                    }
+                })
+
+                .show();
     }
 
 

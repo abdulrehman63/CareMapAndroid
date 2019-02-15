@@ -10,11 +10,11 @@
         android:id="@+id/imageView6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="52dp"
+        android:layout_marginTop="36dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@mipmap/ic_launcher" />
+        app:srcCompat="@drawable/newlogo" />
 
     <TextView
         android:id="@+id/textView22"
@@ -22,6 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:text="By uCarenet"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView6" />
@@ -30,7 +31,7 @@
         android:id="@+id/textView23"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@android:color/black"
+        android:textColor="@color/colorPrimary"
         android:layout_marginTop="32dp"
         android:textSize="14sp"
        android:paddingStart="32dp"
@@ -49,7 +50,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView23"
-        app:srcCompat="@mipmap/ic_launcher" />
+        app:srcCompat="@drawable/certification" />
 
     <TextView
         android:id="@+id/textView24"
@@ -57,7 +58,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="62dp"
         android:padding="5dp"
-        android:textColor="@color/blue_user"
+        android:textColor="@color/text_color"
         android:text="Continue"
         android:onClick="onContinueClick"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -69,11 +70,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"
-        android:text="Click here to be vetted"
-        android:background="@color/red"
-        android:textColor="@color/white"
-        android:textSize="14sp"
-        android:padding="7dp"
+        android:text=""
+        android:background="@drawable/clicktobevetted_2x"
+
         app:layout_constraintBottom_toTopOf="@+id/textView24"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

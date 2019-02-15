@@ -34,7 +34,7 @@ public class RegistrationActivity extends AppCompatActivity {
     }
     public void onSubmitClick(View view){
         Validations validations = new Validations(this);
-        if(validations.validateSignup(binding.textView1,binding.textView2,binding.textView3) == Constants.SUCCESS ){
+        if(validations.validateSignup(binding.textView1,binding.textView2,binding.textView3,binding.imageViewError) == Constants.SUCCESS ){
             UIHelper.openActivity(RegistrationActivity.this,WelcomeActivity.class);
         }
 

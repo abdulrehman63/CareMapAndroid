@@ -11,7 +11,7 @@
         android:id="@+id/tag_group"
         style="@style/TagGroup"
         app:layout_constraintTop_toTopOf="parent"
-        app:atg_backgroundColor ="@color/blue_title"
+        app:atg_backgroundColor ="#6cc9d8"
         app:atg_textColor = "@color/white"/>
 
 </android.support.constraint.ConstraintLayout>

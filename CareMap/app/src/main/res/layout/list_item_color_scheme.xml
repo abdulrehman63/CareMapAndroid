@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="wrap_content"
+    android:layout_height="80dp"
+    android:layout_marginEnd="15dp">
+    <ImageView
+        android:id="@+id/imgColor"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_gravity="center"
+        android:background="@drawable/red_circle"/>
+    <ImageView
+        android:id="@+id/imgColorBig"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:visibility="gone"
+        android:layout_gravity="center"
+        android:background="@drawable/red_circle"/>
+</LinearLayout>

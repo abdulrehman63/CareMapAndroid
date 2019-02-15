@@ -43,7 +43,7 @@
 
         <EditText
             android:id="@+id/edtHourlyRate"
-            style="@style/edit_text_style"
+            style="@style/edit_text_style_profile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginEnd="5dp"
@@ -59,7 +59,7 @@
 
         <EditText
             android:id="@+id/edtExperience"
-            style="@style/edit_text_style"
+            style="@style/edit_text_style_profile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginEnd="5dp"
@@ -80,7 +80,10 @@
             android:layout_marginTop="16dp"
             android:max="100"
             android:min="1"
-            android:thumbTint="@color/colorPrimary" />
+            android:progressTint="@color/colorPrimary"
+            android:thumb="@drawable/custom_thumb"
+            android:thumbTint="@color/white"
+            />
 
         <TextView
             android:id="@+id/txtDistance"
@@ -91,23 +94,27 @@
             android:layout_marginTop="8dp"
             android:text="0KM"
             android:textSize="14sp"
-            android:textColor="@android:color/darker_gray" />
+            android:textColor="@color/text_grey" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginTop="8dp"
-            android:background="@android:color/darker_gray" />
+            style="@style/line_style" />
 
         <TextView
             android:id="@+id/txtLanguage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginStart="5dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
             android:layout_marginTop="16dp"
-            android:background="@android:color/darker_gray"
+            android:background="@color/line_color"
             android:padding="8dp"
+            android:textColor="#6d6d70"
+            android:gravity="center|start"
+            android:drawableEnd="@drawable/ic_back_grey"
             android:onClick="onLanguageSelectionClick"
             android:text="Language(s)" />
     </LinearLayout>
@@ -120,9 +127,12 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
         android:padding="8dp"
+        android:textColor="@color/colorPrimary"
         android:onClick="onAddEducationClick"
         android:text="Add Education"
+        android:drawableStart="@drawable/addeventbutton_small"
         app:layout_constraintStart_toStartOf="parent"
+        android:drawablePadding="5dp"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
     <TextView
         android:id="@+id/txtAddLicense"
@@ -132,10 +142,20 @@
         android:layout_marginEnd="24dp"
         android:layout_marginTop="16dp"
         android:padding="8dp"
+        android:textColor="@color/colorPrimary"
+        android:drawableStart="@drawable/addeventbutton_small"
         android:onClick="onAddLicenseClick"
+        android:drawablePadding="5dp"
         android:text="Add License"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2px"
+        android:layout_marginTop="10dp"
+        style="@style/line_style"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtAddLicense"/>
 
 </android.support.constraint.ConstraintLayout>
 </layout>

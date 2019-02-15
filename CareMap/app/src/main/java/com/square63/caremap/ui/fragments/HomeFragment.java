@@ -23,6 +23,7 @@ import com.square63.caremap.models.ProviderChildModel;
 import com.square63.caremap.models.ProviderGroupModel;
 import com.square63.caremap.models.SkillsModel;
 import com.square63.caremap.ui.adapters.MarketPlaceAdapter;
+import com.square63.caremap.ui.adapters.ProvidersListAdapter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -32,7 +33,7 @@ import java.util.List;
 public class HomeFragment extends Fragment {
 
 
-    private MarketPlaceAdapter adapter;
+    private ProvidersListAdapter adapter;
     private RecyclerView recyclerView;
     int position  = -1;
 
@@ -90,7 +91,7 @@ public class HomeFragment extends Fragment {
             ProviderGroupModel providerGroupModel = new ProviderGroupModel("temp",providerChildModelArrayList);
             providerGroupModelArrayList.add(providerGroupModel);
         }
-        adapter = new MarketPlaceAdapter(getContext(),providerGroupModelArrayList);
+        adapter = new ProvidersListAdapter(getContext(),providerGroupModelArrayList);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
         adapter.setExpandCollapseListener(new ExpandableRecyclerAdapter.ExpandCollapseListener() {

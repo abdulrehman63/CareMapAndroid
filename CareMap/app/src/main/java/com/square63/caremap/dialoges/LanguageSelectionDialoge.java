@@ -7,11 +7,13 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.SearchView;
+
 import android.widget.TextView;
 
 import com.square63.caremap.R;
@@ -81,6 +83,7 @@ public class LanguageSelectionDialoge extends DialogFragment implements View.OnC
 
             }
         });
+
     }
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -106,6 +109,9 @@ public class LanguageSelectionDialoge extends DialogFragment implements View.OnC
         setRecyclerViewBudgetAdapter(languageModelArrayList);
         initToolBar(view);
         searchView = (SearchView) view.findViewById(R.id.searchView);
+        EditText editText = ((EditText)  searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text));
+        editText.setTextColor(getResources().getColor(R.color.text_grey));
+        editText.setHintTextColor(getResources().getColor(R.color.text_grey));
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {

@@ -12,7 +12,6 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-
         android:theme="@style/AppTheme">
         <activity android:name=".ui.SplashActivity">
             <intent-filter>
@@ -21,16 +20,26 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.RegistrationActivity" />
-        <activity android:name=".ui.ForgotPasswordActivity" />
+        <activity android:name=".ui.RegistrationActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden"/>
+        <activity android:name=".ui.ForgotPasswordActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden"/>
         <activity android:name=".ui.WelcomeActivity" />
-        <activity android:name=".ui.providerModule.CreateProviderProfileActivity"
+        <activity
+            android:name=".ui.providerModule.CreateProviderProfileActivity"
             android:configChanges="orientation|screenSize"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".ui.providerModule.PersonalInfoActivity" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden"/>
+        <activity android:name=".ui.providerModule.PersonalInfoActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden"/>
         <activity android:name=".ui.DaysSelectionActivity" />
         <activity android:name=".ui.InterestsActivity" />
-        <activity android:name=".ui.LoginActivity" />
+        <activity android:name=".ui.LoginActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden"/>
         <activity
             android:name=".ui.HomeActivity"
             android:label="@string/title_activity_home" />
@@ -39,8 +48,14 @@
         <activity android:name=".ui.ChatActivity" />
         <activity android:name=".ui.AboutActivity" />
         <activity android:name=".ui.ConfirmationActivity" />
-        <activity android:name=".ui.seekerModule.CreateSeekerProfileActivity" />
-        <activity android:name=".ui.seekerModule.CreateSeniorProfileActivity"></activity>
+        <activity android:name=".ui.seekerModule.CreateSeekerProfileActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden"/>
+        <activity android:name=".ui.seekerModule.CreateSeniorProfileActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity android:name=".ui.seekerModule.SeniorProfileActivity" />
+        <activity android:name=".ui.views.GetStartedActivity"></activity>
     </application>
 
 </manifest>

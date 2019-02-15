@@ -13,7 +13,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@mipmap/ic_launcher" />
+        app:srcCompat="@drawable/certification" />
 
     <TextView
         android:id="@+id/textView16"
@@ -35,7 +35,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="3dp"
         android:text="Lorem ipsum"
-        android:textColor="@color/grey"
+        android:textColor="@color/text_grey"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imageView5"

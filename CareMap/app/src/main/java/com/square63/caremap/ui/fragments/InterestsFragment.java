@@ -16,6 +16,7 @@ import com.square63.caremap.R;
 import com.square63.caremap.listeners.RecyclerItemClickListener;
 import com.square63.caremap.models.InterestModel;
 import com.square63.caremap.ui.adapters.InterestAdapter;
+import com.square63.caremap.ui.adapters.SeniorInterestAdapter;
 
 import java.util.ArrayList;
 
@@ -25,7 +26,8 @@ public class InterestsFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private String interestArr[] = {"Arts & Crafts","Church Events","Cooking","Computers"};
-    private InterestAdapter interestAdapter;
+    private Integer interestIcons[] = {R.drawable.artscrafts,R.drawable.churchactivities,R.drawable.cooking,R.drawable.computertech};
+    private SeniorInterestAdapter interestAdapter;
 
     public InterestsFragment() {
         // Required empty public constructor
@@ -64,13 +66,15 @@ public class InterestsFragment extends Fragment {
         for (int i= 0; i <  interestArr.length; i++){
             InterestModel dayModel = new InterestModel();
             dayModel.setName(interestArr[i]);
+            dayModel.setSelected(true);
+            dayModel.setIcone(interestIcons[i]);
             data.add(dayModel);
         }
         setRecyclerView(data);
     }
     
     private void setRecyclerView(ArrayList<InterestModel> data) {
-        interestAdapter=new InterestAdapter(getContext(), data);
+        interestAdapter=new SeniorInterestAdapter(getContext(), data);
         recyclerView.setAdapter(interestAdapter);
         RecyclerView.LayoutManager mManager =new GridLayoutManager(getContext(), 3);
         recyclerView.setLayoutManager(mManager);

@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -39,12 +40,16 @@ public class InterestAdapter extends RecyclerView.Adapter<InterestAdapter.Viewho
         if (filteredData.size() > 0) {
             final InterestModel agent = this.filteredData.get(position);
             holder.txtName.setText(agent.getName());
+            holder.imgIcon.setImageResource(agent.getIcone());
 
             if (agent.isSelected()) {
                 holder.txtName.setTextColor(context.getResources().getColor(R.color.black));
+                holder.imgIcon.setAlpha(1.0f);
+
 
             } else {
                 holder.txtName.setTextColor(context.getResources().getColor(R.color.grey));
+                holder.imgIcon.setAlpha(0.3f);
             }
 
             holder.relMain.setOnClickListener(new View.OnClickListener() {
@@ -70,13 +75,15 @@ public class InterestAdapter extends RecyclerView.Adapter<InterestAdapter.Viewho
     }
 
     class Viewholder extends RecyclerView.ViewHolder {
-        RelativeLayout relMain;
+        LinearLayout relMain;
         TextView txtName;
+        ImageView imgIcon;
 
         public Viewholder(View itemView) {
             super(itemView);
             txtName = (TextView) itemView.findViewById(R.id.txtName);
-            relMain = (RelativeLayout) itemView.findViewById(R.id.relMain);
+            imgIcon = (ImageView) itemView.findViewById(R.id.imgIcon);
+            relMain = (LinearLayout) itemView.findViewById(R.id.relMain);
 
         }
     }

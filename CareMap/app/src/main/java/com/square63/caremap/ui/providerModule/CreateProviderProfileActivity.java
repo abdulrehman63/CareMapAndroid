@@ -16,6 +16,7 @@ import com.square63.caremap.constants.Constants;
 import com.square63.caremap.databinding.ActivityCreateProviderProfileBinding;
 import com.square63.caremap.listeners.IPermissionsCallback;
 import com.square63.caremap.listeners.IPickerCallBack;
+import com.square63.caremap.models.ProfileModel;
 import com.square63.caremap.utils.ImagePickerHelper;
 import com.square63.caremap.utils.PermissionsHelper;
 import com.square63.caremap.utils.UIHelper;
@@ -36,6 +37,9 @@ public class CreateProviderProfileActivity extends AppCompatActivity implements 
         initToolBar();
     }
     private void initToolBar(){
+        final ProfileModel profileModel = new ProfileModel();
+        binding.setProfileModel(profileModel);
+
         final Validations validations = new Validations(this);
         imgBack =(ImageButton) findViewById(R.id.imgBackbtn);
         imgBack.setVisibility(View.VISIBLE);
@@ -53,8 +57,13 @@ public class CreateProviderProfileActivity extends AppCompatActivity implements 
         toolbarTitleRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(validations.validateCreateProfile(binding.txtFirstName,binding.edtLastName,binding.edtDob,binding.edtPhone,binding.edtCity,binding.edtProvince,binding.edtAddress1) == Constants.SUCCESS){
+
+
+                if(validations.validateCreateProfile(binding.txtFirstName,binding.edtLastName,binding.edtDob,binding.edtPhone,binding.edtCity,binding.edtProvince,binding.edtAddress1
+                      ,binding.fName,binding.lName,binding.dob,binding.pNumber,binding.city,binding.province,binding.addres1 ) == Constants.SUCCESS){
                     UIHelper.openActivity(CreateProviderProfileActivity.this,PersonalInfoActivity.class);
+                }else {
+
                 }
                // UIHelper.openActivity(CreateProviderProfileActivity.this,);
             }

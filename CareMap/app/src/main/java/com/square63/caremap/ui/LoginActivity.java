@@ -22,7 +22,7 @@ public class LoginActivity extends AppCompatActivity {
     }
     public void onLoginClicked(View view){
         Validations validations = new Validations(this);
-        if(validations.validateLogin(binding.textView2,binding.textView3) == Constants.SUCCESS ){
+        if(validations.validateLogin(binding.textView2,binding.textView3,binding.imageViewError) == Constants.SUCCESS ){
             UIHelper.openActivity(LoginActivity.this,WelcomeActivity.class);
         }
 

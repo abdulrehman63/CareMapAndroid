@@ -7,4 +7,14 @@ public class Constants {
 
     public static final String PREF_NAMES = "user_preferences";
     public static final String ID= "ID";
+    public static final int MALE = 0;
+    public static final int FEMAIL = 1;
+    public static final int BINARY = 2;
+    public static final String TYPE= "type";
+    public static final String SEEKER= "SEEKER";
+    public static final String PROVIDER= "PROVIDER";
+    public static final String FORM= "FORM";
+    public static final String MSG= "Please fill out all mandatory fields before continuing.";
+    public static final String INVALID_EMAIL= "Please enter valid email address before continuing.";
+
 }

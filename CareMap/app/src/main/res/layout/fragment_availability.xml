@@ -15,29 +15,29 @@
         app:layout_constraintTop_toTopOf="@id/recyclerView"
         app:layout_constraintBottom_toBottomOf="@id/recyclerView"
         app:layout_constraintEnd_toStartOf="@id/recyclerView"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="8dp"
         android:weightSum="4"
         android:orientation="vertical">
         <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:src="@mipmap/ic_launcher"/>
+            android:src="@drawable/morning"/>
         <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:src="@mipmap/ic_launcher"/>
+            android:src="@drawable/afternoon"/>
         <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:src="@mipmap/ic_launcher"/>
+            android:src="@drawable/evening"/>
         <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:src="@mipmap/ic_launcher"/>
+            android:src="@drawable/night"/>
     </LinearLayout>
     <LinearLayout
         android:id="@+id/lnrDays"

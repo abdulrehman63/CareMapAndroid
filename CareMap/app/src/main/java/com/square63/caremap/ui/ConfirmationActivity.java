@@ -1,5 +1,6 @@
 package com.square63.caremap.ui;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -19,7 +20,10 @@ public class ConfirmationActivity extends AppCompatActivity {
     public void onContinueClick(View view){
         PreferenceHelper.getInstance().init(ConfirmationActivity.this);
         PreferenceHelper.getInstance().setString(Constants.ID,"1");
-        UIHelper.openActivity(ConfirmationActivity.this,HomeActivity.class);
+        PreferenceHelper.getInstance().setString(Constants.TYPE,Constants.PROVIDER);
+        Intent intent = new Intent(ConfirmationActivity.this,HomeActivity.class);
+        intent.putExtra(Constants.TYPE,Constants.PROVIDER);
+        startActivity(intent);
 
     }
 }

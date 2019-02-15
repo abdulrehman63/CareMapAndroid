@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimary">#424b5d</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
 
 
 
-    <color name="red">#e6445c</color>
+    <color name="red">#ff596e</color>
     <color name="blue_title">#206bbe</color>
-    <color name="blue_user">#469ce2</color>
+    <color name="blue_user">#58a9d7</color>
     <color name="grey_skip">#7FFFFFFF</color>
     <color name="profile_backgroung">#eeeeee</color>
     <color name="backSport">#eeeeee</color>
@@ -31,8 +31,24 @@
     <color name="app_color">#84c9f8</color>
 
     <color name="background">#84c9f8</color>
-    <color name="line">#e0e0e0</color>
+    <color name="line">#f0efef</color>
     <color name="light_grey_background">#f7f6f6</color>
     <color name="editText_background">#f2f2f2</color>
     <color name="rating_color">#FDB521</color>
+
+    <color name="text_grey">#6c7382</color>
+    <color name="hint_color">#c6dff0</color>
+
+    <color name="text_color">#0170b9</color>
+    <color name="line_color">#f2f2f3</color>
+    <color name="line_color_light">#f2f2f3</color>
+
+    <color name="colorschem_1">#9702e3</color>
+    <color name="colorschem_2">#c7a86d</color>
+    <color name="colorschem_3">#62c8d9</color>
+    <color name="colorschem_4">#42bb55</color>
+    <color name="colorschem_5">#ffd500</color>
+
+
+
 </resources>

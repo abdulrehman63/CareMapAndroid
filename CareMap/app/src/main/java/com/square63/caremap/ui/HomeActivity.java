@@ -11,12 +11,17 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.square63.caremap.R;
+import com.square63.caremap.constants.Constants;
 import com.square63.caremap.ui.fragments.HomeFragment;
 import com.square63.caremap.ui.fragments.MessagesFragment;
 import com.square63.caremap.ui.fragments.ProfileFragment;
+import com.square63.caremap.ui.fragments.SeekerHomeFragment;
+import com.square63.caremap.ui.fragments.SeniorProfileFragment;
+import com.square63.caremap.utils.PreferenceHelper;
 import com.square63.caremap.utils.UIHelper;
 
 public class HomeActivity extends AppCompatActivity {
@@ -32,20 +37,28 @@ public class HomeActivity extends AppCompatActivity {
             Fragment fragment;
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    addFragment(HomeFragment.newInstance(),"home");
+                    if(type.equalsIgnoreCase(Constants.PROVIDER)) {
+                        addFragment(HomeFragment.newInstance(), "home");
+                    }else {
+                        addFragment(SeekerHomeFragment.newInstance(), "home");
+                    }
                     titileToolbar.setText(R.string.title_home);
-                    toolbarTitleRight.setVisibility(View.GONE);
+                    imgShare.setVisibility(View.GONE);
                     return true;
                 case R.id.navigation_dashboard:
                     addFragment(MessagesFragment.newInstance(),"MessagesFragment");
                     titileToolbar.setText(R.string.title_dashboard);
-                    toolbarTitleRight.setVisibility(View.GONE);
+                    imgShare.setVisibility(View.GONE);
                     return true;
                 case R.id.navigation_notifications:
-                    addFragment(ProfileFragment.newInstance(),"ProfileFragment");
-                    titileToolbar.setText(R.string.title_notifications);
-                    toolbarTitleRight.setVisibility(View.VISIBLE);
-                    toolbarTitleRight.setText("Settings");
+                    if(type.equalsIgnoreCase(Constants.PROVIDER)) {
+                        addFragment(ProfileFragment.newInstance(), "ProfileFragment");
+                    }else {
+                        addFragment(SeniorProfileFragment.newInstance(), "ProfileFragment");
+                    }
+                    titileToolbar.setText("");
+                    imgShare.setVisibility(View.VISIBLE);
+                   // toolbarTitleRight.setText("Settings");
                     return true;
             }
             return false;
@@ -53,6 +66,8 @@ public class HomeActivity extends AppCompatActivity {
 
     };
     private FrameLayout container_body;
+    private ImageView imgShare;
+    private String type;
 
     private void addFragment(Fragment fragment,String tag){
         if (fragment != null) {
@@ -74,9 +89,10 @@ public class HomeActivity extends AppCompatActivity {
 
         titileToolbar = (TextView)findViewById(R.id.toolbarTittle);
         toolbarTitleRight = (TextView)findViewById(R.id.toolbarTitleRight);
+        imgShare = (ImageView)findViewById(R.id.imgShare);
         titileToolbar.setText("Market Place");
        //toolbarTitleRight.setText("Next");
-        toolbarTitleRight.setOnClickListener(new View.OnClickListener() {
+        imgShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 UIHelper.openActivity(HomeActivity.this,SettingsActivity.class);
@@ -87,13 +103,18 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-
+        type = PreferenceHelper.getInstance().getString(Constants.TYPE,"");
         mTextMessage = (TextView) findViewById(R.id.message);
         container_body = (FrameLayout) findViewById(R.id.container_body);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         initToolBar();
-        addFragment(HomeFragment.newInstance(),"home");;
+        if(type.equalsIgnoreCase(Constants.PROVIDER)) {
+            addFragment(HomeFragment.newInstance(), "home");
+        }else {
+            addFragment(SeekerHomeFragment.newInstance(), "homes");
+        }
+       // addFragment(HomeFragment.newInstance(),"home");;
     }
 
 }

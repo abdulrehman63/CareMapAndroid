@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@color/line_color"
     android:layout_height="80dp">
 
     <com.square63.caremap.utils.CircleImageView
@@ -14,7 +15,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:src="@drawable/ic_launcher_background" />
+        android:src="@drawable/profile_default" />
 
     <TextView
         android:id="@+id/textView16"
@@ -23,7 +24,7 @@
         android:layout_marginStart="8dp"
         android:text="Abdul"
         app:layout_constraintBottom_toTopOf="@+id/textView17"
-        android:textColor="@color/black"
+        android:textColor="@color/text_grey"
         android:textSize="12sp"
         app:layout_constraintStart_toEndOf="@+id/imageView5"
 
@@ -36,7 +37,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="3dp"
         android:text="Lorem ipsum"
-        android:textColor="@color/grey"
+        android:textColor="@color/text_color"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imageView5"
@@ -54,8 +55,9 @@
         android:id="@+id/textView18"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="nearby"
+        android:text="Nearby"
         android:layout_marginEnd="16dp"
+        android:drawableTop="@drawable/placemarker_2x"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

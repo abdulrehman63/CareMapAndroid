@@ -9,8 +9,8 @@
         android:background="@drawable/day_rectangle">
         <ImageView
             android:id="@+id/imgDot"
-            android:layout_width="5dp"
-            android:layout_height="5dp"
+            android:layout_width="8dp"
+            android:layout_height="8dp"
             android:src="@drawable/red_circle"
             android:layout_centerInParent="true"/>
     </RelativeLayout>

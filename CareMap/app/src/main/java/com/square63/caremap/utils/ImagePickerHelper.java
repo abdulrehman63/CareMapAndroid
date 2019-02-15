@@ -259,6 +259,16 @@ public class ImagePickerHelper {
         } else if (requestCode == PICK_IMAGE_GALLERY) {
 
             try {
+                Uri selectedImage = data.getData();
+                String[] filePathColumn = { MediaStore.Images.Media.DATA };
+
+                Cursor cursor = context.getContentResolver().query(selectedImage,
+                        filePathColumn, null, null, null);
+                cursor.moveToFirst();
+
+                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                String picturePath = cursor.getString(columnIndex);
+                cursor.close();
                 Uri imgUri = data.getData();
                 bitmap = MediaStore.Images.Media.getBitmap(context.getContentResolver(), imgUri);
                 ByteArrayOutputStream bytes = new ByteArrayOutputStream();

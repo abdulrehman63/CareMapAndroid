@@ -15,6 +15,15 @@ public class ProfileModel extends BaseObservable implements Serializable {
     private String dob;
     private String hourlyRate;
     private String experience;
+    private int isEmpty = 0;
+
+    public int getIsEmpty() {
+        return isEmpty;
+    }
+
+    public void setIsEmpty(int isEmpty) {
+        this.isEmpty = isEmpty;
+    }
 
     public String getHourlyRate() {
         return hourlyRate;

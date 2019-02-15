@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
+    android:background="@color/white"
     android:orientation="vertical">
 
     <include
@@ -17,23 +17,30 @@
         android:id="@+id/lnrSearch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/black"
+        android:background="@color/colorPrimary"
         android:layout_below="@+id/relTopBar">
 
-        <SearchView
+
+        <android.support.v7.widget.SearchView
             android:id="@+id/searchView"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_gravity="center"
-
             android:layout_marginStart="5dp"
             android:layout_weight="1"
             android:layout_margin="10dp"
             android:gravity="center"
 
-            android:background="@color/line"
-            android:queryHint="Search Languages"></SearchView>
+            android:background="@drawable/search_bg"
+
+            android:queryHint="Search Languages"></android.support.v7.widget.SearchView>
     </LinearLayout>
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:background="@color/line_color"
+        android:layout_below="@+id/lnrSearch"/>
     <!-- TODO: Update blank fragment layout -->
     <android.support.v7.widget.RecyclerView
 
@@ -41,7 +48,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
 
-        android:layout_below="@+id/lnrSearch"
+        android:layout_below="@+id/view"
         android:background="@android:color/white" />
 
 </RelativeLayout>

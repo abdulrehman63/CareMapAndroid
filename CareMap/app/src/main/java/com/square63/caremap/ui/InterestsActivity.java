@@ -25,6 +25,7 @@ public class InterestsActivity extends AppCompatActivity {
     private InterestAdapter daysAdapter;
     private RecyclerView recyclerView;
     private String interestArr[] = {"Arts & Crafts","Church Events","Cooking","Computers","Gardening","Movies","Pets","Playing Cards","Reading","Sewing","Shopping","Spiritualism","Sports","Travelling"};
+    private Integer interestIcons[] = {R.drawable.artscrafts,R.drawable.churchactivities,R.drawable.cooking,R.drawable.computertech,R.drawable.gardening,R.drawable.movies,R.drawable.pets,R.drawable.playingcards,R.drawable.reading,R.drawable.sewing,R.drawable.shopping,R.drawable.spiritualism,R.drawable.sports,R.drawable.travelling};
     private ImageButton imgBack;
     private TextView titileToolbar,toolbarTitleRight;
 
@@ -37,6 +38,7 @@ public class InterestsActivity extends AppCompatActivity {
         for (int i= 0; i <  interestArr.length; i++){
             InterestModel dayModel = new InterestModel();
             dayModel.setName(interestArr[i]);
+            dayModel.setIcone(interestIcons[i]);
             data.add(dayModel);
         }
         setRecyclerView(data);

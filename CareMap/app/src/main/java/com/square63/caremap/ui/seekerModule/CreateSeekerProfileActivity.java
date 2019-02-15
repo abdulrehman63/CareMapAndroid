@@ -55,8 +55,10 @@ public class CreateSeekerProfileActivity extends AppCompatActivity implements IP
         toolbarTitleRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(validations.validateSeekerProfile(binding.txtFirstName,binding.edtLastName,binding.edtEmergencyNumber,binding.edtPhone,binding.edtCity,binding.edtProvince,binding.edtAddress1,binding.edtUnitNumber,binding.txtNumber) == Constants.SUCCESS){
-                    UIHelper.openActivity(CreateSeekerProfileActivity.this,PersonalInfoActivity.class);
+                if(validations.validateSeekerProfile(binding.txtFirstName,binding.edtLastName,binding.edtEmergencyNumber,binding.edtPhone,binding.edtCity,binding.edtProvince,binding.edtAddress1,binding.edtUnitNumber,binding.txtNumber
+                      ,binding.fName,binding.lName,binding.txtEmergencyNumber,binding.pNumber, binding.city,binding.province,binding.addres1,binding.unitNumber,binding.number) == Constants.SUCCESS){
+
+                    UIHelper.openActivity(CreateSeekerProfileActivity.this,CreateSeniorProfileActivity.class);
                 }
                 // UIHelper.openActivity(CreateProviderProfileActivity.this,);
             }

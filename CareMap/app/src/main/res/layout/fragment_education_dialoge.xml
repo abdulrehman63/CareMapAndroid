@@ -51,7 +51,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="5dp"
             android:text="@={educationModel.study}"
-            style="@style/edit_text_style"
+            style="@style/edit_text_style_profile"
 
            />
     </LinearLayout>
@@ -74,7 +74,7 @@
 
         <EditText
             android:id="@+id/edtPhone"
-            style="@style/edit_text_style"
+            style="@style/edit_text_style_profile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginEnd="5dp"
@@ -99,7 +99,7 @@
 
             <EditText
                 android:id="@+id/edtDegree"
-                style="@style/edit_text_style"
+                style="@style/edit_text_style_profile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="5dp"
@@ -130,6 +130,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="14sp"
+                    style="@style/edit_text_style_profile"
                     android:layout_marginEnd="5dp"
                     android:text="@={educationModel.startDate}"
                     android:hint="mm/dd/yyyy"/>
@@ -160,10 +161,13 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="5dp"
                     android:textSize="14sp"
+                    style="@style/edit_text_style_profile"
                     android:text="@={educationModel.endDate}"
                     android:hint="mm/dd/yyyy"/>
             </LinearLayout>
+
         </LinearLayout>
+
 </LinearLayout>
 </android.support.constraint.ConstraintLayout>
 </layout>

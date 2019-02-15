@@ -42,7 +42,7 @@ public class AboutActivity extends AppCompatActivity {
         toolbarTitleRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UIHelper.openActivity(AboutActivity.this,InterestsActivity.class);
+                UIHelper.openActivity(AboutActivity.this,DaysSelectionActivity.class);
 
                 }
         });

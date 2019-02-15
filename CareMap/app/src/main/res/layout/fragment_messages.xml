@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@color/line_color"
     android:id="@+id/layoutMain"
     android:layout_height="100dp">
 
@@ -14,7 +15,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:src="@mipmap/ic_launcher" />
+        android:src="@drawable/nurse" />
 
     <TextView
         android:id="@+id/textView16"
@@ -22,9 +23,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:text="uCarenet Team"
-        app:layout_constraintBottom_toTopOf="@+id/textView17"
         android:textColor="@color/black"
-        android:textSize="12sp"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/textView17"
         app:layout_constraintStart_toEndOf="@+id/imageView5"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="packed" />
@@ -36,7 +37,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="3dp"
         android:text="Welcome to CareMap"
-        android:textColor="@color/grey"
+        android:textColor="@color/text_grey"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imageView5"

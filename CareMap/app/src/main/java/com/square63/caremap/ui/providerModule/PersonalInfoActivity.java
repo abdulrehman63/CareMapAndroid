@@ -16,6 +16,7 @@ import com.square63.caremap.dialoges.LanguageSelectionDialoge;
 import com.square63.caremap.dialoges.LicenseDialoge;
 import com.square63.caremap.models.LanguageModel;
 import com.square63.caremap.models.SkillsModel;
+import com.square63.caremap.ui.AboutActivity;
 import com.square63.caremap.ui.DaysSelectionActivity;
 import com.square63.caremap.ui.adapters.LanguagesAdapater;
 import com.square63.caremap.utils.UIHelper;
@@ -76,7 +77,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
         toolbarTitleRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UIHelper.openActivity(PersonalInfoActivity.this,DaysSelectionActivity.class);
+                UIHelper.openActivity(PersonalInfoActivity.this,AboutActivity.class);
                      }
         });
     }
