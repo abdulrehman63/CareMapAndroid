@@ -1,8 +1,40 @@
 package com.square63.caremap.models;
 
-public class InterestModel {
+import com.google.gson.annotations.SerializedName;
+
+import java.io.Serializable;
+
+public class InterestModel implements Serializable{
     private int icone;
     private String name;
+    private String seniorID;
+    private String interestID;
+    @SerializedName("interest")
+    private Interest interest;
+
+    public String getSeniorID() {
+        return seniorID;
+    }
+
+    public void setSeniorID(String seniorID) {
+        this.seniorID = seniorID;
+    }
+
+    public String getInterestID() {
+        return interestID;
+    }
+
+    public void setInterestID(String interestID) {
+        this.interestID = interestID;
+    }
+
+    public Interest getInterest() {
+        return interest;
+    }
+
+    public void setInterest(Interest interest) {
+        this.interest = interest;
+    }
 
     public int getIcone() {
         return icone;

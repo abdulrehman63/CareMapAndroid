@@ -16,5 +16,8 @@ public class Constants {
     public static final String FORM= "FORM";
     public static final String MSG= "Please fill out all mandatory fields before continuing.";
     public static final String INVALID_EMAIL= "Please enter valid email address before continuing.";
+    public static  final  boolean IS_SUCCESS = true;
+    public static final String error = "Error";
+    public static final String DATA = "data";
 
 }

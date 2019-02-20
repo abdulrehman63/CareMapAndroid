@@ -34,6 +34,7 @@ public class CreateProviderProfileActivity extends AppCompatActivity implements 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this,R.layout.activity_create_provider_profile);
+        
         initToolBar();
     }
     private void initToolBar(){
