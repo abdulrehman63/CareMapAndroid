@@ -1,12 +1,20 @@
 package com.square63.caremap.webapi.Apiinterface;
 
 
+import com.square63.caremap.models.EducationModel;
+import com.square63.caremap.models.LicenseModel;
 import com.square63.caremap.webapi.CreateGiverRequest;
+import com.square63.caremap.webapi.requests.GenericGetRequest;
+import com.square63.caremap.webapi.requests.InsertGiverEducationRequest;
+import com.square63.caremap.webapi.requests.InsertGiverExperienceRequest;
+import com.square63.caremap.webapi.requests.InsertGiverLicenseRequest;
+import com.square63.caremap.webapi.requests.InsertUserLangRequest;
 import com.square63.caremap.webapi.responses.CreateCareGiverResponse;
 import com.square63.caremap.webapi.responses.MainResponse;
 
 import okhttp3.RequestBody;
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
@@ -31,7 +39,19 @@ public interface ApiInterface {
 
     }
     @POST(Request.REGISTER)
-    Call<CreateCareGiverResponse> apiRegister(CreateGiverRequest createGiverRequest);
+    Call<MainResponse> apiRegister(@Body CreateGiverRequest createGiverRequest);
     @POST(Request.EMAIL_EXIST)
-    Call<MainResponse> apiEmailValidation(RequestBody requestBody);
+    Call<MainResponse> apiEmailValidation(@Body RequestBody requestBody);
+    @POST(Request.INSERT_USER_LANG)
+    Call<MainResponse> apiInsertUserLanguage(@Body InsertUserLangRequest userLangRequest);
+    @POST(Request.GET_ALL_LANGUAGES)
+    Call<MainResponse> apiGetUserLanguage(@Body GenericGetRequest userLangRequest);
+    @POST(Request.INSERTS_GIVER_EDUCATION)
+    Call<MainResponse> apiInsertEducation(@Body EducationModel request);
+
+    @POST(Request.INSERT_GIVER_LICENSE)
+    Call<MainResponse> apiInsertLicense(@Body LicenseModel request);
+    @POST(Request.INSERT_GIVER_EXPERIENCE)
+    Call<MainResponse> apiInsertExperience(@Body InsertGiverExperienceRequest request);
+
 }

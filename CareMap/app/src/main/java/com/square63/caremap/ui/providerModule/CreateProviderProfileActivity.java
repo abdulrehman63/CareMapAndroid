@@ -17,10 +17,16 @@ import com.square63.caremap.databinding.ActivityCreateProviderProfileBinding;
 import com.square63.caremap.listeners.IPermissionsCallback;
 import com.square63.caremap.listeners.IPickerCallBack;
 import com.square63.caremap.models.ProfileModel;
+import com.square63.caremap.models.RegistrationModel;
 import com.square63.caremap.utils.ImagePickerHelper;
 import com.square63.caremap.utils.PermissionsHelper;
+import com.square63.caremap.utils.PreferenceHelper;
 import com.square63.caremap.utils.UIHelper;
 import com.square63.caremap.utils.Validations;
+import com.square63.caremap.webapi.Apiinterface.ApiCallback;
+import com.square63.caremap.webapi.CreateGiverRequest;
+import com.square63.caremap.webapi.responses.MainResponse;
+import com.square63.caremap.webapi.webservices.WebServiceFactory;
 
 public class CreateProviderProfileActivity extends AppCompatActivity implements IPermissionsCallback {
     ActivityCreateProviderProfileBinding binding;
@@ -29,12 +35,13 @@ public class CreateProviderProfileActivity extends AppCompatActivity implements 
     private TextView toolbarTitleRight;
     private PermissionsHelper permissionsHelper;
     private ImagePickerHelper imagePickerHelper;
+    private RegistrationModel registrationModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this,R.layout.activity_create_provider_profile);
-        
+        registrationModel = (RegistrationModel) getIntent().getSerializableExtra(Constants.DATA);
         initToolBar();
     }
     private void initToolBar(){
@@ -62,7 +69,13 @@ public class CreateProviderProfileActivity extends AppCompatActivity implements 
 
                 if(validations.validateCreateProfile(binding.txtFirstName,binding.edtLastName,binding.edtDob,binding.edtPhone,binding.edtCity,binding.edtProvince,binding.edtAddress1
                       ,binding.fName,binding.lName,binding.dob,binding.pNumber,binding.city,binding.province,binding.addres1 ) == Constants.SUCCESS){
-                    UIHelper.openActivity(CreateProviderProfileActivity.this,PersonalInfoActivity.class);
+                    registrationModel.setCity(profileModel.getCity());
+                    registrationModel.setFirstName(profileModel.getFirstName());
+                    registrationModel.setLastName(profileModel.getLastName());
+                    registrationModel.setGender("Male");
+                    registrationModel.setPostalCode("1234");
+                    apiCreateGiver();
+                   // UIHelper.openActivity(CreateProviderProfileActivity.this,PersonalInfoActivity.class);
                 }else {
 
                 }
@@ -72,6 +85,18 @@ public class CreateProviderProfileActivity extends AppCompatActivity implements 
     }
     public void onPickImageClick(View view){
         selectImage();
+    }
+    private void apiCreateGiver(){
+        CreateGiverRequest createGiverRequest = new CreateGiverRequest();
+        createGiverRequest.setRegistrationModel(registrationModel);
+        WebServiceFactory.getInstance().init(this);
+        WebServiceFactory.getInstance().apiSignup(createGiverRequest, new ApiCallback() {
+            @Override
+            public void onSuccess(MainResponse mainResponse) {
+                PreferenceHelper.getInstance().setString(Constants.GIVER_ID,mainResponse.getResultResponse().getId());
+                UIHelper.openActivity(CreateProviderProfileActivity.this,PersonalInfoActivity.class);
+            }
+        });
     }
 
 

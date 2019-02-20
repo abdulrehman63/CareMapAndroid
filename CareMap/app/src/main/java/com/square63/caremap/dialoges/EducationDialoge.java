@@ -4,6 +4,8 @@ import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -13,7 +15,13 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.square63.caremap.R;
+import com.square63.caremap.constants.Constants;
 import com.square63.caremap.databinding.FragmentEducationDialogeBinding;
+import com.square63.caremap.models.EducationModel;
+import com.square63.caremap.utils.PreferenceHelper;
+import com.square63.caremap.webapi.Apiinterface.ApiCallback;
+import com.square63.caremap.webapi.responses.MainResponse;
+import com.square63.caremap.webapi.webservices.WebServiceFactory;
 
 
 public class EducationDialoge extends DialogFragment {
@@ -59,7 +67,7 @@ public class EducationDialoge extends DialogFragment {
         toolbarTitleRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                insertEducation();
                 dismiss();
 
             }
@@ -70,9 +78,25 @@ public class EducationDialoge extends DialogFragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
          binding = DataBindingUtil.inflate(LayoutInflater.from(getContext()), R.layout. fragment_education_dialoge, null, false);
+       EducationModel educationModel = new EducationModel();
+       binding.setEducationModel(educationModel);
         initToolBar(binding.getRoot());
          return binding.getRoot();
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+    }
+    private void insertEducation(){
 
+        binding.getEducationModel().setCaregiverID(PreferenceHelper.getInstance().getString(Constants.GIVER_ID,""));
+        WebServiceFactory.getInstance().apiAddEducation(binding.getEducationModel(), new ApiCallback() {
+            @Override
+            public void onSuccess(MainResponse mainResponse) {
+
+            }
+        });
+
+    }
 }

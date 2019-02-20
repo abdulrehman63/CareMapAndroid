@@ -13,7 +13,13 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.square63.caremap.R;
+import com.square63.caremap.constants.Constants;
 import com.square63.caremap.databinding.FragmentLicenseDialogeBinding;
+import com.square63.caremap.models.LicenseModel;
+import com.square63.caremap.utils.PreferenceHelper;
+import com.square63.caremap.webapi.Apiinterface.ApiCallback;
+import com.square63.caremap.webapi.responses.MainResponse;
+import com.square63.caremap.webapi.webservices.WebServiceFactory;
 
 
 public class LicenseDialoge extends DialogFragment {
@@ -49,9 +55,12 @@ public class LicenseDialoge extends DialogFragment {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(LayoutInflater.from(getContext()), R.layout. fragment_license_dialoge, null, false);
         initToolBar(binding.getRoot());
+        LicenseModel licenseModel= new LicenseModel();
+        binding.setLicenseModel(licenseModel);
         return binding.getRoot();
 
     }
+
     private void initToolBar(View view){
 
         imgBack =(ImageButton) view.findViewById(R.id.imgBackbtn);
@@ -70,8 +79,18 @@ public class LicenseDialoge extends DialogFragment {
         toolbarTitleRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                addLicense();
                 dismiss();
+
+            }
+        });
+    }
+    private void addLicense(){
+        WebServiceFactory.getInstance().init(getContext());
+        binding.getLicenseModel().setCaregiverID(PreferenceHelper.getInstance().getString(Constants.GIVER_ID,""));
+        WebServiceFactory.getInstance().apiAddLicense(binding.getLicenseModel(), new ApiCallback() {
+            @Override
+            public void onSuccess(MainResponse mainResponse) {
 
             }
         });

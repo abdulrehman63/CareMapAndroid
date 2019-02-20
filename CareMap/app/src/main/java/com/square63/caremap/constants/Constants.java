@@ -19,5 +19,6 @@ public class Constants {
     public static  final  boolean IS_SUCCESS = true;
     public static final String error = "Error";
     public static final String DATA = "data";
+    public static final String GIVER_ID = "giverid";
 
 }

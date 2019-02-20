@@ -53,7 +53,8 @@ public class RegistrationActivity extends AppCompatActivity {
                 if(!mainResponse.getResultResponse().getStatus().equalsIgnoreCase(Constants.error)){
                     Intent intent = new Intent(RegistrationActivity.this, CreateProviderProfileActivity.class);
                     intent.putExtra(Constants.DATA,binding.getRegisterModel());
-                    UIHelper.openActivity(RegistrationActivity.this,WelcomeActivity.class);
+                    startActivity(intent);
+                    //UIHelper.openActivity(RegistrationActivity.this,WelcomeActivity.class);
                 }else {
                     UIHelper.showAlert(Constants.error,mainResponse.getResultResponse().getMsg(),RegistrationActivity.this);
                 }

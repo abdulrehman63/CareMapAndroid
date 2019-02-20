@@ -15,7 +15,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiClient  {
 
-    public static final String BASE_URL = "https://hn.algolia.com/api/v1/";
+    public static final String BASE_URL = "http://ucarenet-staging.azurewebsites.net";
 
     private static Retrofit retrofit = null;
     public static Retrofit getClient() {

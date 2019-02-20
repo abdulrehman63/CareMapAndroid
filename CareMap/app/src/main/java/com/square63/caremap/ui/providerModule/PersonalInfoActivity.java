@@ -21,6 +21,11 @@ import com.square63.caremap.ui.DaysSelectionActivity;
 import com.square63.caremap.ui.adapters.LanguagesAdapater;
 import com.square63.caremap.utils.UIHelper;
 import com.square63.caremap.utils.Validations;
+import com.square63.caremap.webapi.Apiinterface.ApiCallback;
+import com.square63.caremap.webapi.requests.GenericGetRequest;
+import com.square63.caremap.webapi.requests.InsertUserLangRequest;
+import com.square63.caremap.webapi.responses.MainResponse;
+import com.square63.caremap.webapi.webservices.WebServiceFactory;
 
 import java.util.ArrayList;
 
@@ -29,6 +34,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
     private ImageButton imgBack;
     private TextView titileToolbar,toolbarTitleRight;
     ActivityPersonalInfoBinding binding;
+    private ArrayList<LanguageModel> langArrayList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +45,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
     private void  init(){
         initToolBar();
         initSeekBar();
+        getAllLang();
     }
     private void initSeekBar(){
         binding.seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -82,14 +89,8 @@ public class PersonalInfoActivity extends AppCompatActivity {
         });
     }
     public void onLanguageSelectionClick(View view){
-         String languageArr[] = {"English","Italian","Mandarin Chinese","Spanish","Punjabi"};
-        ArrayList<LanguageModel> languageModelArrayList = new ArrayList<>();
-         for (int i= 0; i < languageArr.length; i++){
-             LanguageModel languageModel = new LanguageModel();
-             languageModel.setName(languageArr[i]);
-             languageModelArrayList.add(languageModel);
-         }
-        LanguageSelectionDialoge languageSelectionDialoge = LanguageSelectionDialoge.newInstance(languageModelArrayList);
+
+        LanguageSelectionDialoge languageSelectionDialoge = LanguageSelectionDialoge.newInstance(langArrayList);
          languageSelectionDialoge.setSelectedLanguages(new LanguagesAdapater.ISelectedLanguages() {
              @Override
              public void selectedLanguages(ArrayList<LanguageModel> languageModels) {
@@ -107,6 +108,19 @@ public class PersonalInfoActivity extends AppCompatActivity {
          });
         languageSelectionDialoge.show(getSupportFragmentManager(),"languageSelectionDialoge");
 
+    }
+    private void insertLangs(ArrayList<LanguageModel> languageModelArrayList){
+        InsertUserLangRequest insertUserLangRequest = new InsertUserLangRequest();
+
+    }
+    private void getAllLang(){
+        WebServiceFactory.getInstance().init(this);
+        WebServiceFactory.getInstance().apiGetAllLang(new GenericGetRequest(), new ApiCallback() {
+            @Override
+            public void onSuccess(MainResponse mainResponse) {
+                langArrayList = mainResponse.getResultResponse().getLanguageModelArrayList();
+            }
+        });
     }
     public void onAddEducationClick(View view){
         EducationDialoge educationDialoge = EducationDialoge.newInstance();

@@ -4,10 +4,15 @@ import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 
 import java.io.Serializable;
+
+import com.google.gson.annotations.SerializedName;
 import com.square63.caremap.BR;
 public class LicenseModel extends BaseObservable implements Serializable {
+    @SerializedName("License")
     private String licenseNo;
+    @SerializedName("Credantal")
     private String credentialName;
+    @SerializedName("IssueDate")
     private String issueDate;
 
     public String getLicenseNo() {
@@ -54,8 +59,30 @@ public class LicenseModel extends BaseObservable implements Serializable {
         this.vettingDocuments = vettingDocuments;
         notifyPropertyChanged(BR.vettingDocuments);
     }
-
+    @SerializedName("ExpireDate")
     private String expDate;
+    @SerializedName("Documentfile")
     private String vettingDocuments;
+
+    private String CaregiverID;
+
+    public String getCaregiverID() {
+        return CaregiverID;
+    }
+
+    public void setCaregiverID(String caregiverID) {
+        CaregiverID = caregiverID;
+    }
+
+    public String getRequestdocument() {
+        return Requestdocument;
+    }
+
+    public void setRequestdocument(String requestdocument) {
+        Requestdocument = requestdocument;
+    }
+
+    private String Requestdocument ="fgkjhfg";
+
 
 }
