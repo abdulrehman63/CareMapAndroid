@@ -80,7 +80,7 @@
             android:layout_marginTop="16dp"
             android:max="100"
             android:min="1"
-            android:progressTint="@color/colorPrimary"
+            android:progressTint="@color/text_color"
             android:thumb="@drawable/custom_thumb"
             android:thumbTint="@color/white"
             />
@@ -92,7 +92,7 @@
             android:layout_gravity="center"
             android:layout_marginStart="5dp"
             android:layout_marginTop="8dp"
-            android:text="0KM"
+            android:text="1KM"
             android:textSize="14sp"
             android:textColor="@color/text_grey" />
 
