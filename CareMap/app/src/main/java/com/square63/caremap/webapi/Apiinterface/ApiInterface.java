@@ -5,6 +5,7 @@ import com.square63.caremap.models.EducationModel;
 import com.square63.caremap.models.LicenseModel;
 import com.square63.caremap.webapi.CreateGiverRequest;
 import com.square63.caremap.webapi.requests.GenericGetRequest;
+import com.square63.caremap.webapi.requests.InsertAvailabilityRequest;
 import com.square63.caremap.webapi.requests.InsertGiverEducationRequest;
 import com.square63.caremap.webapi.requests.InsertGiverExperienceRequest;
 import com.square63.caremap.webapi.requests.InsertGiverLicenseRequest;
@@ -37,6 +38,7 @@ public interface ApiInterface {
         String INSERT_AVAILABILITY = "api/services/app/availability/InsertAvailability";
         String INSET_CARE_SEEKER ="api/services/app/careseeker/InsertCareseeker";
 
+
     }
     @POST(Request.REGISTER)
     Call<MainResponse> apiRegister(@Body CreateGiverRequest createGiverRequest);
@@ -56,6 +58,9 @@ public interface ApiInterface {
     Call<MainResponse> apiInsertLicense(@Body LicenseModel request);
     @POST(Request.INSERT_GIVER_EXPERIENCE)
     Call<MainResponse> apiInsertExperience(@Body InsertGiverExperienceRequest request);
+
+    @POST(Request.INSERT_AVAILABILITY)
+    Call<MainResponse> apiInsertAvailability(@Body InsertAvailabilityRequest request);
     @POST(Request.GET_ALL_SKILLS)
     Call<MainResponse> apiGetGiverSkills(@Body GenericGetRequest request);
 

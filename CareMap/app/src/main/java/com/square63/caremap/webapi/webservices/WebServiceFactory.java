@@ -21,6 +21,7 @@ import com.square63.caremap.webapi.Apiinterface.ApiCallback;
 import com.square63.caremap.webapi.Apiinterface.ApiInterface;
 import com.square63.caremap.webapi.CreateGiverRequest;
 import com.square63.caremap.webapi.requests.GenericGetRequest;
+import com.square63.caremap.webapi.requests.InsertAvailabilityRequest;
 import com.square63.caremap.webapi.requests.InsertGiverEducationRequest;
 import com.square63.caremap.webapi.requests.InsertGiverExperienceRequest;
 import com.square63.caremap.webapi.requests.InsertGiverLicenseRequest;
@@ -284,6 +285,38 @@ public class WebServiceFactory {
 
 
         Call<MainResponse> signUpResponseCall = apiInterface.apiInsertExperience(signUpModel);
+        signUpResponseCall.enqueue(new Callback<MainResponse>() {
+            @Override
+            public void onResponse(Call<MainResponse> call, retrofit2.Response<MainResponse> response) {
+                if (response.isSuccessful() && response.body().isStatus()) {
+                    // UIHelper.showLongToastInCenter(context_, response.body().getStoreResponse().getMessage());
+                    apiCallback.onSuccess(response.body());
+
+                }else {
+                    //   UIHelper.showLongToastInCenter(context_, response.body().getStoreResponse().getMessage());
+                }
+
+                loading.dismiss();
+            }
+
+            @Override
+            public void onFailure(Call<MainResponse> call, Throwable t) {
+                //  UIHelper.showLongToastInCenter(context_, t.getMessage());
+                Log.d("fail", t.getMessage());
+                loading.dismiss();
+
+            }
+        });
+
+    }
+    public void apiAddAvailability(InsertAvailabilityRequest signUpModel, final ApiCallback apiCallback) {
+        checkNetworkState();
+        ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        final ProgressDialog loading;
+        loading = ProgressDialog.show(context_, context_.getResources().getString(R.string.loading), "", true, false);
+
+
+        Call<MainResponse> signUpResponseCall = apiInterface.apiInsertAvailability(signUpModel);
         signUpResponseCall.enqueue(new Callback<MainResponse>() {
             @Override
             public void onResponse(Call<MainResponse> call, retrofit2.Response<MainResponse> response) {

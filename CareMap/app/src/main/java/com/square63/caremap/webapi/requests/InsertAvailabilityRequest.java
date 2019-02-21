@@ -29,13 +29,13 @@ public class InsertAvailabilityRequest {
         this.toHour = toHour;
     }
 
-    public int getDayOfWeekl() {
-        return dayOfWeekl;
+    public int getDayOfWeek() {
+        return dayOfWeek;
     }
 
-    public void setDayOfWeekl(int dayOfWeekl) {
-        this.dayOfWeekl = dayOfWeekl;
+    public void setDayOfWeek(int dayOfWeek) {
+        this.dayOfWeek = dayOfWeek;
     }
 
-    private int dayOfWeekl;
+    private int dayOfWeek;
 }
