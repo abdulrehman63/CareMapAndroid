@@ -44,7 +44,7 @@ public class SplashActivity extends FragmentActivity {
                         startActivity(intent);
                         finish();
                     }else {
-                        Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
+                        Intent intent = new Intent(SplashActivity.this, SkillsActivity.class);
                         startActivity(intent);
                         finish();
                     }

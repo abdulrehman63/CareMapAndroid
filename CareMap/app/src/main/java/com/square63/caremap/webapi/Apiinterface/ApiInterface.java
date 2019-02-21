@@ -46,6 +46,9 @@ public interface ApiInterface {
     Call<MainResponse> apiInsertUserLanguage(@Body InsertUserLangRequest userLangRequest);
     @POST(Request.GET_ALL_LANGUAGES)
     Call<MainResponse> apiGetUserLanguage(@Body GenericGetRequest userLangRequest);
+    @POST(Request.GET_ALL_INTERESTS)
+    Call<MainResponse> apiGetUserInterests(@Body GenericGetRequest userLangRequest);
+
     @POST(Request.INSERTS_GIVER_EDUCATION)
     Call<MainResponse> apiInsertEducation(@Body EducationModel request);
 
@@ -53,5 +56,7 @@ public interface ApiInterface {
     Call<MainResponse> apiInsertLicense(@Body LicenseModel request);
     @POST(Request.INSERT_GIVER_EXPERIENCE)
     Call<MainResponse> apiInsertExperience(@Body InsertGiverExperienceRequest request);
+    @POST(Request.GET_ALL_SKILLS)
+    Call<MainResponse> apiGetGiverSkills(@Body GenericGetRequest request);
 
 }

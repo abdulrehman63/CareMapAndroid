@@ -16,6 +16,10 @@ import com.square63.caremap.models.SkillsModel;
 import com.square63.caremap.ui.adapters.InterestAdapter;
 import com.square63.caremap.ui.adapters.SkillsAdapter;
 import com.square63.caremap.utils.UIHelper;
+import com.square63.caremap.webapi.Apiinterface.ApiCallback;
+import com.square63.caremap.webapi.requests.GenericGetRequest;
+import com.square63.caremap.webapi.responses.MainResponse;
+import com.square63.caremap.webapi.webservices.WebServiceFactory;
 
 import java.util.ArrayList;
 
@@ -38,25 +42,8 @@ public class SkillsActivity extends AppCompatActivity {
         recyclerViewServices = (RecyclerView) findViewById(R.id.recyclerViewServices);
         recyclerViewSkills = (RecyclerView) findViewById(R.id.recyclerViewSkills);
         initToolBar();
-        ArrayList<SkillsModel> data = new ArrayList<>();
-        for (int i= 0; i <  credentialsArr.length; i++){
-            SkillsModel dayModel = new SkillsModel();
-            dayModel.setName(credentialsArr[i]);
-            data.add(dayModel);
-        }
-        ArrayList<SkillsModel> dataService = new ArrayList<>();
-        for (int i= 0; i <  servicesArr.length; i++){
-            SkillsModel dayModel = new SkillsModel();
-            dayModel.setName(servicesArr[i]);
-            dataService.add(dayModel);
-        }
-        ArrayList<SkillsModel> dataSkills = new ArrayList<>();
-        for (int i= 0; i <  skillsArr.length; i++){
-            SkillsModel dayModel = new SkillsModel();
-            dayModel.setName(skillsArr[i]);
-            dataSkills.add(dayModel);
-        }
-        setRecyclerView(data,dataService,dataSkills);
+        apiGetSkills();
+
     }
     private void setRecyclerView(ArrayList<SkillsModel> data, ArrayList<SkillsModel> dataServices,ArrayList<SkillsModel> dataSkills) {
         daysAdapter=new SkillsAdapter(this,data);
@@ -80,6 +67,31 @@ public class SkillsActivity extends AppCompatActivity {
         }));
 
 
+    }
+    private void apiGetSkills(){
+        WebServiceFactory.getInstance().init(this);
+        WebServiceFactory.getInstance().apiGetGiverSkills(new GenericGetRequest(), new ApiCallback() {
+            @Override
+            public void onSuccess(MainResponse mainResponse) {
+                ArrayList<SkillsModel> data = new ArrayList<>();
+                ArrayList<SkillsModel> dataService = new ArrayList<>();
+                ArrayList<SkillsModel> dataSkills = new ArrayList<>();
+                ArrayList<SkillsModel> skillsModelArrayList  = mainResponse.getResultResponse().getSkillsModelArrayList();
+                for (int i=0; i < skillsModelArrayList.size(); i++){
+                    if(skillsModelArrayList.get(i).getCategory() == 0){
+                           data.add(skillsModelArrayList.get(i));
+                    }
+                    else if(skillsModelArrayList.get(i).getCategory() == 2){
+                        dataService.add(skillsModelArrayList.get(i));
+                    }
+                    else if(skillsModelArrayList.get(i).getCategory() == 1){
+                        dataSkills.add(skillsModelArrayList.get(i));
+                    }
+                }
+
+                setRecyclerView(data,dataService,dataSkills);
+            }
+        });
     }
     private void initToolBar(){
 

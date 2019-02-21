@@ -32,7 +32,7 @@
     <string name="camera_gallery">Choose From Gallery</string>
     <string name="error_some_thing_went_wrong">Some Thing Went Wrong</string>
     <string name="email_field_error">%1$s address is not valid</string>
-    <string name="emergency_number">Emergency Number</string>
+    <string name="emergency_number">Emergency Cell</string>
     <string name="number">Number</string>
     <string name="unit_number">Unit Number</string>
     <string name="connectivity_msg">Please check your internet connection.</string>

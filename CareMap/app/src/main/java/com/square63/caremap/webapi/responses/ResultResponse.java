@@ -3,6 +3,7 @@ package com.square63.caremap.webapi.responses;
 import com.google.gson.annotations.SerializedName;
 import com.square63.caremap.models.InterestModel;
 import com.square63.caremap.models.LanguageModel;
+import com.square63.caremap.models.SkillsModel;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -43,6 +44,17 @@ public class ResultResponse implements Serializable{
     @SerializedName("languages")
 
     private ArrayList<LanguageModel> languageModelArrayList;
+
+    public ArrayList<SkillsModel> getSkillsModelArrayList() {
+        return skillsModelArrayList;
+    }
+
+    public void setSkillsModelArrayList(ArrayList<SkillsModel> skillsModelArrayList) {
+        this.skillsModelArrayList = skillsModelArrayList;
+    }
+
+    @SerializedName("skills")
+    private ArrayList<SkillsModel> skillsModelArrayList;
     public String getStatus() {
         return status;
     }

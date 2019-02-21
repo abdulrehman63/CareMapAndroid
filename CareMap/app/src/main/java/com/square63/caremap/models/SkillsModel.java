@@ -6,7 +6,7 @@ public class SkillsModel implements Serializable{
     private String name;
     private boolean isSelected;
     private int sortOrder;
-    private String category;
+    private int category;
     private String id;
 
     public int getSortOrder() {
@@ -17,11 +17,11 @@ public class SkillsModel implements Serializable{
         this.sortOrder = sortOrder;
     }
 
-    public String getCategory() {
+    public int getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(int category) {
         this.category = category;
     }
 

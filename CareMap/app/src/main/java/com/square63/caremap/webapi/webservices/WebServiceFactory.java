@@ -308,6 +308,71 @@ public class WebServiceFactory {
         });
 
     }
+
+    public void apiGetAllInterests(GenericGetRequest signUpModel, final ApiCallback apiCallback) {
+        checkNetworkState();
+        ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        final ProgressDialog loading;
+        loading = ProgressDialog.show(context_, context_.getResources().getString(R.string.loading), "", true, false);
+
+
+        Call<MainResponse> signUpResponseCall = apiInterface.apiGetUserInterests(signUpModel);
+        signUpResponseCall.enqueue(new Callback<MainResponse>() {
+            @Override
+            public void onResponse(Call<MainResponse> call, retrofit2.Response<MainResponse> response) {
+                if (response.isSuccessful() && response.body().isStatus()) {
+                    // UIHelper.showLongToastInCenter(context_, response.body().getStoreResponse().getMessage());
+                    apiCallback.onSuccess(response.body());
+
+                }else {
+                    //   UIHelper.showLongToastInCenter(context_, response.body().getStoreResponse().getMessage());
+                }
+
+                loading.dismiss();
+            }
+
+            @Override
+            public void onFailure(Call<MainResponse> call, Throwable t) {
+                //  UIHelper.showLongToastInCenter(context_, t.getMessage());
+                Log.d("fail", t.getMessage());
+                loading.dismiss();
+
+            }
+        });
+
+    }
+    public void apiGetGiverSkills(GenericGetRequest signUpModel, final ApiCallback apiCallback) {
+        checkNetworkState();
+        ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        final ProgressDialog loading;
+        loading = ProgressDialog.show(context_, context_.getResources().getString(R.string.loading), "", true, false);
+
+
+        Call<MainResponse> signUpResponseCall = apiInterface.apiGetGiverSkills(signUpModel);
+        signUpResponseCall.enqueue(new Callback<MainResponse>() {
+            @Override
+            public void onResponse(Call<MainResponse> call, retrofit2.Response<MainResponse> response) {
+                if (response.isSuccessful() && response.body().isStatus()) {
+                    // UIHelper.showLongToastInCenter(context_, response.body().getStoreResponse().getMessage());
+                    apiCallback.onSuccess(response.body());
+
+                }else {
+                    //   UIHelper.showLongToastInCenter(context_, response.body().getStoreResponse().getMessage());
+                }
+
+                loading.dismiss();
+            }
+
+            @Override
+            public void onFailure(Call<MainResponse> call, Throwable t) {
+                //  UIHelper.showLongToastInCenter(context_, t.getMessage());
+                Log.d("fail", t.getMessage());
+                loading.dismiss();
+
+            }
+        });
+
+    }
     private void checkNetworkState(){
         if(!isNetworkAvailable(context_)) {
            showLongToastInCenter(context_,context_.getResources().getString(R.string.connectivity_msg));
