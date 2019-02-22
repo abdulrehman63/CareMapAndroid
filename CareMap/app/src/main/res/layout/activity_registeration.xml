@@ -83,7 +83,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:hint="Password"
-
+        android:inputType="textPassword"
         android:textColorHint="@color/hint_color"
         android:text="@{registerModel.password}"
         style="@style/edit_text_style"

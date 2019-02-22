@@ -75,6 +75,7 @@ public class CreateSeniorProfileActivity extends AppCompatActivity implements Vi
         initColorList();
     }
     private void initToolBar(){
+
         final Validations validations = new Validations(this);
         imgBack =(ImageButton) findViewById(R.id.imgBackbtn);
         imgBack.setVisibility(View.VISIBLE);
@@ -87,19 +88,30 @@ public class CreateSeniorProfileActivity extends AppCompatActivity implements Vi
 
         titileToolbar = (TextView)findViewById(R.id.toolbarTittle);
         toolbarTitleRight = (TextView)findViewById(R.id.toolbarTitleRight);
-        titileToolbar.setText("Senior Profile");
-        toolbarTitleRight.setText("Next");
+        titileToolbar.setText("CREATE SENIOR PROFILE");
+        toolbarTitleRight.setText("Done");
         toolbarTitleRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(validations.validateSeekerProfile(binding.edtCity,binding.edtProvince,binding.edtAddress1,binding.edtUnitNumber,binding.txtNumber,
-                       binding.city,binding.province,binding.addres1,binding.unitNumber,binding.number) == Constants.SUCCESS){
+                if(validations.validateSeekerProfile(binding.edtName,binding.edtAge,binding.edtCity,binding.edtProvince,binding.edtAddress1,binding.edtUnitNumber,binding.txtNumber,
+                       binding.city,binding.province,binding.addres1,binding.unitNumber,binding.number,binding.txtName,binding.txtAge) == Constants.SUCCESS){
+                    if(getIntent() != null && getIntent().getStringExtra(Constants.TYPE) != null){
+                        if(getIntent().getStringExtra(Constants.TYPE).equalsIgnoreCase("Edit")){
+                            finish();
+                        }
+                    }else {
+                        UIHelper.openActivity(CreateSeniorProfileActivity.this,GetStartedActivity.class);
+                    }
 
-                    UIHelper.openActivity(CreateSeniorProfileActivity.this,GetStartedActivity.class);
                 }
                 // UIHelper.openActivity(CreateProviderProfileActivity.this,);
             }
         });
+        if(getIntent() != null && getIntent().getStringExtra(Constants.TYPE) != null){
+            if(getIntent().getStringExtra(Constants.TYPE).equalsIgnoreCase("Edit")){
+                titileToolbar.setText("EDIT SENIOR PROFILE");
+            }
+        }
     }
     private void initCareList(){
         ArrayList<LanguageModel> languageModelArrayList = new ArrayList<>();

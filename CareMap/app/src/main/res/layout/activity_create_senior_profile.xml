@@ -61,410 +61,450 @@
                         android:textColor="@color/text_grey" />
                 </LinearLayout>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        style="@style/generic_text_blue"
-                        android:layout_marginStart="16dp"
-                        android:text="Senior Name"/>
-
-                    <EditText
-                        android:id="@+id/edtName"
-                        style="@style/edit_text_style_profile"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="16dp"
-                        android:layout_marginStart="16dp"
-
-                        android:inputType="numberDecimal"
-                        android:text="@={profileModel.phoneNumber}"
-                        android:hint=""/>
                 <TextView
+                    android:id="@+id/txtName"
+                    style="@style/generic_text_blue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    style="@style/generic_text_blue"
                     android:layout_marginStart="16dp"
-                    android:text="Age"/>
+                    android:text="Senior Name" />
+
+                <EditText
+                    android:id="@+id/edtName"
+                    style="@style/edit_text_style_profile"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint=""
+                    android:paddingEnd="16dp"
+                    android:paddingStart="16dp"
+                    android:text="@={profileModel.phoneNumber}" />
+
+                <TextView
+                    android:id="@+id/txtAge"
+                    style="@style/generic_text_blue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:text="Age" />
 
                 <EditText
                     android:id="@+id/edtAge"
                     style="@style/edit_text_style_profile"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginStart="16dp"
+                    android:hint=""
                     android:inputType="numberDecimal"
-                    android:text="@={profileModel.phoneNumber}"
-                    android:hint=""/>
+                    android:paddingEnd="16dp"
+                    android:paddingStart="16dp"
+                    android:text="@={profileModel.phoneNumber}" />
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Sex"
-                    android:gravity="center"
-                    android:textColor="@color/black"
                     android:layout_marginTop="5dp"
-                    android:textStyle="bold"
-                    android:textSize="16sp"/>
+                    android:gravity="center"
+                    android:text="Sex"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="78dp"
-                    android:orientation="horizontal"
                     android:layout_marginTop="5dp"
+                    android:orientation="horizontal"
 
                     android:weightSum="3">
+
                     <TextView
                         android:id="@+id/txtMale"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:text="Male"
-                        android:gravity="center"
-                        android:paddingTop="10dp"
+                        android:layout_weight="1"
                         android:background="@drawable/rectangleshadow_2x"
-
-                        android:paddingBottom="10dp"
-                        android:textColor="@color/text_grey"
-                        android:drawableTop="@drawable/femaledark_2x"
                         android:drawablePadding="5dp"
-                        android:layout_weight="1"/>
+                        android:drawableTop="@drawable/femaledark_2x"
+
+                        android:gravity="center"
+                        android:paddingBottom="10dp"
+                        android:paddingTop="10dp"
+                        android:text="Male"
+                        android:textColor="@color/text_grey" />
+
                     <TextView
                         android:id="@+id/txtFemail"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:text="Femail"
+                        android:layout_weight="1"
                         android:background="@drawable/rectangleshadow_2x"
-                        android:gravity="center"
-                        android:paddingTop="10dp"
-                        android:paddingBottom="10dp"
-
-                        android:textColor="@color/text_grey"
-                        android:drawableTop="@drawable/maledark_2x"
                         android:drawablePadding="5dp"
-                        android:layout_weight="1"/>
+                        android:drawableTop="@drawable/maledark_2x"
+                        android:gravity="center"
+
+                        android:paddingBottom="10dp"
+                        android:paddingTop="10dp"
+                        android:text="Female"
+                        android:textColor="@color/text_grey" />
+
                     <TextView
                         android:id="@+id/txtBinary"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:text="Non Binary"
-                        android:gravity="center"
-                        android:paddingTop="10dp"
-                        android:paddingBottom="10dp"
-                        android:drawablePadding="5dp"
+                        android:layout_weight="1"
                         android:background="@drawable/rectangleshadow_2x"
-                        android:textColor="@color/text_grey"
+                        android:drawablePadding="5dp"
                         android:drawableTop="@drawable/nonbinarydark_2x"
-                        android:layout_weight="1"/>
+                        android:gravity="center"
+                        android:paddingBottom="10dp"
+                        android:paddingTop="10dp"
+                        android:text="Non Binary"
+                        android:textColor="@color/text_grey" />
                 </LinearLayout>
+
                 <View
+                    style="@style/line_style"
                     android:layout_width="match_parent"
                     android:layout_height="1px"
-                    android:layout_marginTop="10dp"
-                    style="@style/line_style"/>
+                    android:layout_marginTop="20dp" />
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Reason for care"
+                    android:layout_marginTop="10dp"
                     android:gravity="center"
+                    android:text="Reason For Care"
                     android:textColor="@color/black"
-                    android:layout_marginTop="5dp"
-                    android:textStyle="bold"
-                    android:textSize="16sp"/>
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/recyclerView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
-                    android:layout_marginTop="10dp"
                     android:layout_marginStart="8dp"
-                   >
-                </android.support.v7.widget.RecyclerView>
+                    android:layout_marginTop="10dp"></android.support.v7.widget.RecyclerView>
+
                 <View
+                    style="@style/line_style"
                     android:layout_width="match_parent"
                     android:layout_height="1px"
-                    android:layout_marginTop="10dp"
-                    style="@style/line_style"/>
+                    android:layout_marginTop="20dp" />
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Mobility"
+                    android:layout_marginTop="10dp"
                     android:gravity="center"
+                    android:text="Mobility"
                     android:textColor="@color/black"
-                    android:layout_marginTop="5dp"
-                    android:textStyle="bold"
-                    android:textSize="16sp"/>
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/recyclerViewMobility"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
-                    android:layout_marginTop="10dp"
                     android:layout_marginStart="8dp"
-                    >
-                </android.support.v7.widget.RecyclerView>
+                    android:layout_marginTop="10dp"></android.support.v7.widget.RecyclerView>
+
                 <View
+                    style="@style/line_style"
                     android:layout_width="match_parent"
                     android:layout_height="1px"
-                    android:layout_marginTop="10dp"
-                    style="@style/line_style"/>
+                    android:layout_marginTop="20dp" />
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Interest"
+                    android:layout_marginTop="10dp"
                     android:gravity="center"
+                    android:text="Interests"
                     android:textColor="@color/black"
-                    android:layout_marginTop="5dp"
-                    android:textStyle="bold"
-                    android:textSize="16sp"/>
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/recyclerViewInterest"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
-                    android:layout_marginTop="10dp"
                     android:layout_marginStart="8dp"
-                    >
+                    android:layout_marginTop="10dp">
 
                 </android.support.v7.widget.RecyclerView>
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1px"
-                        android:layout_marginTop="10dp"
-                        style="@style/line_style"/>
-                    <TextView
-                        android:id="@+id/txtLanguage"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginStart="5dp"
-                        android:layout_marginTop="16dp"
-                        android:background="#f5f5f5"
-                        android:padding="8dp"
-                        android:textColor="#6d6d70"
-                        android:gravity="center|start"
-                        android:drawableEnd="@drawable/ic_back_grey"
-                        android:onClick="onLanguageSelectionClick"
-                        android:text="Language(s)" />
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1px"
-                        android:layout_marginTop="10dp"
-                        style="@style/line_style"/>
+
+                <View
+                    style="@style/line_style"
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_marginTop="20dp" />
+
                 <TextView
+                    android:id="@+id/txtLanguage"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Address"
-                    android:gravity="center"
-                    android:textColor="@color/black"
-                    android:layout_marginTop="10dp"
-                    android:textStyle="bold"
-                    android:textSize="16sp"/>
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Only approximate location will be shared to determine travel distance "
-                    android:gravity="center"
-                    android:textColor="@color/black"
-                    android:layout_marginTop="5dp"
                     android:layout_gravity="center"
-                    android:paddingStart="24dp"
+                    android:layout_marginEnd="24dp"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="16dp"
+                    android:background="#f5f5f5"
+                    android:drawableEnd="@drawable/ic_back_grey"
+                    android:gravity="center|start"
+                    android:onClick="onLanguageSelectionClick"
+                    android:padding="8dp"
+                    android:text="Language(s)"
+                    android:textColor="#6d6d70"
+                    android:textSize="14sp" />
+
+                <View
+                    style="@style/line_style"
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_marginTop="20dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:text="Address"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center"
                     android:paddingEnd="24dp"
-                    android:textSize="14sp"/>
+                    android:paddingStart="24dp"
+                    android:text="Only approximate location will be shared to determine travel distance. "
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    style="@style/profile_margin"
                     android:layout_marginTop="8dp"
                     android:orientation="horizontal">
+
                     <LinearLayout
 
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:orientation="vertical"
-                        >
+                        android:orientation="vertical">
+
                         <TextView
                             android:id="@+id/number"
+                            style="@style/generic_text_blue"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            style="@style/generic_text_blue"
-                            android:text="@string/number"/>
+                            android:layout_marginStart="16dp"
+                            android:text="@string/number" />
 
                         <EditText
                             android:id="@+id/txtNumber"
+                            style="@style/edit_text_style_profile"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@={profileModel.number}"
-                            style="@style/edit_text_style_profile"
-                            android:layout_marginEnd="5dp"
-                            android:hint=""/>
+                            android:background="@null"
+                            android:hint=""
+                            android:paddingStart="16dp"
+                            android:text="@={profileModel.number}" />
                     </LinearLayout>
+
                     <View
                         android:layout_width="1px"
                         android:layout_height="40dp"
-                        android:background="@android:color/darker_gray"/>
+                        android:background="@android:color/darker_gray" />
+
                     <LinearLayout
 
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:orientation="vertical"
-                        >
+                        android:orientation="vertical">
+
                         <TextView
                             android:id="@+id/unitNumber"
+                            style="@style/generic_text_blue"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            style="@style/generic_text_blue"
                             android:layout_marginStart="5dp"
-                            android:text="@string/unit_number"/>
+                            android:text="@string/unit_number" />
 
                         <EditText
 
                             android:id="@+id/edtUnitNumber"
+                            style="@style/edit_text_style_profile"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="5dp"
-                            style="@style/edit_text_style_profile"
-                            android:text="@={profileModel.unitNumber}"
-                            android:hint=""/>
+                            android:background="@null"
+                            android:hint=""
+                            android:paddingStart="5dp"
+                            android:text="@={profileModel.unitNumber}" />
                     </LinearLayout>
                 </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+
+                    android:layout_height="1dp"
+
+                    android:layout_marginTop="7dp"
+
+                    android:background="@color/grey_background" />
 
                 <LinearLayout
 
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    style="@style/profile_margin"
                     android:layout_marginTop="5dp"
-                    android:orientation="vertical"
-                    >
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
                     <TextView
                         android:id="@+id/city"
+                        style="@style/generic_text_blue"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        style="@style/generic_text_blue"
-                        android:layout_marginStart="5dp"
-                        android:text="@string/city"/>
+                        android:layout_marginStart="16dp"
+                        android:text="@string/city" />
 
                     <EditText
                         android:id="@+id/edtCity"
                         style="@style/edit_text_style_profile"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="5dp"
-                        android:text="@={profileModel.city}"
-                        android:hint=""/>
+                        android:hint=""
+                        android:paddingEnd="16dp"
+                        android:paddingStart="16dp"
+                        android:text="@={profileModel.city}" />
                 </LinearLayout>
 
                 <LinearLayout
 
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    style="@style/profile_margin"
                     android:layout_marginTop="5dp"
-                    android:orientation="vertical"
-                    >
+
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
                     <TextView
                         android:id="@+id/province"
+                        style="@style/generic_text_blue"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        style="@style/generic_text_blue"
-                        android:layout_marginStart="5dp"
-                        android:text="@string/province"/>
+                        android:layout_marginStart="16dp"
+                        android:text="@string/province" />
 
                     <EditText
                         android:id="@+id/edtProvince"
                         style="@style/edit_text_style_profile"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="5dp"
-                        android:text="@={profileModel.province}"
-                        android:hint=""/>
+                        android:hint=""
+                        android:paddingEnd="16dp"
+                        android:paddingStart="16dp"
+                        android:text="@={profileModel.province}" />
                 </LinearLayout>
 
                 <LinearLayout
 
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    style="@style/profile_margin"
                     android:layout_marginTop="5dp"
-                    android:orientation="vertical"
-                    >
+
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
                     <TextView
                         android:id="@+id/addres1"
+                        style="@style/generic_text_blue"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        style="@style/generic_text_blue"
-                        android:layout_marginStart="5dp"
-                        android:text="Postal Code"/>
+                        android:layout_marginStart="16dp"
+                        android:text="Postal Code" />
 
                     <EditText
                         android:id="@+id/edtAddress1"
                         style="@style/edit_text_style_profile"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="5dp"
-                        android:text="@={profileModel.address1}"
-                        android:hint=""/>
+                        android:hint=""
+                        android:paddingEnd="16dp"
+                        android:paddingStart="16dp"
+                        android:text="@={profileModel.address1}" />
                 </LinearLayout>
 
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Sharing approximate location will provide you with the best match of care. Click here if you wish to remove your address. Note: city will be shown "
-                    android:gravity="center"
-                    android:textColor="@color/black"
-                    android:layout_marginTop="5dp"
                     android:layout_gravity="center"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="16dp"
-                    android:textSize="14sp"/>
+                    android:layout_marginTop="5dp"
+                    android:gravity="center"
+                    android:paddingEnd="32dp"
+                    android:paddingStart="32dp"
+                    android:text="Sharing approximate location will provide you with the best match of care. Click here if you wish to remove your address. Note: city will be shown "
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
                 <android.support.v7.widget.AppCompatCheckBox
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Do not share location "
                     android:layout_gravity="center"
-                    android:layoutDirection="rtl"
-                    android:textColor="@color/text_color"
                     android:layout_marginTop="5dp"
+                    android:layoutDirection="rtl"
+                    android:text="Do not share location "
+                    android:textColor="@color/text_color"
 
-                    android:textSize="14sp"/>
+                    android:textSize="14sp" />
+
                 <View
-                    android:layout_width="1px"
-                    android:layout_height="40dp"
-                    android:background="@android:color/darker_gray"/>
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_marginTop="20dp"
+                    android:background="@android:color/darker_gray" />
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Profile Color Scheme"
-                    android:gravity="center"
-                    android:textColor="@color/black"
                     android:layout_marginTop="15dp"
-                    android:textStyle="bold"
-                    android:textSize="16sp"/>
+                    android:gravity="center"
+                    android:text="Profile Color Scheme"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Did you know you can care for more than one senior on this app? Choosing a colour profile can help distinguish between multiple profiles"
-                    android:gravity="center"
-                    android:textColor="@color/black"
-                    android:layout_marginTop="10dp"
                     android:layout_gravity="center"
-                    android:paddingStart="16dp"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
                     android:paddingEnd="16dp"
-                    android:textSize="14sp"/>
+                    android:paddingStart="16dp"
+                    android:text="Did you know you can care for more than one senior on this app? Choosing a colour profile can help distinguish between multiple profiles"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/recyclerViewProfile"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginTop="20dp"
                     android:layout_marginBottom="20dp"
+                    android:layout_marginTop="20dp"
 
-                    >
-                </android.support.v7.widget.RecyclerView>
+                    ></android.support.v7.widget.RecyclerView>
             </LinearLayout>
         </android.support.v4.widget.NestedScrollView>
     </LinearLayout>

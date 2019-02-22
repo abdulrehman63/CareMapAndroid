@@ -35,7 +35,7 @@
         android:drawableEnd="@drawable/ic_back_grey"
         android:onClick="onChangePasswordAppClick"
         style="@style/setting_text_style"
-        android:text="Change Password"/>
+        android:text="Reset Password"/>
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"

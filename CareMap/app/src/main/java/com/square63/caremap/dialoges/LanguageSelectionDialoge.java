@@ -74,6 +74,7 @@ public class LanguageSelectionDialoge extends DialogFragment implements View.OnC
         titileToolbar = (TextView)view.findViewById(R.id.toolbarTittle);
         toolbarTitleRight = (TextView)view.findViewById(R.id.toolbarTitleRight);
         titileToolbar.setText("Languages");
+        titileToolbar.setAllCaps(false);
         toolbarTitleRight.setText("Done");
         toolbarTitleRight.setOnClickListener(new View.OnClickListener() {
             @Override

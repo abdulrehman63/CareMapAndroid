@@ -13,7 +13,9 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.square63.caremap.R;
+import com.square63.caremap.constants.Constants;
 import com.square63.caremap.databinding.FragmentLicenseDialogeBinding;
+import com.square63.caremap.utils.UIHelper;
 
 
 public class LicenseDialoge extends DialogFragment {
@@ -70,7 +72,7 @@ public class LicenseDialoge extends DialogFragment {
         toolbarTitleRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                UIHelper.showAlert(Constants.Success,Constants.license_added,getContext());
                 dismiss();
 
             }

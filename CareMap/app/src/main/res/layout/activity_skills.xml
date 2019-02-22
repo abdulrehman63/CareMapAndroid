@@ -14,7 +14,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-<ScrollView
+<android.support.v4.widget.NestedScrollView
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:layout_constraintTop_toBottomOf="@+id/include">
@@ -48,49 +48,16 @@
         style="@style/line_style"/>
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
+
         android:layout_marginTop="16dp"
 
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtCredentials">
 
     </android.support.v7.widget.RecyclerView>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        style="@style/line_style"/>
-    <TextView
-        android:id="@+id/txtServices"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Services"
-        android:textAllCaps="true"
-        android:textSize="14sp"
-        android:background="@color/line_color_light"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recyclerView"
-        android:padding="10dp"/>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        style="@style/line_style"/>
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerViewServices"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="16dp"
 
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtServices">
-
-    </android.support.v7.widget.RecyclerView>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        style="@style/line_style"/>
     <TextView
         android:id="@+id/txtSkills"
         android:layout_width="match_parent"
@@ -108,9 +75,9 @@
         style="@style/line_style"/>
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerViewSkills"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
+
         android:layout_marginTop="16dp"
 
         app:layout_constraintStart_toStartOf="parent"
@@ -118,6 +85,31 @@
 
     </android.support.v7.widget.RecyclerView>
 
+    <TextView
+        android:id="@+id/txtServices"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Services"
+        android:textAllCaps="true"
+        android:textSize="14sp"
+        android:background="@color/line_color_light"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/recyclerView"
+        android:padding="10dp"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        style="@style/line_style"/>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerViewServices"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtServices">
+
+    </android.support.v7.widget.RecyclerView>
+
 </LinearLayout>
-</ScrollView>
+</android.support.v4.widget.NestedScrollView>
 </android.support.constraint.ConstraintLayout>

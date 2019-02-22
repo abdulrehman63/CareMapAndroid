@@ -13,7 +13,9 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.square63.caremap.R;
+import com.square63.caremap.constants.Constants;
 import com.square63.caremap.databinding.FragmentEducationDialogeBinding;
+import com.square63.caremap.utils.UIHelper;
 
 
 public class EducationDialoge extends DialogFragment {
@@ -59,7 +61,7 @@ public class EducationDialoge extends DialogFragment {
         toolbarTitleRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                UIHelper.showAlert(Constants.Success,Constants.education_added,getContext());
                 dismiss();
 
             }

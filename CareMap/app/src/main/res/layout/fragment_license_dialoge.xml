@@ -44,7 +44,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/generic_text_blue"
-                android:layout_marginStart="5dp"
+
                 android:text="Enter License"/>
 
             <EditText
@@ -70,7 +70,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/generic_text_blue"
-                android:layout_marginStart="5dp"
+
                 android:text="Credential Name"/>
 
             <EditText
@@ -100,6 +100,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/generic_text_blue"
+                    android:layout_marginStart="5dp"
                     android:text="Issue Date"/>
 
                 <EditText
@@ -107,7 +108,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="14sp"
+                    android:layout_marginStart="5dp"
                     android:text="@{licenseModel.issueDate}"
+                    android:background="@null"
                     android:layout_marginEnd="5dp"
                     android:hint="mm/dd/yyyy"/>
             </LinearLayout>
@@ -137,10 +140,19 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="5dp"
                     android:textSize="14sp"
+                    android:background="@null"
                     android:text="@{licenseModel.expDate}"
                     android:hint="mm/dd/yyyy"/>
             </LinearLayout>
         </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_marginEnd="21dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="7dp"
+            android:layout_marginStart="21dp"
+
+            android:background="@color/grey_background"/>
         <LinearLayout
 
             android:layout_width="match_parent"
@@ -162,7 +174,7 @@
                 style="@style/edit_text_style_profile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="5dp"
+
                 android:text="@{licenseModel.vettingDocuments}"
                 android:hint=""/>
         </LinearLayout>

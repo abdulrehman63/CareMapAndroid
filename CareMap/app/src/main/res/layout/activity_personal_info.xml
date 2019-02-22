@@ -71,7 +71,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
-            android:text="How far can you travel for work ?" />
+            android:text="How far can you travel for work?" />
 
         <SeekBar
             android:id="@+id/seekBar"
@@ -92,7 +92,7 @@
             android:layout_gravity="center"
             android:layout_marginStart="5dp"
             android:layout_marginTop="8dp"
-            android:text="1KM"
+            android:text="1 km"
             android:textSize="14sp"
             android:textColor="@color/text_grey" />
 
@@ -126,13 +126,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginStart="24dp"
+        android:layout_marginStart="30dp"
         android:layout_marginTop="16dp"
         android:padding="8dp"
         android:textColor="@color/colorPrimary"
         android:onClick="onAddEducationClick"
         android:text="Add Education"
-        android:drawableStart="@drawable/addeventbutton_small"
+        android:drawableStart="@drawable/addeventbutton"
         app:layout_constraintStart_toStartOf="parent"
         android:drawablePadding="5dp"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
@@ -141,11 +141,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginEnd="24dp"
+        android:layout_marginEnd="30dp"
         android:layout_marginTop="16dp"
         android:padding="8dp"
         android:textColor="@color/colorPrimary"
-        android:drawableStart="@drawable/addeventbutton_small"
+        android:drawableStart="@drawable/addeventbutton"
         android:onClick="onAddLicenseClick"
         android:drawablePadding="5dp"
         android:text="Add License"

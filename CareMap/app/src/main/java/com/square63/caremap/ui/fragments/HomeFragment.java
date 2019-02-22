@@ -7,12 +7,15 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.UiThread;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.bignerdranch.expandablerecyclerview.ExpandableRecyclerAdapter;
@@ -24,6 +27,7 @@ import com.square63.caremap.models.ProviderGroupModel;
 import com.square63.caremap.models.SkillsModel;
 import com.square63.caremap.ui.adapters.MarketPlaceAdapter;
 import com.square63.caremap.ui.adapters.ProvidersListAdapter;
+import com.square63.caremap.utils.VerticalSpaceItemDecoration;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -93,6 +97,12 @@ public class HomeFragment extends Fragment {
         }
         adapter = new ProvidersListAdapter(getContext(),providerGroupModelArrayList);
         recyclerView.setLayoutManager(layoutManager);
+       int VERTICAL_ITEM_SPACE = 48;
+
+        //or
+       /* DividerItemDecoration itemDecorator = new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
+        itemDecorator.setDrawable(ContextCompat.getDrawable(getContext(), R.drawable.divider));
+        recyclerView.addItemDecoration(itemDecorator);*/
         recyclerView.setAdapter(adapter);
         adapter.setExpandCollapseListener(new ExpandableRecyclerAdapter.ExpandCollapseListener() {
             @UiThread

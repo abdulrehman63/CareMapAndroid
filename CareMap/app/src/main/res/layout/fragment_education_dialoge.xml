@@ -111,6 +111,7 @@
             android:layout_height="wrap_content"
             style="@style/profile_margin"
             android:layout_marginTop="8dp"
+
             android:orientation="horizontal">
             <LinearLayout
                 android:id="@+id/text_input_layout"
@@ -123,6 +124,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/generic_text_blue"
+                    android:layout_marginStart="5dp"
                     android:text="Start Date"/>
 
                 <EditText
@@ -132,6 +134,8 @@
                     android:textSize="14sp"
                     style="@style/edit_text_style_profile"
                     android:layout_marginEnd="5dp"
+                    android:layout_marginStart="5dp"
+                    android:background="@null"
                     android:text="@={educationModel.startDate}"
                     android:hint="mm/dd/yyyy"/>
             </LinearLayout>
@@ -161,13 +165,22 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="5dp"
                     android:textSize="14sp"
+
                     style="@style/edit_text_style_profile"
+                    android:background="@null"
                     android:text="@={educationModel.endDate}"
                     android:hint="mm/dd/yyyy"/>
             </LinearLayout>
 
         </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_marginEnd="21dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="7dp"
+            android:layout_marginStart="23dp"
 
+            android:background="@color/grey_background"/>
 </LinearLayout>
 </android.support.constraint.ConstraintLayout>
 </layout>
