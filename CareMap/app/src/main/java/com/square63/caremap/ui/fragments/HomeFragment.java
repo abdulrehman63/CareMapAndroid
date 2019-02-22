@@ -100,9 +100,9 @@ public class HomeFragment extends Fragment {
        int VERTICAL_ITEM_SPACE = 48;
 
         //or
-       /* DividerItemDecoration itemDecorator = new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
+        DividerItemDecoration itemDecorator = new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
         itemDecorator.setDrawable(ContextCompat.getDrawable(getContext(), R.drawable.divider));
-        recyclerView.addItemDecoration(itemDecorator);*/
+        recyclerView.addItemDecoration(itemDecorator);
         recyclerView.setAdapter(adapter);
         adapter.setExpandCollapseListener(new ExpandableRecyclerAdapter.ExpandCollapseListener() {
             @UiThread

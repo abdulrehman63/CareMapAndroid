@@ -94,7 +94,7 @@ public class CreateSeniorProfileActivity extends AppCompatActivity implements Vi
             @Override
             public void onClick(View v) {
                 if(validations.validateSeekerProfile(binding.edtName,binding.edtAge,binding.edtCity,binding.edtProvince,binding.edtAddress1,binding.edtUnitNumber,binding.txtNumber,
-                       binding.city,binding.province,binding.addres1,binding.unitNumber,binding.number,binding.txtName,binding.txtAge) == Constants.SUCCESS){
+                       binding.city,binding.province,binding.addres1,binding.unitNumber,binding.number,binding.txtName,binding.txtAge,binding.edtStreet,binding.street) == Constants.SUCCESS){
                     if(getIntent() != null && getIntent().getStringExtra(Constants.TYPE) != null){
                         if(getIntent().getStringExtra(Constants.TYPE).equalsIgnoreCase("Edit")){
                             finish();

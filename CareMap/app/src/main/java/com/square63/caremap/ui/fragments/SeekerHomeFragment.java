@@ -5,7 +5,9 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.UiThread;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -85,6 +87,9 @@ public class SeekerHomeFragment extends Fragment {
         }
         adapter = new MarketPlaceAdapter(getContext(),providerGroupModelArrayList);
         recyclerView.setLayoutManager(layoutManager);
+        DividerItemDecoration itemDecorator = new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
+        itemDecorator.setDrawable(ContextCompat.getDrawable(getContext(), R.drawable.divider));
+        recyclerView.addItemDecoration(itemDecorator);
         recyclerView.setAdapter(adapter);
         adapter.setExpandCollapseListener(new ExpandableRecyclerAdapter.ExpandCollapseListener() {
             @UiThread

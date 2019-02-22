@@ -23,7 +23,7 @@ public class SettingsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
-        type = PreferenceHelper.getInstance().getAppString(Constants.TYPE,"");
+        type = PreferenceHelper.getInstance().getString(Constants.TYPE,"");
         initToolBar();
     }
     private void initToolBar(){

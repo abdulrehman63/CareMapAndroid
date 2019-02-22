@@ -299,7 +299,7 @@ public class Validations {
     }
 
     public int validateSeekerProfile(EditText edtName,EditText edtAge,EditText edtCity,EditText edtProvince, EditText edtAddress1,EditText number, EditText unitNumber,
-                                     TextView txtCity,TextView txtProvince, TextView txtAddress1,TextView txtNumber, TextView txtUnitNumber,TextView txtName,TextView txtAge) {
+                                     TextView txtCity,TextView txtProvince, TextView txtAddress1,TextView txtNumber, TextView txtUnitNumber,TextView txtName,TextView txtAge,EditText edtStreet, TextView street) {
         Resources res = context.getResources();
         String text;
         int isValidate = Constants.SUCCESS;
@@ -307,6 +307,13 @@ public class Validations {
             /*text = String.format(res.getString(R.string.empty_field_error), context.getString(R.string.city));
             edtCity.setError(Html.fromHtml("<font color='red'>" + text + "</font>"));*/
             setDrawableEnd(txtName);
+            isValidate = Constants.EMPTY_EMAIL_FIELD;
+            //return Constants.EMPTY_EMAIL_FIELD;
+        }
+        if (edtStreet.getText().toString().trim().length() == 0) {
+            /*text = String.format(res.getString(R.string.empty_field_error), context.getString(R.string.city));
+            edtCity.setError(Html.fromHtml("<font color='red'>" + text + "</font>"));*/
+            setDrawableEnd(street);
             isValidate = Constants.EMPTY_EMAIL_FIELD;
             //return Constants.EMPTY_EMAIL_FIELD;
         }

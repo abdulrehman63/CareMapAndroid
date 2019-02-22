@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">CareMap</string>
+    <string name="app_name">Caremap</string>
 
     <string name="empty_field_error">%1$s field must not be empty</string>
     <string name="match_password">%1$s does not match</string>
