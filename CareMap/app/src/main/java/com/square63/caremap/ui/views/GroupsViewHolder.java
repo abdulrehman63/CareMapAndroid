@@ -16,9 +16,12 @@ import static android.view.animation.Animation.RELATIVE_TO_SELF;
 
 public class GroupsViewHolder extends ParentViewHolder {
 
-
+  public View adapter_divider_top,adapter_divider_bottom;
   public GroupsViewHolder(View itemView) {
+
     super(itemView);
+    adapter_divider_top = (View) itemView.findViewById(R.id.adapter_divider_top);
+      adapter_divider_bottom= (View) itemView.findViewById(R.id.adapter_divider_bottom);
    /* genreName = (TextView) itemView.findViewById(R.id.list_item_genre_name);
     arrow = (ImageView) itemView.findViewById(R.id.list_item_genre_arrow);
     icon = (ImageView) itemView.findViewById(R.id.list_item_genre_icon);*/
@@ -28,6 +31,13 @@ public class GroupsViewHolder extends ParentViewHolder {
 
 
   public void bind(ProviderGroupModel providerGroupModel) {
+    if(providerGroupModel.isExpanded()){
+      adapter_divider_top.setVisibility(View.GONE);
+        adapter_divider_bottom.setVisibility(View.VISIBLE);
+    }else {
+      adapter_divider_top.setVisibility(View.VISIBLE);
+        adapter_divider_bottom.setVisibility(View.GONE);
+    }
     //mRecipeTextView.setText(recipe.getName());
   }
 }

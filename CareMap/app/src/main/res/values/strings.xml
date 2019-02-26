@@ -26,7 +26,7 @@
 
     <string name="name">Name</string>
     <string name="enter_valid_address">Please enter valid email address.</string>
-    <string name="camera_select_option">Select Option</string>
+    <string name="camera_select_option">Edit Profile Picture</string>
     <string name="camera_take_photo">Take Photo</string>
     <string name="camera_cancel">Cancel</string>
     <string name="camera_gallery">Choose From Gallery</string>

@@ -88,7 +88,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
 
-                            
+                            android:paddingStart="5dp"
                             android:background="@null"
                             android:hint=""
                             android:text="@={profileModel.firstName}" />
@@ -221,7 +221,7 @@
                             style="@style/edit_text_style_profile"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            
+                            android:paddingStart="5dp"
                             android:background="@null"
                             android:hint=""
                             android:inputType="number"

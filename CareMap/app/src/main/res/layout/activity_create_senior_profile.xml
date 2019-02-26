@@ -127,7 +127,7 @@
 
                         android:gravity="center"
                         android:paddingBottom="10dp"
-                        android:paddingTop="10dp"
+                        android:paddingTop="15dp"
                         android:text="Male"
                         android:textColor="@color/text_grey" />
 
@@ -142,7 +142,7 @@
                         android:gravity="center"
 
                         android:paddingBottom="10dp"
-                        android:paddingTop="10dp"
+                        android:paddingTop="15dp"
                         android:text="Female"
                         android:textColor="@color/text_grey" />
 
@@ -156,7 +156,7 @@
                         android:drawableTop="@drawable/nonbinarydark_2x"
                         android:gravity="center"
                         android:paddingBottom="10dp"
-                        android:paddingTop="10dp"
+                        android:paddingTop="15dp"
                         android:text="Non Binary"
                         android:textColor="@color/text_grey" />
                 </LinearLayout>

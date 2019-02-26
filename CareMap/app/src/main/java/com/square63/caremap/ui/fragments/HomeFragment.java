@@ -40,6 +40,8 @@ public class HomeFragment extends Fragment {
     private ProvidersListAdapter adapter;
     private RecyclerView recyclerView;
     int position  = -1;
+    private ArrayList<ProviderGroupModel> providerGroupModelArrayList;
+    private ArrayList<ProviderChildModel> providerChildModelArrayList;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -87,9 +89,9 @@ public class HomeFragment extends Fragment {
         if (animator instanceof DefaultItemAnimator) {
             ((DefaultItemAnimator) animator).setSupportsChangeAnimations(false);
         }
-        ArrayList<ProviderGroupModel> providerGroupModelArrayList = new ArrayList<>();
+        final ArrayList<ProviderGroupModel> providerGroupModelArrayList = new ArrayList<>();
         for(int i = 0 ;i < 10; i++){
-            ArrayList<ProviderChildModel> providerChildModelArrayList =new ArrayList<>();
+            providerChildModelArrayList =new ArrayList<>();
             ProviderChildModel providerChildModel = new ProviderChildModel();
             providerChildModelArrayList.add(providerChildModel);
             ProviderGroupModel providerGroupModel = new ProviderGroupModel("temp",providerChildModelArrayList);
@@ -97,13 +99,11 @@ public class HomeFragment extends Fragment {
         }
         adapter = new ProvidersListAdapter(getContext(),providerGroupModelArrayList);
         recyclerView.setLayoutManager(layoutManager);
-       int VERTICAL_ITEM_SPACE = 48;
-
-        //or
-        DividerItemDecoration itemDecorator = new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
+       /* DividerItemDecoration itemDecorator = new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
         itemDecorator.setDrawable(ContextCompat.getDrawable(getContext(), R.drawable.divider));
-        recyclerView.addItemDecoration(itemDecorator);
+        recyclerView.addItemDecoration(itemDecorator);*/
         recyclerView.setAdapter(adapter);
+
         adapter.setExpandCollapseListener(new ExpandableRecyclerAdapter.ExpandCollapseListener() {
             @UiThread
             @Override
@@ -111,6 +111,15 @@ public class HomeFragment extends Fragment {
                 if(position != -1)
                adapter.collapseParent(position);
                 position = parentPosition;
+                ProviderChildModel providerChildModel = new ProviderChildModel();
+                providerChildModel.setExpanded(true);
+                for (int i =0; i < providerGroupModelArrayList.size(); i++){
+                    providerGroupModelArrayList.get(i).setExpanded(false );
+                }
+                providerGroupModelArrayList.get(position).setExpanded(true);
+                providerGroupModelArrayList.get(position).getChildList().set(0,providerChildModel);
+                adapter.setParentList(providerGroupModelArrayList,true);
+                adapter.notifyDataSetChanged();
             }
 
             @UiThread
@@ -118,6 +127,13 @@ public class HomeFragment extends Fragment {
             public void onParentCollapsed(int parentPosition) {
                 if(parentPosition == position)
                     position = -1;
+                ProviderChildModel providerChildModel = new ProviderChildModel();
+                providerChildModel.setExpanded(true);
+                for (int i =0; i < providerGroupModelArrayList.size(); i++){
+                    providerGroupModelArrayList.get(i).setExpanded(false );
+                }
+                adapter.setParentList(providerGroupModelArrayList,true);
+                adapter.notifyDataSetChanged();
 
             }
         });
