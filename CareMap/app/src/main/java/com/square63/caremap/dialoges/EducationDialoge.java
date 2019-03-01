@@ -22,7 +22,9 @@ import com.square63.caremap.utils.PreferenceHelper;
 import com.square63.caremap.webapi.Apiinterface.ApiCallback;
 import com.square63.caremap.webapi.responses.MainResponse;
 import com.square63.caremap.webapi.webservices.WebServiceFactory;
+import com.square63.caremap.utils.UIHelper;
 
+import retrofit2.http.HEAD;
 
 public class EducationDialoge extends DialogFragment {
 
@@ -68,7 +70,8 @@ public class EducationDialoge extends DialogFragment {
             @Override
             public void onClick(View v) {
                 insertEducation();
-                dismiss();
+
+
 
             }
         });
@@ -94,7 +97,8 @@ public class EducationDialoge extends DialogFragment {
         WebServiceFactory.getInstance().apiAddEducation(binding.getEducationModel(), new ApiCallback() {
             @Override
             public void onSuccess(MainResponse mainResponse) {
-
+                UIHelper.showAlert(Constants.Success,Constants.education_added,getActivity());
+                dismiss();
             }
         });
 

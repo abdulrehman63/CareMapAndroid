@@ -23,17 +23,18 @@
         <item name="android:paddingStart">16dp</item>
         <item name="android:textColorHint">@color/hint_color</item>
         <item name="android:background">@drawable/bluerectangle</item>
+        <item name="android:singleLine">true</item>
         <item name="android:textColor">@color/blue_user</item>
 
     </style>
 
     <style name="edit_text_style_profile">
         <item name="android:textSize">14sp</item>
-
+        <item name="android:singleLine">true</item>
         <item name="android:textColorHint">@color/text_grey</item>
        <item name="android:backgroundTint">@color/grey_background</item>
         <item name="android:textColor">@color/black</item>
-        <item name="android:drawablePadding">5dp</item>
+
     </style>
     <style name="AppTheme.SearchView" parent="Widget.AppCompat.SearchView">
         <item name="searchIcon">@drawable/ic_search_grey</item>
@@ -43,7 +44,7 @@
 
     </style>
     <style name="day_text_style">
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">11sp</item>
         <item name="android:textColor">#384153</item>
 
     </style>
@@ -67,6 +68,9 @@
         <item name="android:background">@color/grey_background</item>
 
     </style>
-
+    <style name="CustomTextAppearanceTab" parent="TextAppearance.Design.Tab">
+        <item name="textAllCaps">false</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
 
 </resources>

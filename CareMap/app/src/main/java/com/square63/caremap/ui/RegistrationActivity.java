@@ -13,6 +13,7 @@ import com.square63.caremap.constants.Constants;
 import com.square63.caremap.databinding.ActivityRegisterationBinding;
 import com.square63.caremap.models.RegistrationModel;
 import com.square63.caremap.ui.providerModule.CreateProviderProfileActivity;
+import com.square63.caremap.ui.seekerModule.CreateSeekerProfileActivity;
 import com.square63.caremap.utils.UIHelper;
 import com.square63.caremap.utils.Validations;
 import com.square63.caremap.webapi.Apiinterface.ApiCallback;
@@ -51,7 +52,7 @@ public class RegistrationActivity extends AppCompatActivity {
             @Override
             public void onSuccess(MainResponse mainResponse) {
                 if(!mainResponse.getResultResponse().getStatus().equalsIgnoreCase(Constants.error)){
-                    Intent intent = new Intent(RegistrationActivity.this, CreateProviderProfileActivity.class);
+                    Intent intent = new Intent(RegistrationActivity.this, CreateSeekerProfileActivity.class);
                     intent.putExtra(Constants.DATA,binding.getRegisterModel());
                     startActivity(intent);
                     //UIHelper.openActivity(RegistrationActivity.this,WelcomeActivity.class);

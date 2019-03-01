@@ -10,6 +10,8 @@ import android.graphics.Bitmap;
 import android.graphics.Matrix;
 import android.media.ExifInterface;
 import android.net.Uri;
+import android.os.Build;
+import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -24,6 +26,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URI;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -43,6 +46,7 @@ public class ImagePickerHelper {
 
     private String imgPath = null;
     private IPickerCallBack iPickerCallBack;
+    private int PROCESS_IMAGE = 3;
 
     public ImagePickerHelper(){
 
@@ -203,11 +207,20 @@ public class ImagePickerHelper {
                     if (options[item].equals(context.getResources().getString(R.string.camera_take_photo))) {
                         dialog.dismiss();
                         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
                         context.startActivityForResult(intent, PICK_IMAGE_CAMERA);
                     } else if (options[item].equals(context.getResources().getString(R.string.camera_gallery))) {
                         dialog.dismiss();
-                        Intent pickPhoto = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                        context.startActivityForResult(pickPhoto, PICK_IMAGE_GALLERY);
+                        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                        intent.setDataAndType(picUri, "image/*");
+                        intent.putExtra("crop", "true");
+                        intent.putExtra("aspectX", 1);
+                        intent.putExtra("aspectY", 1);
+                        intent.putExtra("outputX", 96);
+                        intent.putExtra("outputY", 96);
+                        intent.putExtra("noFaceDetection", true);
+                        intent.putExtra("return-data", true);
+                        context.startActivityForResult(intent, PICK_IMAGE_GALLERY);
                     } else if (options[item].equals(context.getResources().getString(R.string.camera_cancel))) {
                         dialog.dismiss();
                     }
@@ -227,11 +240,12 @@ public class ImagePickerHelper {
         inputStreamImg = null;
         if (requestCode == PICK_IMAGE_CAMERA) {
             try {
+
                 // picUri = data.getData();
                 bitmap = (Bitmap) data.getExtras().get("data");
                 ByteArrayOutputStream bytes = new ByteArrayOutputStream();
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 50, bytes);
-                picUri = getImageUri(context, bitmap);
+                picUri = data.getData();
                 Log.e("Activity", "Pick from Camera::>>> ");
 
                 String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
@@ -250,16 +264,69 @@ public class ImagePickerHelper {
                 }
 
                 imgPath = destination.getAbsolutePath();
-               // profile_image.setImageBitmap(bitmap);
+                Uri selectedImageCropped = Uri.parse(imgPath);
                 iPickerCallBack.onImageSelected(bitmap);
+
+                /** Crop selected image. */
+              /*  Intent cropIntent = new Intent("com.android.camera.action.CROP");
+                //indicate image type and Uri
+
+                cropIntent.setDataAndType(picUri, "image/*");
+                //set crop properties
+                cropIntent.putExtra("crop", "true");
+                //indicate aspect of desired crop
+                cropIntent.putExtra("aspectX", 1);
+                cropIntent.putExtra("aspectY", 1);
+                //indicate output X and Y
+                cropIntent.putExtra("outputX", 256);
+                cropIntent.putExtra("outputY", 256);
+                //retrieve data on return
+                cropIntent.putExtra("return-data", true);
+                cropIntent.putExtra(MediaStore.EXTRA_OUTPUT, selectedImageCropped);
+                context.startActivityForResult(cropIntent, PROCESS_IMAGE);*/
+
+               // profile_image.setImageBitmap(bitmap);
+
 
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        } else if (requestCode == PICK_IMAGE_GALLERY) {
+        }if (requestCode == PROCESS_IMAGE) {
+            Bitmap selectedBitmap;
+            if(Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+                Bundle extras = data.getExtras();
+                selectedBitmap = extras.getParcelable("data");
+                iPickerCallBack.onImageSelected(selectedBitmap);
+            }
+            else{
+                Uri uri = data.getData();
+                try {
+                    selectedBitmap=MediaStore.Images.Media.getBitmap(context.getContentResolver(),uri);
+                    iPickerCallBack.onImageSelected(selectedBitmap);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+           /* Bundle extras = data.getExtras();
+            if(extras != null ) {
+                Bitmap photo = extras.getParcelable("data");
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                photo.compress(Bitmap.CompressFormat.JPEG, 75, stream);
+                iPickerCallBack.onImageSelected(bitmap);
+                //The The stream to write to a file or directly using the photo
+            }*/
+        }
+        else if (requestCode == PICK_IMAGE_GALLERY) {
 
             try {
-                Uri selectedImage = data.getData();
+                Bundle extras = data.getExtras();
+                if(extras != null ) {
+                    Bitmap photo = extras.getParcelable("data");
+                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                    photo.compress(Bitmap.CompressFormat.JPEG, 75, stream);
+                    // The stream to write to a file or directly using the photo
+                }
+                /*Uri selectedImage = data.getData();
                 String[] filePathColumn = { MediaStore.Images.Media.DATA };
 
                 Cursor cursor = context.getContentResolver().query(selectedImage,
@@ -272,7 +339,7 @@ public class ImagePickerHelper {
                 Uri imgUri = data.getData();
                 bitmap = MediaStore.Images.Media.getBitmap(context.getContentResolver(), imgUri);
                 ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 10, bytes);
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 10, bytes);*/
                 Log.e("Activity", "Pick from Gallery::>>> ");
                 //picUri = getImageUri(context, bitmap);
                 //imgPath = getRealPathFromURI(picUri);

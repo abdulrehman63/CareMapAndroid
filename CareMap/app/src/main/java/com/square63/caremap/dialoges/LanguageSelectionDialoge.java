@@ -74,6 +74,7 @@ public class LanguageSelectionDialoge extends DialogFragment implements View.OnC
         titileToolbar = (TextView)view.findViewById(R.id.toolbarTittle);
         toolbarTitleRight = (TextView)view.findViewById(R.id.toolbarTitleRight);
         titileToolbar.setText("Languages");
+        titileToolbar.setAllCaps(false);
         toolbarTitleRight.setText("Done");
         toolbarTitleRight.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,6 +113,7 @@ public class LanguageSelectionDialoge extends DialogFragment implements View.OnC
         EditText editText = ((EditText)  searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text));
         editText.setTextColor(getResources().getColor(R.color.text_grey));
         editText.setHintTextColor(getResources().getColor(R.color.text_grey));
+        editText.setHint("Search Languages");
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {

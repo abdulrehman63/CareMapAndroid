@@ -1,5 +1,6 @@
 package com.square63.caremap.ui;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -22,7 +23,7 @@ public class SettingsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
-        type = PreferenceHelper.getInstance().getAppString(Constants.TYPE,"");
+        type = PreferenceHelper.getInstance().getString(Constants.TYPE,"");
         initToolBar();
     }
     private void initToolBar(){
@@ -52,14 +53,21 @@ public class SettingsActivity extends AppCompatActivity {
     }
     public void onLogoutClick(View view){
         PreferenceHelper.getInstance().setString(Constants.ID,"");
+        PreferenceHelper.getInstance().setString(Constants.TYPE,"");
         UIHelper.openAndClearActivity(SettingsActivity.this,LoginActivity.class);
     }
 
     public void onEditProfileClick(View view) {
-        if(type.equalsIgnoreCase(Constants.SEEKER)){
-            UIHelper.openActivity(SettingsActivity.this, CreateSeniorProfileActivity.class);
+        if(type.equalsIgnoreCase(Constants.PROVIDER)){
+            Intent intent = new Intent(SettingsActivity.this,CreateProviderProfileActivity.class);
+            intent.putExtra(Constants.TYPE,"Edit");
+            startActivity(intent);
+           // UIHelper.openActivity(SettingsActivity.this, CreateProviderProfileActivity.class);
         }else {
-            UIHelper.openActivity(SettingsActivity.this, CreateProviderProfileActivity.class);
+            Intent intent = new Intent(SettingsActivity.this,CreateSeniorProfileActivity.class);
+            intent.putExtra(Constants.TYPE,"Edit");
+            startActivity(intent);
+            //UIHelper.openActivity(SettingsActivity.this, CreateSeniorProfileActivity.class);
         }
     }
 

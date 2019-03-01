@@ -51,7 +51,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView23"
-        app:srcCompat="@drawable/certification" />
+        app:srcCompat="@drawable/certificateicon_3x" />
 
     <TextView
         android:id="@+id/textView24"

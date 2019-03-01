@@ -51,7 +51,8 @@ public class PersonalInfoActivity extends AppCompatActivity {
         binding.seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                binding.txtDistance.setText(""+progress+" KM");
+                if(progress > 0)
+                binding.txtDistance.setText(""+progress+" km");
             }
 
             @Override
@@ -97,7 +98,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
                  String languages="";
                  for (LanguageModel languageModel:languageModels){
                      if(languageModel.isSelected())
-                         languages = languages+languageModel.getName()+",";
+                         languages = languages+languageModel.getName()+", ";
                  }
                  if (languages != null && languages.length() > 0 && languages.charAt(languages.length() - 1) == ',') {
                      languages = languages.substring(0, languages.length() - 1);

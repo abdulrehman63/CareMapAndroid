@@ -21,6 +21,10 @@ import com.square63.caremap.webapi.Apiinterface.ApiCallback;
 import com.square63.caremap.webapi.responses.MainResponse;
 import com.square63.caremap.webapi.webservices.WebServiceFactory;
 
+import com.square63.caremap.utils.UIHelper;
+
+import retrofit2.http.HEAD;
+
 
 public class LicenseDialoge extends DialogFragment {
     FragmentLicenseDialogeBinding binding;
@@ -80,6 +84,7 @@ public class LicenseDialoge extends DialogFragment {
             @Override
             public void onClick(View v) {
                 addLicense();
+
                 dismiss();
 
             }
@@ -91,7 +96,7 @@ public class LicenseDialoge extends DialogFragment {
         WebServiceFactory.getInstance().apiAddLicense(binding.getLicenseModel(), new ApiCallback() {
             @Override
             public void onSuccess(MainResponse mainResponse) {
-
+                UIHelper.showAlert(Constants.Success,Constants.license_added,getContext());
             }
         });
     }

@@ -53,10 +53,12 @@ public class HomeActivity extends AppCompatActivity {
                 case R.id.navigation_notifications:
                     if(type.equalsIgnoreCase(Constants.PROVIDER)) {
                         addFragment(ProfileFragment.newInstance(), "ProfileFragment");
+                        titileToolbar.setText("");
                     }else {
                         addFragment(SeniorProfileFragment.newInstance(), "ProfileFragment");
+                        titileToolbar.setText("F.C");
                     }
-                    titileToolbar.setText("");
+
                     imgShare.setVisibility(View.VISIBLE);
                    // toolbarTitleRight.setText("Settings");
                     return true;
@@ -90,7 +92,7 @@ public class HomeActivity extends AppCompatActivity {
         titileToolbar = (TextView)findViewById(R.id.toolbarTittle);
         toolbarTitleRight = (TextView)findViewById(R.id.toolbarTitleRight);
         imgShare = (ImageView)findViewById(R.id.imgShare);
-        titileToolbar.setText("Market Place");
+        titileToolbar.setText("MarketPlace");
        //toolbarTitleRight.setText("Next");
         imgShare.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,6 +105,7 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        PreferenceHelper.getInstance().init(this);
         type = PreferenceHelper.getInstance().getString(Constants.TYPE,"");
         mTextMessage = (TextView) findViewById(R.id.message);
         container_body = (FrameLayout) findViewById(R.id.container_body);

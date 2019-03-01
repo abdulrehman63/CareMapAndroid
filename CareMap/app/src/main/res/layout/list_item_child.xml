@@ -1,10 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
+<LinearLayout   xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="96dp"
+    android:background="@color/line_color"
+    android:orientation="vertical">
+
+
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="94dp"
     android:background="@color/line_color"
     >
 
@@ -14,6 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
+        android:layout_alignParentTop="true"
         android:orientation="vertical"
 
         >
@@ -106,6 +116,7 @@
                 android:background="@color/grey_background" />
 
             <LinearLayout
+                android:id="@+id/lnrProfile"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -132,6 +143,7 @@
                 android:background="@color/grey_background" />
 
             <LinearLayout
+                android:id="@+id/lnrMessage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -152,4 +164,16 @@
 
         </LinearLayout>
     </LinearLayout>
+    <View
+        android:layout_width="3dp"
+        android:layout_height="96dp"
+        android:layout_alignParentEnd="true"
+        android:background="@color/colorPrimary" />
 </RelativeLayout>
+    <View
+        android:id="@+id/adapter_divider_top"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white" />
+</LinearLayout>

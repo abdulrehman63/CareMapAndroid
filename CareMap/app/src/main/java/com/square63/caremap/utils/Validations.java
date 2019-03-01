@@ -298,11 +298,32 @@ public class Validations {
          return isValidate;
     }
 
-    public int validateSeekerProfile(EditText edtCity,EditText edtProvince, EditText edtAddress1,EditText number, EditText unitNumber,
-                                     TextView txtCity,TextView txtProvince, TextView txtAddress1,TextView txtNumber, TextView txtUnitNumber) {
+    public int validateSeekerProfile(EditText edtName,EditText edtAge,EditText edtCity,EditText edtProvince, EditText edtAddress1,EditText number, EditText unitNumber,
+                                     TextView txtCity,TextView txtProvince, TextView txtAddress1,TextView txtNumber, TextView txtUnitNumber,TextView txtName,TextView txtAge,EditText edtStreet, TextView street) {
         Resources res = context.getResources();
         String text;
         int isValidate = Constants.SUCCESS;
+        if (edtName.getText().toString().trim().length() == 0) {
+            /*text = String.format(res.getString(R.string.empty_field_error), context.getString(R.string.city));
+            edtCity.setError(Html.fromHtml("<font color='red'>" + text + "</font>"));*/
+            setDrawableEnd(txtName);
+            isValidate = Constants.EMPTY_EMAIL_FIELD;
+            //return Constants.EMPTY_EMAIL_FIELD;
+        }
+        if (edtStreet.getText().toString().trim().length() == 0) {
+            /*text = String.format(res.getString(R.string.empty_field_error), context.getString(R.string.city));
+            edtCity.setError(Html.fromHtml("<font color='red'>" + text + "</font>"));*/
+            setDrawableEnd(street);
+            isValidate = Constants.EMPTY_EMAIL_FIELD;
+            //return Constants.EMPTY_EMAIL_FIELD;
+        }
+        if (edtAge.getText().toString().trim().length() == 0) {
+           /* text = String.format(res.getString(R.string.empty_field_error), context.getString(R.string.province));
+            edtProvince.setError(Html.fromHtml("<font color='red'>" + text + "</font>"));*/
+            setDrawableEnd(txtAge);
+            isValidate = Constants.EMPTY_EMAIL_FIELD;
+            //return Constants.EMPTY_EMAIL_FIELD;
+        }
 
         if (edtCity.getText().toString().trim().length() == 0) {
             /*text = String.format(res.getString(R.string.empty_field_error), context.getString(R.string.city));
@@ -326,12 +347,12 @@ public class Validations {
 
 
         }
-        if (number.getText().toString().trim().length() == 0) {
-           /* text = String.format(res.getString(R.string.empty_field_error), context.getString(R.string.number));
-            number.setError(Html.fromHtml("<font color='red'>" + text + "</font>"));*/
+        /*if (number.getText().toString().trim().length() == 0) {
+           *//* text = String.format(res.getString(R.string.empty_field_error), context.getString(R.string.number));
+            number.setError(Html.fromHtml("<font color='red'>" + text + "</font>"));*//*
             setDrawableEnd(txtNumber);
             isValidate = Constants.EMPTY_EMAIL_FIELD;
-        }
+        }*/
         if (unitNumber.getText().toString().trim().length() == 0) {
            /* text = String.format(res.getString(R.string.empty_field_error), context.getString(R.string.unit_number));
             unitNumber.setError(Html.fromHtml("<font color='red'>" + text + "</font>"));
@@ -339,7 +360,9 @@ public class Validations {
             setDrawableEnd(txtUnitNumber);
             isValidate = Constants.EMPTY_EMAIL_FIELD;
         }
-
+        if(isValidate != Constants.SUCCESS){
+            UIHelper.showAlert(Constants.FORM,Constants.MSG,context);
+        }
         return isValidate;
     }
 

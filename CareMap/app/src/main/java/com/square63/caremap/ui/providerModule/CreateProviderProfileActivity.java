@@ -61,6 +61,11 @@ public class CreateProviderProfileActivity extends AppCompatActivity implements 
         titileToolbar = (TextView)findViewById(R.id.toolbarTittle);
         toolbarTitleRight = (TextView)findViewById(R.id.toolbarTitleRight);
         titileToolbar.setText("Create Profile");
+        if(getIntent() != null && getIntent().getStringExtra(Constants.TYPE) != null){
+            if(getIntent().getStringExtra(Constants.TYPE).equalsIgnoreCase("Edit")){
+                titileToolbar.setText("Create Profile");
+            }
+        }
         toolbarTitleRight.setText("Next");
         toolbarTitleRight.setOnClickListener(new View.OnClickListener() {
             @Override

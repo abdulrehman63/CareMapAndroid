@@ -14,19 +14,31 @@ import com.square63.caremap.R;
 import com.square63.caremap.listeners.RegisterApiCallBack;
 import com.square63.caremap.models.EducationModel;
 import com.square63.caremap.models.LicenseModel;
+import com.square63.caremap.models.LoginModel;
 import com.square63.caremap.models.RegistrationModel;
+import com.square63.caremap.models.chatModule.CreateMessageRequest;
+import com.square63.caremap.models.seekerModels.CreateSeekerRequest;
+import com.square63.caremap.models.seekerModels.CreateSeniorRequest;
 import com.square63.caremap.utils.UIHelper;
 import com.square63.caremap.webapi.ApiClient;
+import com.square63.caremap.webapi.Apiinterface.ApiCallBack2;
 import com.square63.caremap.webapi.Apiinterface.ApiCallback;
 import com.square63.caremap.webapi.Apiinterface.ApiInterface;
 import com.square63.caremap.webapi.CreateGiverRequest;
 import com.square63.caremap.webapi.requests.GenericGetRequest;
+import com.square63.caremap.webapi.requests.GetGiverInterestById;
+import com.square63.caremap.webapi.requests.GetGiverLanguageRequest;
+import com.square63.caremap.webapi.requests.GetGiverProfileRequest;
+import com.square63.caremap.webapi.requests.GetMaeesageByIdRequest;
+import com.square63.caremap.webapi.requests.GiverRequest;
 import com.square63.caremap.webapi.requests.InsertAvailabilityRequest;
 import com.square63.caremap.webapi.requests.InsertGiverEducationRequest;
 import com.square63.caremap.webapi.requests.InsertGiverExperienceRequest;
 import com.square63.caremap.webapi.requests.InsertGiverLicenseRequest;
+import com.square63.caremap.webapi.requests.LoginRequest;
 import com.square63.caremap.webapi.responses.CreateCareGiverResponse;
 import com.square63.caremap.webapi.responses.MainResponse;
+import com.square63.caremap.webapi.responses.MainResponse2;
 
 import org.json.JSONObject;
 
@@ -71,6 +83,38 @@ public class WebServiceFactory {
 
                 }else {
                  //   UIHelper.showLongToastInCenter(context_, response.body().getStoreResponse().getMessage());
+                }
+
+                loading.dismiss();
+            }
+
+            @Override
+            public void onFailure(Call<MainResponse> call, Throwable t) {
+                //  UIHelper.showLongToastInCenter(context_, t.getMessage());
+                Log.d("fail", t.getMessage());
+                loading.dismiss();
+
+            }
+        });
+
+    }
+    public void apiLogin(LoginModel signUpModel, final ApiCallback apiCallback) {
+        checkNetworkState();
+        ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        final ProgressDialog loading;
+        loading = ProgressDialog.show(context_, context_.getResources().getString(R.string.loading), "", true, false);
+
+
+        Call<MainResponse> signUpResponseCall = apiInterface.apiLogin(signUpModel);
+        signUpResponseCall.enqueue(new Callback<MainResponse>() {
+            @Override
+            public void onResponse(Call<MainResponse> call, retrofit2.Response<MainResponse> response) {
+                if (response.isSuccessful() && response.body().isStatus()) {
+                    // UIHelper.showLongToastInCenter(context_, response.body().getStoreResponse().getMessage());
+                    apiCallback.onSuccess(response.body());
+
+                }else {
+                    //   UIHelper.showLongToastInCenter(context_, response.body().getStoreResponse().getMessage());
                 }
 
                 loading.dismiss();
@@ -374,6 +418,134 @@ public class WebServiceFactory {
         });
 
     }
+    public void apiGetAllCareGivers(GiverRequest signUpModel, final ApiCallback apiCallback) {
+        checkNetworkState();
+        ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        final ProgressDialog loading;
+        loading = ProgressDialog.show(context_, context_.getResources().getString(R.string.loading), "", true, false);
+
+
+        Call<MainResponse> signUpResponseCall = apiInterface.apiGetAllGiver(signUpModel);
+        signUpResponseCall.enqueue(new Callback<MainResponse>() {
+            @Override
+            public void onResponse(Call<MainResponse> call, retrofit2.Response<MainResponse> response) {
+                if (response.isSuccessful() && response.body().isStatus()) {
+                    // UIHelper.showLongToastInCenter(context_, response.body().getStoreResponse().getMessage());
+                    apiCallback.onSuccess(response.body());
+
+                }else {
+                    //   UIHelper.showLongToastInCenter(context_, response.body().getStoreResponse().getMessage());
+                }
+
+                loading.dismiss();
+            }
+
+            @Override
+            public void onFailure(Call<MainResponse> call, Throwable t) {
+                //  UIHelper.showLongToastInCenter(context_, t.getMessage());
+                Log.d("fail", t.getMessage());
+                loading.dismiss();
+
+            }
+        });
+
+    }
+    public void apiGetGiverById(GetGiverProfileRequest signUpModel, final ApiCallback apiCallback) {
+        checkNetworkState();
+        ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        final ProgressDialog loading;
+        loading = ProgressDialog.show(context_, context_.getResources().getString(R.string.loading), "", true, false);
+
+
+        Call<MainResponse> signUpResponseCall = apiInterface.apiGetGiverById(signUpModel);
+        signUpResponseCall.enqueue(new Callback<MainResponse>() {
+            @Override
+            public void onResponse(Call<MainResponse> call, retrofit2.Response<MainResponse> response) {
+                if (response.isSuccessful() && response.body().isStatus()) {
+                    // UIHelper.showLongToastInCenter(context_, response.body().getStoreResponse().getMessage());
+                    apiCallback.onSuccess(response.body());
+
+                }else {
+                    //   UIHelper.showLongToastInCenter(context_, response.body().getStoreResponse().getMessage());
+                }
+
+                loading.dismiss();
+            }
+
+            @Override
+            public void onFailure(Call<MainResponse> call, Throwable t) {
+                //  UIHelper.showLongToastInCenter(context_, t.getMessage());
+                Log.d("fail", t.getMessage());
+                loading.dismiss();
+
+            }
+        });
+
+    }
+    public void apiGetGiverLanguageById(GetGiverLanguageRequest signUpModel, final ApiCallback apiCallback) {
+        checkNetworkState();
+        ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        final ProgressDialog loading;
+        loading = ProgressDialog.show(context_, context_.getResources().getString(R.string.loading), "", true, false);
+
+
+        Call<MainResponse> signUpResponseCall = apiInterface.apiGetGiverLanguageById(signUpModel);
+        signUpResponseCall.enqueue(new Callback<MainResponse>() {
+            @Override
+            public void onResponse(Call<MainResponse> call, retrofit2.Response<MainResponse> response) {
+                if (response.isSuccessful() && response.body().isStatus()) {
+                    // UIHelper.showLongToastInCenter(context_, response.body().getStoreResponse().getMessage());
+                    apiCallback.onSuccess(response.body());
+
+                }else {
+                    //   UIHelper.showLongToastInCenter(context_, response.body().getStoreResponse().getMessage());
+                }
+
+                loading.dismiss();
+            }
+
+            @Override
+            public void onFailure(Call<MainResponse> call, Throwable t) {
+                //  UIHelper.showLongToastInCenter(context_, t.getMessage());
+                Log.d("fail", t.getMessage());
+                loading.dismiss();
+
+            }
+        });
+
+    }
+    public void apiGetGiverInterestById(GetGiverInterestById signUpModel, final ApiCallBack2 apiCallback) {
+        checkNetworkState();
+        ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        final ProgressDialog loading;
+        loading = ProgressDialog.show(context_, context_.getResources().getString(R.string.loading), "", true, false);
+
+
+        Call<MainResponse2> signUpResponseCall = apiInterface.apiGetGiverInterestById(signUpModel);
+        signUpResponseCall.enqueue(new Callback<MainResponse2>() {
+            @Override
+            public void onResponse(Call<MainResponse2> call, retrofit2.Response<MainResponse2> response) {
+                if (response.isSuccessful() && response.body().isStatus()) {
+                    // UIHelper.showLongToastInCenter(context_, response.body().getStoreResponse().getMessage());
+                    apiCallback.onSuccess(response.body());
+
+                }else {
+                    //   UIHelper.showLongToastInCenter(context_, response.body().getStoreResponse().getMessage());
+                }
+
+                loading.dismiss();
+            }
+
+            @Override
+            public void onFailure(Call<MainResponse2> call, Throwable t) {
+                //  UIHelper.showLongToastInCenter(context_, t.getMessage());
+                Log.d("fail", t.getMessage());
+                loading.dismiss();
+
+            }
+        });
+
+    }
     public void apiGetGiverSkills(GenericGetRequest signUpModel, final ApiCallback apiCallback) {
         checkNetworkState();
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
@@ -406,6 +578,136 @@ public class WebServiceFactory {
         });
 
     }
+    public void apiInsertSeeker(CreateSeekerRequest signUpModel, final ApiCallback apiCallback) {
+        checkNetworkState();
+        ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        final ProgressDialog loading;
+        loading = ProgressDialog.show(context_, context_.getResources().getString(R.string.loading), "", true, false);
+
+
+        Call<MainResponse> signUpResponseCall = apiInterface.apiInsertSeeker(signUpModel);
+        signUpResponseCall.enqueue(new Callback<MainResponse>() {
+            @Override
+            public void onResponse(Call<MainResponse> call, retrofit2.Response<MainResponse> response) {
+                if (response.isSuccessful() && response.body().isStatus()) {
+                    // UIHelper.showLongToastInCenter(context_, response.body().getStoreResponse().getMessage());
+                    apiCallback.onSuccess(response.body());
+
+                }else {
+                    //   UIHelper.showLongToastInCenter(context_, response.body().getStoreResponse().getMessage());
+                }
+
+                loading.dismiss();
+            }
+
+            @Override
+            public void onFailure(Call<MainResponse> call, Throwable t) {
+                //  UIHelper.showLongToastInCenter(context_, t.getMessage());
+                Log.d("fail", t.getMessage());
+                loading.dismiss();
+
+            }
+        });
+
+    }
+    public void apiInsertSenior(CreateSeniorRequest signUpModel, final ApiCallback apiCallback) {
+
+        checkNetworkState();
+        ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        final ProgressDialog loading;
+        loading = ProgressDialog.show(context_, context_.getResources().getString(R.string.loading), "", true, false);
+
+
+        Call<MainResponse> signUpResponseCall = apiInterface.apiInsertSenior(signUpModel);
+        signUpResponseCall.enqueue(new Callback<MainResponse>() {
+            @Override
+            public void onResponse(Call<MainResponse> call, retrofit2.Response<MainResponse> response) {
+                if (response.isSuccessful() && response.body().isStatus()) {
+                    // UIHelper.showLongToastInCenter(context_, response.body().getStoreResponse().getMessage());
+                    apiCallback.onSuccess(response.body());
+
+                }else {
+                    //   UIHelper.showLongToastInCenter(context_, response.body().getStoreResponse().getMessage());
+                }
+
+                loading.dismiss();
+            }
+
+            @Override
+            public void onFailure(Call<MainResponse> call, Throwable t) {
+                //  UIHelper.showLongToastInCenter(context_, t.getMessage());
+                Log.d("fail", t.getMessage());
+                loading.dismiss();
+
+            }
+        });
+
+    }
+    public void apiGetMessages(GetMaeesageByIdRequest signUpModel, final ApiCallBack2 apiCallback) {
+        checkNetworkState();
+        ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        final ProgressDialog loading;
+        loading = ProgressDialog.show(context_, context_.getResources().getString(R.string.loading), "", true, false);
+
+
+        Call<MainResponse2> signUpResponseCall = apiInterface.apiGetMessageById(signUpModel);
+        signUpResponseCall.enqueue(new Callback<MainResponse2>() {
+            @Override
+            public void onResponse(Call<MainResponse2> call, retrofit2.Response<MainResponse2> response) {
+                if (response.isSuccessful() && response.body().isStatus()) {
+                    // UIHelper.showLongToastInCenter(context_, response.body().getStoreResponse().getMessage());
+                    apiCallback.onSuccess(response.body());
+
+                }else {
+                    //   UIHelper.showLongToastInCenter(context_, response.body().getStoreResponse().getMessage());
+                }
+
+                loading.dismiss();
+            }
+
+            @Override
+            public void onFailure(Call<MainResponse2> call, Throwable t) {
+                //  UIHelper.showLongToastInCenter(context_, t.getMessage());
+                Log.d("fail", t.getMessage());
+                loading.dismiss();
+
+            }
+        });
+
+    }
+    public void apiInsertMessage(CreateMessageRequest signUpModel, final ApiCallback apiCallback) {
+        checkNetworkState();
+        ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        final ProgressDialog loading;
+        loading = ProgressDialog.show(context_, context_.getResources().getString(R.string.loading), "", true, false);
+
+
+        Call<MainResponse> signUpResponseCall = apiInterface.apiInsertMessage(signUpModel);
+        signUpResponseCall.enqueue(new Callback<MainResponse>() {
+            @Override
+            public void onResponse(Call<MainResponse> call, retrofit2.Response<MainResponse> response) {
+                if (response.isSuccessful() && response.body().isStatus()) {
+                    // UIHelper.showLongToastInCenter(context_, response.body().getStoreResponse().getMessage());
+                    apiCallback.onSuccess(response.body());
+
+                }else {
+                    //   UIHelper.showLongToastInCenter(context_, response.body().getStoreResponse().getMessage());
+                }
+
+                loading.dismiss();
+            }
+
+            @Override
+            public void onFailure(Call<MainResponse> call, Throwable t) {
+                //  UIHelper.showLongToastInCenter(context_, t.getMessage());
+                Log.d("fail", t.getMessage());
+                loading.dismiss();
+
+            }
+        });
+
+    }
+
     private void checkNetworkState(){
         if(!isNetworkAvailable(context_)) {
            showLongToastInCenter(context_,context_.getResources().getString(R.string.connectivity_msg));

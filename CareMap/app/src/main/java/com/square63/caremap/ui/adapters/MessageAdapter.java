@@ -21,11 +21,12 @@ import com.square63.caremap.ui.views.MessageViewHolder;
 
 public class MessageAdapter extends BaseAdapter {
 
-    List<Message> messages = new ArrayList<Message>();
+    ArrayList<Message> messages = new ArrayList<Message>();
     Context context;
 
-    public MessageAdapter(Context context) {
+    public MessageAdapter(Context context,ArrayList<Message> messages) {
         this.context = context;
+        this.messages =messages;
     }
 
 
@@ -63,11 +64,11 @@ public class MessageAdapter extends BaseAdapter {
         } else {
             convertView = messageInflater.inflate(R.layout.their_message, null);
             holder.avatar = (View) convertView.findViewById(R.id.avatar);
-            holder.name = (TextView) convertView.findViewById(R.id.name);
+            //holder.name = (TextView) convertView.findViewById(R.id.name);
             holder.messageBody = (TextView) convertView.findViewById(R.id.message_body);
             convertView.setTag(holder);
 
-            holder.name.setText(message.getData().getName());
+           // holder.name.setText(message.getData().getName());
             holder.messageBody.setText(message.getText());
            // GradientDrawable drawable = (GradientDrawable) holder.avatar.getBackground();
             //drawable.setColor(Color.parseColor(message.getData().getColor()));

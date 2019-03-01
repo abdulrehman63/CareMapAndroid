@@ -15,8 +15,9 @@
         app:layout_constraintTop_toTopOf="@id/recyclerView"
         app:layout_constraintBottom_toBottomOf="@id/recyclerView"
         app:layout_constraintEnd_toStartOf="@id/recyclerView"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="16dp"
         android:weightSum="4"
+        android:gravity="center"
         android:orientation="vertical">
         <ImageView
             android:layout_width="wrap_content"
@@ -46,50 +47,57 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="@id/recyclerView"
         app:layout_constraintEnd_toEndOf="@id/recyclerView"
-        android:weightSum="7"
-        android:layout_marginTop="24dp"
+
+        android:layout_marginTop="16dp"
         android:orientation="horizontal">
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="40dp"
             android:layout_height="wrap_content"
             style="@style/day_text_style"
             android:layout_weight="1"
+            android:gravity="center"
             android:text="Sun"/>
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="40dp"
             android:layout_height="wrap_content"
             style="@style/day_text_style"
             android:layout_weight="1"
+            android:gravity="center"
             android:text="Mon"/>
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="40dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             style="@style/day_text_style"
+            android:gravity="center"
             android:text="Tue"/>
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="40dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:gravity="center"
             style="@style/day_text_style"
             android:text="Wed"/>
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="40dp"
             android:layout_height="wrap_content"
             style="@style/day_text_style"
             android:layout_weight="1"
-            android:text="Thur"/>
+            android:gravity="center"
+            android:text="Thu"/>
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="40dp"
             android:layout_height="wrap_content"
             style="@style/day_text_style"
             android:layout_weight="1"
+            android:gravity="center"
             android:text="Fri"/>
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="40dp"
             android:layout_height="wrap_content"
             style="@style/day_text_style"
             android:layout_weight="1"
+            android:gravity="center"
             android:text="Sat"/>
     </LinearLayout>
     <android.support.v7.widget.RecyclerView

@@ -4,16 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:orientation="vertical">
 
 
 
 <ScrollView   android:layout_width="match_parent"
+    android:background="@color/white"
     android:layout_height="wrap_content">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/white"
         tools:context=".ui.fragments.ProfileFragment">
 
         <View
@@ -24,7 +27,6 @@
             app:layout_constraintBottom_toBottomOf="@+id/textView15"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.square63.caremap.utils.CircleImageView
@@ -32,7 +34,7 @@
             android:layout_width="60dp"
 
             android:layout_height="60dp"
-            android:layout_marginTop="52dp"
+            android:layout_marginTop="32dp"
             android:src="@drawable/profile_default"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -161,7 +163,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="5dp"
-            android:text="Hourly \n Wages"
+            android:text="hourly \nwage"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="@+id/view2"
             app:layout_constraintEnd_toStartOf="@+id/txtExperience"
@@ -185,8 +187,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingStart="5dp"
-            android:textSize="14sp"
-            android:text="Years \n Experience"
+            android:textSize="12sp"
+            android:text="years \nexperience"
             app:layout_constraintBottom_toBottomOf="@+id/view2"
             app:layout_constraintEnd_toEndOf="@+id/view2"
             app:layout_constraintStart_toEndOf="@+id/txtWage"
@@ -214,7 +216,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:text="$0"
+            android:text="20 "
             android:textSize="26sp"
             android:drawableStart="@drawable/locationmarkerblue_2x"
             android:drawablePadding="5dp"
@@ -232,7 +234,7 @@
             android:layout_marginStart="5dp"
             android:paddingStart="5dp"
             android:textSize="14sp"
-            android:text="Km \n drive"
+            android:text="km \ndrive"
             app:layout_constraintBottom_toBottomOf="@+id/view3"
             app:layout_constraintEnd_toEndOf="@+id/view3"
             app:layout_constraintStart_toStartOf="@+id/view3"
@@ -269,6 +271,8 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginTop="10dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
            style="@style/line_style"
             app:layout_constraintTop_toBottomOf="@+id/txtLanguage" />
 
@@ -289,11 +293,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:minHeight="?actionBarSize"
-
                 app:tabGravity="fill"
                 app:tabIndicatorColor="@color/red"
                 app:tabIndicatorHeight="4dp"
                 app:tabMode="fixed"
+                app:tabTextAppearance="@style/CustomTextAppearanceTab"
+
                 app:tabTextColor="@color/black"></android.support.design.widget.TabLayout>
 
             <android.support.v4.view.ViewPager
@@ -307,6 +312,8 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginTop="5dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
            style="@style/line_style"
             app:layout_constraintTop_toBottomOf="@+id/tabAvailability" />
 
@@ -327,13 +334,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:minHeight="?actionBarSize"
-
+                app:tabTextAppearance="@style/CustomTextAppearanceTab"
                 app:tabGravity="fill"
                 app:tabIndicatorColor="@color/red"
 
                 app:tabIndicatorHeight="4dp"
                 app:tabMode="fixed"
-                app:tabTextColor="@color/black"></android.support.design.widget.TabLayout>
+                app:tabTextColor="@color/black"
+                ></android.support.design.widget.TabLayout>
 
             <android.support.v4.view.ViewPager
                 android:id="@+id/viewPagerSkills"

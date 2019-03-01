@@ -19,6 +19,8 @@ import com.square63.caremap.dialoges.LanguageSelectionDialoge;
 import com.square63.caremap.listeners.RecyclerItemClickListener;
 import com.square63.caremap.models.InterestModel;
 import com.square63.caremap.models.LanguageModel;
+import com.square63.caremap.models.seekerModels.CreateSeekerRequest;
+import com.square63.caremap.models.seekerModels.CreateSeniorRequest;
 import com.square63.caremap.ui.adapters.CareListAdapter;
 import com.square63.caremap.ui.adapters.ColorSchemeAdapter;
 import com.square63.caremap.ui.adapters.InterestAdapter;
@@ -26,8 +28,12 @@ import com.square63.caremap.ui.adapters.LanguagesAdapater;
 import com.square63.caremap.ui.adapters.MobilityAdapter;
 import com.square63.caremap.ui.providerModule.PersonalInfoActivity;
 import com.square63.caremap.ui.views.GetStartedActivity;
+import com.square63.caremap.utils.PreferenceHelper;
 import com.square63.caremap.utils.UIHelper;
 import com.square63.caremap.utils.Validations;
+import com.square63.caremap.webapi.Apiinterface.ApiCallback;
+import com.square63.caremap.webapi.responses.MainResponse;
+import com.square63.caremap.webapi.webservices.WebServiceFactory;
 
 import java.util.ArrayList;
 
@@ -56,6 +62,7 @@ public class CreateSeniorProfileActivity extends AppCompatActivity implements Vi
     }
 
     private void init() {
+        binding.setProfileModel(new CreateSeniorRequest());
         initToolBar();
         recyclerView = binding.getRoot().findViewById(R.id.recyclerView);
         recyclerViewMobility = binding.getRoot().findViewById(R.id.recyclerViewMobility);
@@ -75,6 +82,7 @@ public class CreateSeniorProfileActivity extends AppCompatActivity implements Vi
         initColorList();
     }
     private void initToolBar(){
+
         final Validations validations = new Validations(this);
         imgBack =(ImageButton) findViewById(R.id.imgBackbtn);
         imgBack.setVisibility(View.VISIBLE);
@@ -87,20 +95,46 @@ public class CreateSeniorProfileActivity extends AppCompatActivity implements Vi
 
         titileToolbar = (TextView)findViewById(R.id.toolbarTittle);
         toolbarTitleRight = (TextView)findViewById(R.id.toolbarTitleRight);
-        titileToolbar.setText("Senior Profile");
-        toolbarTitleRight.setText("Next");
+        titileToolbar.setText("CREATE SENIOR PROFILE");
+        toolbarTitleRight.setText("Done");
         toolbarTitleRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(validations.validateSeekerProfile(binding.edtCity,binding.edtProvince,binding.edtAddress1,binding.edtUnitNumber,binding.txtNumber,
-                       binding.city,binding.province,binding.addres1,binding.unitNumber,binding.number) == Constants.SUCCESS){
+                if(validations.validateSeekerProfile(binding.edtName,binding.edtAge,binding.edtCity,binding.edtProvince,binding.edtAddress1,binding.edtUnitNumber,binding.txtNumber,
+                       binding.city,binding.province,binding.addres1,binding.unitNumber,binding.number,binding.txtName,binding.txtAge,binding.edtStreet,binding.street) == Constants.SUCCESS){
+                    if(getIntent() != null && getIntent().getStringExtra(Constants.TYPE) != null){
+                        if(getIntent().getStringExtra(Constants.TYPE).equalsIgnoreCase("Edit")){
+                            finish();
+                        }
+                    }else {
+                        insertSenior();
 
-                    UIHelper.openActivity(CreateSeniorProfileActivity.this,GetStartedActivity.class);
+                    }
+
                 }
                 // UIHelper.openActivity(CreateProviderProfileActivity.this,);
             }
         });
+        if(getIntent() != null && getIntent().getStringExtra(Constants.TYPE) != null){
+            if(getIntent().getStringExtra(Constants.TYPE).equalsIgnoreCase("Edit")){
+                titileToolbar.setText("EDIT SENIOR PROFILE");
+            }
+        }
     }
+    private void insertSenior(){
+        PreferenceHelper.getInstance().init(this);
+        CreateSeniorRequest createSeniorRequest = new CreateSeniorRequest();
+        createSeniorRequest.setCity(binding.getProfileModel().getCity());
+        binding.getProfileModel().setCareSeekerID(PreferenceHelper.getInstance().getString(Constants.SEEKER_ID,""));
+        WebServiceFactory.getInstance().init(this);
+        WebServiceFactory.getInstance().apiInsertSenior(binding.getProfileModel(), new ApiCallback() {
+            @Override
+            public void onSuccess(MainResponse mainResponse) {
+                UIHelper.openActivity(CreateSeniorProfileActivity.this,GetStartedActivity.class);
+            }
+        });
+    }
+
     private void initCareList(){
         ArrayList<LanguageModel> languageModelArrayList = new ArrayList<>();
         for (int i= 0; i < reasonForCareArr.length; i++){
