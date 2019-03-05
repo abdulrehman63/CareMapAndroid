@@ -12,7 +12,33 @@ public class FilterCaregiver {
     @SerializedName("UserId")
     @Expose
     private String userId;
+    @SerializedName("CaregiverId")
+    @Expose
+    private String caregiverId;
+
+    public String getSeniorId() {
+        return seniorId;
+    }
+
+    public void setSeniorId(String seniorId) {
+        this.seniorId = seniorId;
+    }
+
+    @SerializedName("SeniorId")
+    @Expose
+
+    private String seniorId;
+
+    public String getCaregiverId() {
+        return caregiverId;
+    }
+
+    public void setCaregiverId(String caregiverId) {
+        this.caregiverId = caregiverId;
+    }
+
     @SerializedName("City")
+
     @Expose
     private String city;
 

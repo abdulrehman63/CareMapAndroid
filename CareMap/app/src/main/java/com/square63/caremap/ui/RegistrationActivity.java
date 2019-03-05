@@ -52,7 +52,7 @@ public class RegistrationActivity extends AppCompatActivity {
             @Override
             public void onSuccess(MainResponse mainResponse) {
                 if(!mainResponse.getResultResponse().getStatus().equalsIgnoreCase(Constants.error)){
-                    Intent intent = new Intent(RegistrationActivity.this, CreateSeekerProfileActivity.class);
+                    Intent intent = new Intent(RegistrationActivity.this, WelcomeActivity.class);
                     intent.putExtra(Constants.DATA,binding.getRegisterModel());
                     startActivity(intent);
                     //UIHelper.openActivity(RegistrationActivity.this,WelcomeActivity.class);

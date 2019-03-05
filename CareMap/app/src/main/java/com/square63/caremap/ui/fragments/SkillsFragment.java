@@ -10,13 +10,27 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.square63.caremap.ApplicationState;
 import com.square63.caremap.R;
+import com.square63.caremap.constants.Constants;
+import com.square63.caremap.models.SkillsMainModel;
+import com.square63.caremap.models.SkillsModel;
+import com.square63.caremap.utils.PreferenceHelper;
+import com.square63.caremap.webapi.Apiinterface.ApiCallback;
+import com.square63.caremap.webapi.requests.FilterCaregiver;
+import com.square63.caremap.webapi.requests.GetGiverSkilsById;
+import com.square63.caremap.webapi.responses.MainResponse;
+import com.square63.caremap.webapi.webservices.WebServiceFactory;
+
+import java.util.ArrayList;
 
 import me.gujun.android.taggroup.TagGroup;
 
 
 public class SkillsFragment extends Fragment {
 
+
+    private TagGroup mTagGroup;
 
     public SkillsFragment() {
         // Required empty public constructor
@@ -50,8 +64,24 @@ public class SkillsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        TagGroup mTagGroup = (TagGroup) view.findViewById(R.id.tag_group);
+        mTagGroup = (TagGroup) view.findViewById(R.id.tag_group);
+        apiGetGiverSkills();
 
-        mTagGroup.setTags(new String[]{"Practitioner", "Nurse", "House Keeping"});
+    }
+    private void apiGetGiverSkills(){
+        GetGiverSkilsById giverSkilsById = new GetGiverSkilsById();
+        giverSkilsById.getFilterCaregiver().setCaregiverId(PreferenceHelper.getInstance().getString(Constants.GIVER_ID,""));
+        WebServiceFactory.getInstance().init(getContext());
+        WebServiceFactory.getInstance().apiGetGiverSkillsById(giverSkilsById, new ApiCallback() {
+            @Override
+            public void onSuccess(MainResponse mainResponse) {
+                ArrayList<String> tagsList = new ArrayList<>();
+                ApplicationState.getInstance().setSkillsModelArrayList(mainResponse.getResultResponse().getCaregiverSkills());
+                for (SkillsMainModel skillsModel:mainResponse.getResultResponse().getCaregiverSkills()){
+                    tagsList.add(skillsModel.getSkill().getName());
+                }
+                mTagGroup.setTags(tagsList);
+            }
+        });
     }
 }

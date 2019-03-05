@@ -4,4 +4,5 @@ import android.graphics.Bitmap;
 
 public interface IPickerCallBack {
     void onImageSelected(Bitmap bitmap);
+    void onImageSelected(Bitmap bitmap,byte[] bytes);
 }

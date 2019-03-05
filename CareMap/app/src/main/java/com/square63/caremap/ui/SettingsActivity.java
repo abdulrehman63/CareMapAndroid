@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.square63.caremap.ApplicationState;
 import com.square63.caremap.R;
 import com.square63.caremap.constants.Constants;
 import com.square63.caremap.ui.providerModule.CreateProviderProfileActivity;
@@ -60,11 +61,13 @@ public class SettingsActivity extends AppCompatActivity {
     public void onEditProfileClick(View view) {
         if(type.equalsIgnoreCase(Constants.PROVIDER)){
             Intent intent = new Intent(SettingsActivity.this,CreateProviderProfileActivity.class);
+            ApplicationState.getInstance().setFromEdit(true);
             intent.putExtra(Constants.TYPE,"Edit");
             startActivity(intent);
            // UIHelper.openActivity(SettingsActivity.this, CreateProviderProfileActivity.class);
         }else {
             Intent intent = new Intent(SettingsActivity.this,CreateSeniorProfileActivity.class);
+            ApplicationState.getInstance().setFromEdit(true);
             intent.putExtra(Constants.TYPE,"Edit");
             startActivity(intent);
             //UIHelper.openActivity(SettingsActivity.this, CreateSeniorProfileActivity.class);

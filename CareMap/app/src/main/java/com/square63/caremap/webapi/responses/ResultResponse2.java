@@ -9,6 +9,7 @@ import com.square63.caremap.models.SkillsModel;
 import com.square63.caremap.models.giverModels.Caregiver;
 import com.square63.caremap.models.giverModels.UserInterest;
 import com.square63.caremap.models.giverModels.UserLanguage;
+import com.square63.caremap.models.seekerModels.Senior;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -135,6 +136,18 @@ public class ResultResponse2 implements Serializable{
     @Expose
 
     private Data data;
+
+    public ArrayList<Senior> getSeniors() {
+        return seniors;
+    }
+
+    public void setSeniors(ArrayList<Senior> seniors) {
+        this.seniors = seniors;
+    }
+
+    @SerializedName("seniors")
+    @Expose
+    private ArrayList<Senior> seniors = new ArrayList<>();
 
     public ArrayList<Caregiver> getCaregivers() {
         return caregivers;

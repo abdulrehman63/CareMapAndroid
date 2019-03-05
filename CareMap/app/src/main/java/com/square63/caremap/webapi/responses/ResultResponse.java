@@ -5,13 +5,18 @@ import com.google.gson.annotations.SerializedName;
 import com.square63.caremap.models.Data;
 import com.square63.caremap.models.InterestModel;
 import com.square63.caremap.models.LanguageModel;
+import com.square63.caremap.models.SkillsMainModel;
 import com.square63.caremap.models.SkillsModel;
+import com.square63.caremap.models.giverModels.Availability;
 import com.square63.caremap.models.giverModels.Caregiver;
 import com.square63.caremap.models.giverModels.User;
 import com.square63.caremap.models.giverModels.UserLanguage;
+import com.square63.caremap.models.seekerModels.Senior;
+import com.square63.caremap.models.seekerModels.SeniorLanguageModel;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 public class ResultResponse implements Serializable{
     private String status;
@@ -60,6 +65,18 @@ public class ResultResponse implements Serializable{
 
     @SerializedName("skills")
     private ArrayList<SkillsModel> skillsModelArrayList;
+
+    @SerializedName("caregiverSkills")
+    private ArrayList<SkillsMainModel> caregiverSkills;
+
+    public ArrayList<SkillsMainModel> getCaregiverSkills() {
+        return caregiverSkills;
+    }
+
+    public void setCaregiverSkills(ArrayList<SkillsMainModel> caregiverSkills) {
+        this.caregiverSkills = caregiverSkills;
+    }
+
     public String getStatus() {
         return status;
     }
@@ -132,5 +149,28 @@ public class ResultResponse implements Serializable{
     @Expose
     private ArrayList<UserLanguage> userLanguages = new ArrayList<>();
 
+
+    public ArrayList<SeniorLanguageModel> getSeniorLanguages() {
+        return seniorLanguages;
+    }
+
+    public void setSeniorLanguages(ArrayList<SeniorLanguageModel> seniorLanguages) {
+        this.seniorLanguages = seniorLanguages;
+    }
+
+    @SerializedName("seniorLanguages")
+    @Expose
+    private ArrayList<SeniorLanguageModel> seniorLanguages = new ArrayList<>();
+    @SerializedName("availabilities")
+    @Expose
+    private ArrayList<Availability> availabilities = null;
+
+    public ArrayList<Availability> getAvailabilities() {
+        return availabilities;
+    }
+
+    public void setAvailabilities(ArrayList<Availability> availabilities) {
+        this.availabilities = availabilities;
+    }
 
 }

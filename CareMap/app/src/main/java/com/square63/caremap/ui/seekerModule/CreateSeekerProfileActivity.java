@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.square63.caremap.ApplicationState;
 import com.square63.caremap.R;
 import com.square63.caremap.constants.Constants;
 import com.square63.caremap.databinding.ActivityCreateProviderProfileBinding;
@@ -17,6 +18,7 @@ import com.square63.caremap.databinding.ActivityCreateSeekerProfileBinding;
 import com.square63.caremap.listeners.IPermissionsCallback;
 import com.square63.caremap.listeners.IPickerCallBack;
 import com.square63.caremap.models.RegistrationModel;
+import com.square63.caremap.models.seekerModels.CareSeeker;
 import com.square63.caremap.models.seekerModels.CreateSeekerProfileModel;
 import com.square63.caremap.models.seekerModels.CreateSeekerRequest;
 import com.square63.caremap.models.seekerModels.User;
@@ -49,8 +51,7 @@ public class CreateSeekerProfileActivity extends AppCompatActivity implements IP
         initToolBar();
     }
     private void initToolBar(){
-        CreateSeekerProfileModel createSeekerProfileModel = new CreateSeekerProfileModel();
-        binding.setProfileModel(createSeekerProfileModel);
+        setData();
         final Validations validations = new Validations(this);
         imgBack =(ImageButton) findViewById(R.id.imgBackbtn);
         imgBack.setVisibility(View.VISIBLE);
@@ -77,6 +78,19 @@ public class CreateSeekerProfileActivity extends AppCompatActivity implements IP
             }
         });
     }
+    private void  setData(){
+        CreateSeekerProfileModel createSeekerProfileModel = new CreateSeekerProfileModel();
+        if (ApplicationState.getInstance().isFromEdit()){
+            CareSeeker  careSeeker = ApplicationState.getInstance().getCareSeeker();
+            if(careSeeker != null){
+                createSeekerProfileModel.setFirstName(careSeeker.getUser().getFirstName());
+                createSeekerProfileModel.setLastName(careSeeker.getUser().getLastName());
+                createSeekerProfileModel.setCity(careSeeker.getUser().getCity());
+                //createSeekerProfileModel.setp(careSeeker.getUser().getFirstName());
+            }
+        }
+        binding.setProfileModel(createSeekerProfileModel);
+    }
     public void onPickImageClick(View view){
         selectImage();
     }
@@ -99,7 +113,7 @@ public class CreateSeekerProfileActivity extends AppCompatActivity implements IP
         WebServiceFactory.getInstance().apiInsertSeeker(createSeekerRequest, new ApiCallback() {
             @Override
             public void onSuccess(MainResponse mainResponse) {
-                PreferenceHelper.getInstance().setString(Constants.SEEKER_ID,mainResponse.getResultResponse().getId());
+                PreferenceHelper.getInstance().setString(Constants.SEEKER_ID,mainResponse.getResultResponse().getId2());
                 UIHelper.openActivity(CreateSeekerProfileActivity.this,CreateSeniorProfileActivity.class);
             }
         });
@@ -112,6 +126,11 @@ public class CreateSeekerProfileActivity extends AppCompatActivity implements IP
             @Override
             public void onImageSelected(Bitmap bitmap) {
                 binding.imgProfile.setImageBitmap(bitmap);
+
+            }
+
+            @Override
+            public void onImageSelected(Bitmap bitmap, byte[] bytes) {
 
             }
         });

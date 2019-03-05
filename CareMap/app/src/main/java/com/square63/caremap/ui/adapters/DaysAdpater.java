@@ -25,6 +25,12 @@ public class DaysAdpater extends RecyclerView.Adapter<DaysAdpater.Viewholder> {
     private ISkills iSkills;
     private ArrayList<DayModel> filteredData;
 
+    public DaysAdpater(Context context, ArrayList<DayModel> data,ISkills iSkills) {
+        this.context = context;
+        this.data = data;
+        this.filteredData = data;
+        this.iSkills = iSkills;
+    }
     public DaysAdpater(Context context, ArrayList<DayModel> data) {
         this.context = context;
         this.data = data;
@@ -57,11 +63,16 @@ public class DaysAdpater extends RecyclerView.Adapter<DaysAdpater.Viewholder> {
                     else
                         filteredData.get(position).setSelected(true);
                     notifyDataSetChanged();
-                    // iSkills.selectedSkills(filteredData);
+                     iSkills.selectedSkills(filteredData);
 
                 }
             });
         }
+    }
+    public void setData(ArrayList<DayModel> dayModelArrayList){
+        filteredData =dayModelArrayList;
+        notifyDataSetChanged();
+
     }
 
     @Override
@@ -83,7 +94,7 @@ public class DaysAdpater extends RecyclerView.Adapter<DaysAdpater.Viewholder> {
 
 
     public interface ISkills {
-        public void selectedSkills(ArrayList<String> policies);
+        public void selectedSkills(ArrayList<DayModel> policies);
 
     }
 }

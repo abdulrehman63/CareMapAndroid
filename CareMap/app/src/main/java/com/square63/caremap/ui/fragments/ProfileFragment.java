@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.square63.caremap.ApplicationState;
 import com.square63.caremap.R;
 import com.square63.caremap.constants.Constants;
 import com.square63.caremap.models.LanguageModel;
@@ -22,6 +23,7 @@ import com.square63.caremap.utils.PreferenceHelper;
 import com.square63.caremap.webapi.Apiinterface.ApiCallback;
 import com.square63.caremap.webapi.requests.GetGiverLanguageRequest;
 import com.square63.caremap.webapi.requests.GetGiverProfileRequest;
+import com.square63.caremap.webapi.requests.GiverRequest;
 import com.square63.caremap.webapi.responses.MainResponse;
 import com.square63.caremap.webapi.webservices.WebServiceFactory;
 
@@ -93,25 +95,26 @@ public class ProfileFragment extends Fragment {
     }
 
     private void getGiver() {
-        GetGiverProfileRequest profileRequest = new GetGiverProfileRequest();
+        GiverRequest profileRequest = new GiverRequest();
         profileRequest.getFilterCaregiver().setId(PreferenceHelper.getInstance().getString(Constants.GIVER_ID, ""));
         WebServiceFactory.getInstance().init(getActivity());
-        WebServiceFactory.getInstance().apiGetGiverById(profileRequest, new ApiCallback() {
+        WebServiceFactory.getInstance().apiGetAllCareGivers(profileRequest, new ApiCallback() {
             @Override
             public void onSuccess(MainResponse mainResponse) {
-                txtName.setText(mainResponse.getResultResponse().getCaregiver().get(0).getFirstName() + " " + mainResponse.getResultResponse().getCaregiver().get(0).getLastName());
+                ApplicationState.getInstance().setCaregiver(mainResponse.getResultResponse().getCaregivers().get(0));
+                txtName.setText(mainResponse.getResultResponse().getCaregivers().get(0).getUser().getFirstName() + " " + mainResponse.getResultResponse().getCaregivers().get(0).getUser().getLastName());
             }
         });
     }
 
     private void getUserLanguages() {
         GetGiverLanguageRequest profileRequest = new GetGiverLanguageRequest();
-        profileRequest.getFilterCaregiver().setUserId(PreferenceHelper.getInstance().getString(Constants.GIVER_ID, ""));
+        profileRequest.getFilterCaregiver().setUserId(PreferenceHelper.getInstance().getString(Constants.USER_ID, ""));
         WebServiceFactory.getInstance().init(getActivity());
         WebServiceFactory.getInstance().apiGetGiverLanguageById(profileRequest, new ApiCallback() {
             @Override
             public void onSuccess(MainResponse mainResponse) {
-
+                    ApplicationState.getInstance().setLanguageModelArrayList(mainResponse.getResultResponse().getUserLanguages());
                    String languages = "";
                         for (UserLanguage languageModel:mainResponse.getResultResponse().getUserLanguages()){
 

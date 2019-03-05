@@ -1,9 +1,25 @@
 package com.square63.caremap.models;
 
 public class DayModel {
-    private String day;
-    private String dayTime;
+    private int day;
+    private int dayTime;
     private boolean isSelected;
+
+    public int getDay() {
+        return day;
+    }
+
+    public void setDay(int day) {
+        this.day = day;
+    }
+
+    public int getDayTime() {
+        return dayTime;
+    }
+
+    public void setDayTime(int dayTime) {
+        this.dayTime = dayTime;
+    }
 
     public boolean isSelected() {
         return isSelected;
@@ -11,21 +27,5 @@ public class DayModel {
 
     public void setSelected(boolean selected) {
         isSelected = selected;
-    }
-
-    public String getDay() {
-        return day;
-    }
-
-    public void setDay(String day) {
-        this.day = day;
-    }
-
-    public String getDayTime() {
-        return dayTime;
-    }
-
-    public void setDayTime(String dayTime) {
-        this.dayTime = dayTime;
     }
 }

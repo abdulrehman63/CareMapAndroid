@@ -28,6 +28,10 @@ public class Constants {
     public static final String caregiver = "caregiver";
     public static final String education_added= "Education was added to your profile. You may continue to add more if applicable";
     public static final String license_added= "License was added to your profile. You may continue to add more if applicable";
+    public static final String S_MALE= "male";
+    public static final String FEMALE= "female";
+    public static final String SENIOR_ID= "seniorId";
 
 
+    public static final String USER_ID = "userId";
 }

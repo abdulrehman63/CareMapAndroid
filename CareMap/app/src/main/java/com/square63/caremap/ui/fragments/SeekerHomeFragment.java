@@ -18,8 +18,17 @@ import com.bignerdranch.expandablerecyclerview.ExpandableRecyclerAdapter;
 import com.square63.caremap.R;
 import com.square63.caremap.models.ProviderChildModel;
 import com.square63.caremap.models.ProviderGroupModel;
+import com.square63.caremap.models.giverModels.Caregiver;
+import com.square63.caremap.models.seekerModels.Senior;
 import com.square63.caremap.ui.adapters.MarketPlaceAdapter;
 import com.square63.caremap.ui.adapters.ProvidersListAdapter;
+import com.square63.caremap.webapi.Apiinterface.ApiCallBack2;
+import com.square63.caremap.webapi.Apiinterface.ApiCallback;
+import com.square63.caremap.webapi.requests.GetSeekersRequest;
+import com.square63.caremap.webapi.requests.GiverRequest;
+import com.square63.caremap.webapi.responses.MainResponse;
+import com.square63.caremap.webapi.responses.MainResponse2;
+import com.square63.caremap.webapi.webservices.WebServiceFactory;
 
 import java.util.ArrayList;
 
@@ -66,9 +75,38 @@ public class SeekerHomeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         init(view);
     }
+    private void getAllSeekers(){
+        WebServiceFactory.getInstance().init(getContext());
+        WebServiceFactory.getInstance().apiGetAllSeekers(new GetSeekersRequest(), new ApiCallBack2() {
+            @Override
+            public void onSuccess(MainResponse2 mainResponse) {
+                final ArrayList<ProviderGroupModel> providerGroupModelArrayList = new ArrayList<>();
+
+                ArrayList<Senior> caregiverArrayList = mainResponse.getResultResponse().getSeniors();
+                for (int i= 0; i < caregiverArrayList.size(); i++){
+                    providerChildModelArrayList =new ArrayList<>();
+                    ProviderChildModel providerChildModel = new ProviderChildModel();
+                    providerChildModel.setId(caregiverArrayList.get(i).getCareSeekerID());
+                    providerChildModelArrayList.add(providerChildModel);
+                    ProviderGroupModel providerGroupModel = new ProviderGroupModel("temp",providerChildModelArrayList);
+                    providerGroupModel.setName(caregiverArrayList.get(i).getCareSeeker().getUser().getFirstName());
+                    providerGroupModel.setDesc(caregiverArrayList.get(i).getCareSeeker().getUser().getEmail());
+
+                    providerGroupModelArrayList.add(providerGroupModel);
+                }
+                setRecyclerView(providerGroupModelArrayList);
+            }
+        });
+    }
+
 
     private void init(View view){
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
+        getAllSeekers();
+
+
+    }
+    private void setRecyclerView(final  ArrayList<ProviderGroupModel> providerGroupModelArrayList){
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
 
         // RecyclerView has some built in animations to it, using the DefaultItemAnimator.
@@ -78,14 +116,7 @@ public class SeekerHomeFragment extends Fragment {
         if (animator instanceof DefaultItemAnimator) {
             ((DefaultItemAnimator) animator).setSupportsChangeAnimations(false);
         }
-        final ArrayList<ProviderGroupModel> providerGroupModelArrayList = new ArrayList<>();
-        for(int i = 0 ;i < 10; i++){
-            providerChildModelArrayList =new ArrayList<>();
-            ProviderChildModel providerChildModel = new ProviderChildModel();
-            providerChildModelArrayList.add(providerChildModel);
-            ProviderGroupModel providerGroupModel = new ProviderGroupModel("temp",providerChildModelArrayList);
-            providerGroupModelArrayList.add(providerGroupModel);
-        }
+
         adapter = new MarketPlaceAdapter(getContext(),providerGroupModelArrayList);
         recyclerView.setLayoutManager(layoutManager);
        /* DividerItemDecoration itemDecorator = new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
@@ -99,9 +130,8 @@ public class SeekerHomeFragment extends Fragment {
             public void onParentExpanded(int parentPosition) {
                 if(position != -1)
                     adapter.collapseParent(position);
-                //adapter.notifyItemChanged(position);
                 position = parentPosition;
-                ProviderChildModel providerChildModel = new ProviderChildModel();
+                ProviderChildModel providerChildModel = providerGroupModelArrayList.get(position).getChildList().get(0);
                 providerChildModel.setExpanded(true);
                 for (int i =0; i < providerGroupModelArrayList.size(); i++){
                     providerGroupModelArrayList.get(i).setExpanded(false );
@@ -125,11 +155,11 @@ public class SeekerHomeFragment extends Fragment {
                 adapter.setParentList(providerGroupModelArrayList,true);
                 adapter.notifyDataSetChanged();
 
+
             }
         });
 
     }
-
 
 
 }

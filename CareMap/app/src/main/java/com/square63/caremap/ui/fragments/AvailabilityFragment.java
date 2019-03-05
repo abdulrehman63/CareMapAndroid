@@ -12,10 +12,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.square63.caremap.ApplicationState;
 import com.square63.caremap.R;
+import com.square63.caremap.constants.Constants;
 import com.square63.caremap.listeners.RecyclerItemClickListener;
 import com.square63.caremap.models.DayModel;
+import com.square63.caremap.models.Interest;
+import com.square63.caremap.models.giverModels.Availability;
 import com.square63.caremap.ui.adapters.DaysAdpater;
+import com.square63.caremap.utils.PreferenceHelper;
+import com.square63.caremap.webapi.Apiinterface.ApiCallback;
+import com.square63.caremap.webapi.requests.GetGiverSkilsById;
+import com.square63.caremap.webapi.requests.InsertAvailabilityRequest;
+import com.square63.caremap.webapi.responses.MainResponse;
+import com.square63.caremap.webapi.webservices.WebServiceFactory;
 
 import java.util.ArrayList;
 
@@ -25,6 +35,7 @@ public class AvailabilityFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private DaysAdpater daysAdapter;
+    private ArrayList<DayModel> data;
 
     public AvailabilityFragment() {
         // Required empty public constructor
@@ -46,6 +57,7 @@ public class AvailabilityFragment extends Fragment {
         if (getArguments() != null) {
 
         }
+
     }
 
     @Override
@@ -60,12 +72,37 @@ public class AvailabilityFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
-        ArrayList<DayModel> data = new ArrayList<>();
-        for (int i= 1; i <=  28; i++){
+        data = new ArrayList<>();
+        for (int i= 1; i <=  7; i++){
             DayModel dayModel = new DayModel();
+            dayModel.setDay(i);
+            dayModel.setDayTime(1);
+            data.add(dayModel);
+        }
+        for (int i= 1; i <=  7; i++){
+            DayModel dayModel = new DayModel();
+            dayModel.setDay(i);
+            dayModel.setDayTime(2);
+            data.add(dayModel);
+        }
+        for (int i= 1; i <=  7; i++){
+            DayModel dayModel = new DayModel();
+            dayModel.setDay(i);
+            dayModel.setDayTime(3);
+            data.add(dayModel);
+        }
+        for (int i= 1; i <=  7; i++){
+            DayModel dayModel = new DayModel();
+            dayModel.setDay(i);
+            dayModel.setDayTime(4);
             data.add(dayModel);
         }
         setRecyclerView(data);
+        GetGiverSkilsById giverSkilsById = new GetGiverSkilsById();
+        PreferenceHelper.getInstance().init(getContext());
+        giverSkilsById.getFilterAvailability().setUserId(PreferenceHelper.getInstance().getString(Constants.USER_ID,""));
+        getAvailability(giverSkilsById);
+
     }
 
 
@@ -84,6 +121,25 @@ public class AvailabilityFragment extends Fragment {
             }
         }));
 
+    }
+    private void getAvailability(GetGiverSkilsById insertAvailabilityRequest){
+        WebServiceFactory.getInstance().init(getContext());
+        WebServiceFactory.getInstance().apiGetGiverAvailById(insertAvailabilityRequest, new ApiCallback() {
+            @Override
+            public void onSuccess(MainResponse mainResponse) {
+                ArrayList<Availability> dayModels = mainResponse.getResultResponse().getAvailabilities();
+                ApplicationState.getInstance().setAvailabilityArrayList(dayModels);
+                for (int i= 0; i < data.size(); i++){
+                   for (int j =0 ; j < dayModels.size();j++){
+                       if(data.get(i).getDayTime() == Integer.parseInt(dayModels.get(j).getFromHour()) && data.get(i).getDay() == dayModels.get(j).getDayOfWeek()){
+                           data.get(i).setSelected(true);
+                           break;
+                       }
+                   }
+                }
+                daysAdapter.setData(data);
+            }
+        });
     }
 
 }

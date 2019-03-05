@@ -3,23 +3,22 @@ package com.square63.caremap.webapi.requests;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class GetGiverLanguageRequest {
-    @SerializedName("filterUserLanguage")
+public class GetGiverSkilsById {
+
+    @SerializedName("filterCareGiverSkill")
     @Expose
     private FilterCaregiver filterCaregiver = new FilterCaregiver();
-
-    public FilterCaregiver getFilterSeniorLanguage() {
-        return filterSeniorLanguage;
-    }
-
-    public void setFilterSeniorLanguage(FilterCaregiver filterSeniorLanguage) {
-        this.filterSeniorLanguage = filterSeniorLanguage;
-    }
-
-    @SerializedName("filterSeniorLanguage")
+    @SerializedName("filterAvailability")
     @Expose
+    private FilterCaregiver filterAvailability = new FilterCaregiver();
 
-    private FilterCaregiver filterSeniorLanguage = new FilterCaregiver();
+    public FilterCaregiver getFilterAvailability() {
+        return filterAvailability;
+    }
+
+    public void setFilterAvailability(FilterCaregiver filterAvailability) {
+        this.filterAvailability = filterAvailability;
+    }
 
     @SerializedName("offset")
     @Expose

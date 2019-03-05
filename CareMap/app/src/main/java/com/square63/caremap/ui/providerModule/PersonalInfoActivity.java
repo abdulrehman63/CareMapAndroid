@@ -8,6 +8,7 @@ import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.square63.caremap.ApplicationState;
 import com.square63.caremap.R;
 import com.square63.caremap.constants.Constants;
 import com.square63.caremap.databinding.ActivityPersonalInfoBinding;
@@ -15,10 +16,14 @@ import com.square63.caremap.dialoges.EducationDialoge;
 import com.square63.caremap.dialoges.LanguageSelectionDialoge;
 import com.square63.caremap.dialoges.LicenseDialoge;
 import com.square63.caremap.models.LanguageModel;
+import com.square63.caremap.models.ProfileModel;
 import com.square63.caremap.models.SkillsModel;
+import com.square63.caremap.models.giverModels.Caregiver;
+import com.square63.caremap.models.giverModels.UserLanguage;
 import com.square63.caremap.ui.AboutActivity;
 import com.square63.caremap.ui.DaysSelectionActivity;
 import com.square63.caremap.ui.adapters.LanguagesAdapater;
+import com.square63.caremap.utils.PreferenceHelper;
 import com.square63.caremap.utils.UIHelper;
 import com.square63.caremap.utils.Validations;
 import com.square63.caremap.webapi.Apiinterface.ApiCallback;
@@ -40,12 +45,31 @@ public class PersonalInfoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this,R.layout.activity_personal_info);
+        PreferenceHelper.getInstance().init(this);
        init();
     }
     private void  init(){
+        setData();
         initToolBar();
         initSeekBar();
         getAllLang();
+    }
+    private void setData(){
+
+        if(ApplicationState.getInstance().isFromEdit()){
+            ArrayList<UserLanguage> userLanguages = ApplicationState.getInstance().getLanguageModelArrayList();
+            if(userLanguages !=null){
+                String languages ="";
+                for (UserLanguage languageModel:userLanguages){
+                        languages = languages + languageModel.getLanguage().getName() + ", ";
+                }
+                if (languages != null && languages.length() > 0 && languages.charAt(languages.length() - 1) == ',') {
+                    languages = languages.substring(0, languages.length() - 1);
+                }
+                binding.txtLanguage.setText(languages);
+            }
+        }
+
     }
     private void initSeekBar(){
         binding.seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -96,22 +120,40 @@ public class PersonalInfoActivity extends AppCompatActivity {
              @Override
              public void selectedLanguages(ArrayList<LanguageModel> languageModels) {
                  String languages="";
+                 ArrayList<LanguageModel> languageModelArrayList = new ArrayList<>();
                  for (LanguageModel languageModel:languageModels){
-                     if(languageModel.isSelected())
-                         languages = languages+languageModel.getName()+", ";
+                     if(languageModel.isSelected()) {
+                         languages = languages + languageModel.getName() + ", ";
+                         languageModelArrayList.add(languageModel);
+                     }
                  }
                  if (languages != null && languages.length() > 0 && languages.charAt(languages.length() - 1) == ',') {
                      languages = languages.substring(0, languages.length() - 1);
                  }
                  binding.txtLanguage.setText(languages);
+                 insertLangs(languageModelArrayList);
 
              }
          });
         languageSelectionDialoge.show(getSupportFragmentManager(),"languageSelectionDialoge");
 
     }
+
     private void insertLangs(ArrayList<LanguageModel> languageModelArrayList){
-        InsertUserLangRequest insertUserLangRequest = new InsertUserLangRequest();
+        for (int i =0; i < languageModelArrayList.size(); i++){
+            InsertUserLangRequest langRequest = new InsertUserLangRequest();
+            langRequest.setLanguageID(languageModelArrayList.get(i).getId());
+            apiInsertLang(langRequest);
+        }
+    }
+    private void apiInsertLang(InsertUserLangRequest insertUserLangRequest ){
+        WebServiceFactory.getInstance().init(this);
+        WebServiceFactory.getInstance().apiInsertLanguages(insertUserLangRequest, new ApiCallback() {
+            @Override
+            public void onSuccess(MainResponse mainResponse) {
+
+            }
+        });
 
     }
     private void getAllLang(){

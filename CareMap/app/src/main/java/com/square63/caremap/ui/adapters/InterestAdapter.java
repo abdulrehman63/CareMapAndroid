@@ -30,6 +30,13 @@ public class InterestAdapter extends RecyclerView.Adapter<InterestAdapter.Viewho
         this.iSkills = iSkills;
     }
 
+    public InterestAdapter(Context context, ArrayList<InterestModel> data,ISkills iSkills) {
+        this.context = context;
+        this.data = data;
+        this.filteredData = data;
+        this.iSkills = iSkills;
+    }
+
     @Override
     public InterestAdapter.Viewholder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new InterestAdapter.Viewholder(LayoutInflater.from(context).inflate(R.layout.list_item_interest, parent, false));
@@ -61,7 +68,7 @@ public class InterestAdapter extends RecyclerView.Adapter<InterestAdapter.Viewho
                         filteredData.get(position).setSelected(true);
 
                     notifyDataSetChanged();
-
+                    iSkills.selectedSkills(filteredData);
                     // iSkills.selectedSkills(filteredData);
 
                 }
@@ -90,7 +97,7 @@ public class InterestAdapter extends RecyclerView.Adapter<InterestAdapter.Viewho
 
 
     public interface ISkills {
-        public void selectedSkills(ArrayList<String> policies);
+        public void selectedSkills(ArrayList<InterestModel> policies);
 
     }
 }

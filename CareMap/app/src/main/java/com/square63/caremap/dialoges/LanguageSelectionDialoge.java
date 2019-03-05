@@ -17,6 +17,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.square63.caremap.R;
+import com.square63.caremap.constants.Constants;
 import com.square63.caremap.listeners.RecyclerItemClickListener;
 import com.square63.caremap.models.LanguageModel;
 import com.square63.caremap.ui.adapters.LanguagesAdapater;
@@ -40,6 +41,7 @@ public class LanguageSelectionDialoge extends DialogFragment implements View.OnC
     private ImageButton imgBack;
     private TextView titileToolbar,toolbarTitleRight;
     private ArrayList<LanguageModel> languageModelArrayList = new ArrayList<>();
+    private boolean isSenior = false;
 
 
     public LanguageSelectionDialoge() {
@@ -52,7 +54,15 @@ public class LanguageSelectionDialoge extends DialogFragment implements View.OnC
         LanguageSelectionDialoge fragment = new LanguageSelectionDialoge();
         Bundle args = new Bundle();
         args.putSerializable(ARG_PARAM1, skillsModel);
-
+        args.putBoolean(Constants.SEEKER, false);
+        fragment.setArguments(args);
+        return fragment;
+    }
+    public static LanguageSelectionDialoge newInstance(ArrayList<LanguageModel> skillsModel,boolean isSenior) {
+        LanguageSelectionDialoge fragment = new LanguageSelectionDialoge();
+        Bundle args = new Bundle();
+        args.putSerializable(ARG_PARAM1, skillsModel);
+        args.putBoolean(Constants.SEEKER, true);
         fragment.setArguments(args);
         return fragment;
     }
@@ -92,9 +102,9 @@ public class LanguageSelectionDialoge extends DialogFragment implements View.OnC
         setStyle(android.support.v4.app.DialogFragment.STYLE_NO_TITLE, R.style.AppTheme);
         if (getArguments() != null) {
             ArrayList<LanguageModel> skillsModels= (ArrayList<LanguageModel>)getArguments().getSerializable(ARG_PARAM1);
-
             languageModelArrayList.clear();
             languageModelArrayList.addAll(skillsModels);
+
           //  mParam2 = getArguments().getString(ARG_PARAM2);
         }
 

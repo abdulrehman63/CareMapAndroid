@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.square63.caremap.ApplicationState;
 import com.square63.caremap.R;
 import com.square63.caremap.constants.Constants;
 import com.square63.caremap.listeners.RecyclerItemClickListener;
@@ -81,12 +82,13 @@ public class InterestsFragment extends Fragment {
     private void getUserInterests(){
         WebServiceFactory.getInstance().init(getActivity());
         GetGiverInterestById profileRequest = new GetGiverInterestById();
-        profileRequest.getFilterCaregiver().setUserId(PreferenceHelper.getInstance().getString(Constants.GIVER_ID, ""));
+        profileRequest.getFilterCaregiver().setUserId(PreferenceHelper.getInstance().getString(Constants.USER_ID, ""));
 
         WebServiceFactory.getInstance().apiGetGiverInterestById(profileRequest, new ApiCallBack2() {
             @Override
             public void onSuccess(MainResponse2 mainResponse) {
                 ArrayList<InterestModel> data = new ArrayList<>();
+                ApplicationState.getInstance().setInterestModelArrayList( mainResponse.getResultResponse().getInterestModelArrayList());
                 for (int i= 0; i <  mainResponse.getResultResponse().getInterestModelArrayList().size(); i++){
                     InterestModel dayModel = new InterestModel();
 

@@ -1,7 +1,10 @@
 package com.square63.caremap.webapi.requests;
 
+import com.square63.caremap.constants.Constants;
+import com.square63.caremap.utils.PreferenceHelper;
+
 public class InsertAvailabilityRequest {
-    private String userId;
+    private String userId= PreferenceHelper.getInstance().getString(Constants.USER_ID,"");
     private int fromHour;
     private int toHour;
 

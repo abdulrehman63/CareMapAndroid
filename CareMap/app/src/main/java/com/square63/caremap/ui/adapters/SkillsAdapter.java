@@ -38,6 +38,13 @@ public class SkillsAdapter extends RecyclerView.Adapter<SkillsAdapter.Viewholder
         this.iSkills = iSkills;
     }
 
+    public SkillsAdapter(Context context, ArrayList<SkillsModel> data,ISkills iSkills) {
+        this.context = context;
+        this.data = data;
+        this.filteredData = data;
+        this.iSkills = iSkills;
+    }
+
     @Override
     public SkillsAdapter.Viewholder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new SkillsAdapter.Viewholder(LayoutInflater.from(context).inflate(R.layout.list_item_skills, parent, false));
@@ -65,7 +72,7 @@ public class SkillsAdapter extends RecyclerView.Adapter<SkillsAdapter.Viewholder
                     }
                     //iSelectedLanguages.selectedLanguages(filteredData);
                     notifyDataSetChanged();
-                    // iSkills.selectedSkills(filteredData);
+                    iSkills.selectedSkills(filteredData);
 
                 }
             });
@@ -94,7 +101,7 @@ public class SkillsAdapter extends RecyclerView.Adapter<SkillsAdapter.Viewholder
 
 
     public interface ISkills {
-        public void selectedSkills(ArrayList<String> policies);
+        public void selectedSkills(ArrayList<SkillsModel> data );
 
     }
 }

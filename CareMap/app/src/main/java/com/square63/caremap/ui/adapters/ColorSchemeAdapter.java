@@ -26,7 +26,7 @@ public class ColorSchemeAdapter extends RecyclerView.Adapter<ColorSchemeAdapter.
     private ISkills iSkills;
     private ArrayList<InterestModel> filteredData;
 
-    public ColorSchemeAdapter(Context context, ArrayList<InterestModel> data) {
+    public ColorSchemeAdapter(Context context, ArrayList<InterestModel> data,ISkills iSkills) {
         this.context = context;
         this.data = data;
         this.filteredData = data;
@@ -74,7 +74,7 @@ public class ColorSchemeAdapter extends RecyclerView.Adapter<ColorSchemeAdapter.
                     }
 
                     filteredData.get(position).setSelected(true);
-
+                    iSkills.selectedColorScheme(filteredData.get(position).getIcone());
                     notifyDataSetChanged();
 
                     // iSkills.selectedSkills(filteredData);
@@ -106,7 +106,7 @@ public class ColorSchemeAdapter extends RecyclerView.Adapter<ColorSchemeAdapter.
 
 
     public interface ISkills {
-        public void selectedSkills(ArrayList<String> policies);
+        public void selectedColorScheme(int color);
 
     }
 }

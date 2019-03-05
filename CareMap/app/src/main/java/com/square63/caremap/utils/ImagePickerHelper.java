@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.media.ExifInterface;
 import android.net.Uri;
@@ -14,6 +15,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Base64;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -123,8 +125,17 @@ public class ImagePickerHelper {
             }
 
         }
+        Bundle extras = data.getExtras();
+        if(extras != null ) {
+            Bitmap photo = extras.getParcelable("data");
+
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            photo.compress(Bitmap.CompressFormat.PNG, 75, stream);
+            iPickerCallBack.onImageSelected(myBitmap,stream.toByteArray());
+            // The stream to write to a file or directly using the photo
+        }
        // profile_image.setImageBitmap(myBitmap);
-        iPickerCallBack.onImageSelected(myBitmap);
+
     }
 
     public Uri getPickImageResultUri(Intent data) {
@@ -244,7 +255,7 @@ public class ImagePickerHelper {
                 // picUri = data.getData();
                 bitmap = (Bitmap) data.getExtras().get("data");
                 ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 50, bytes);
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, bytes);
                 picUri = data.getData();
                 Log.e("Activity", "Pick from Camera::>>> ");
 
@@ -265,7 +276,10 @@ public class ImagePickerHelper {
 
                 imgPath = destination.getAbsolutePath();
                 Uri selectedImageCropped = Uri.parse(imgPath);
-                iPickerCallBack.onImageSelected(bitmap);
+                Bitmap bm = BitmapFactory.decodeFile(imgPath);
+
+                byte[] byteArray = bytes.toByteArray();
+                iPickerCallBack.onImageSelected(bitmap,byteArray);
 
                 /** Crop selected image. */
               /*  Intent cropIntent = new Intent("com.android.camera.action.CROP");
@@ -319,13 +333,7 @@ public class ImagePickerHelper {
         else if (requestCode == PICK_IMAGE_GALLERY) {
 
             try {
-                Bundle extras = data.getExtras();
-                if(extras != null ) {
-                    Bitmap photo = extras.getParcelable("data");
-                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                    photo.compress(Bitmap.CompressFormat.JPEG, 75, stream);
-                    // The stream to write to a file or directly using the photo
-                }
+
                 /*Uri selectedImage = data.getData();
                 String[] filePathColumn = { MediaStore.Images.Media.DATA };
 
