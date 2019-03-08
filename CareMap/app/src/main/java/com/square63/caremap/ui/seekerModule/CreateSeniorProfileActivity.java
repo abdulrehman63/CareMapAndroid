@@ -8,6 +8,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -65,7 +66,9 @@ public class CreateSeniorProfileActivity extends AppCompatActivity implements Vi
     private ArrayList<InterestModel> interestModelArrayList = new ArrayList<>();
     private ArrayList<LanguageModel> modelArrayList = new ArrayList<>();
     private ArrayList<LanguageModel> langArrayList = new ArrayList<>();
+    private String gender = "Male";
     private int selectedColor ;
+    private boolean isLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,13 +79,13 @@ public class CreateSeniorProfileActivity extends AppCompatActivity implements Vi
     }
 
     private void init() {
-       setSeniorData();
+
         initToolBar();
         recyclerView = binding.getRoot().findViewById(R.id.recyclerView);
         recyclerViewMobility = binding.getRoot().findViewById(R.id.recyclerViewMobility);
         recyclerViewInterest = binding.getRoot().findViewById(R.id.recyclerViewInterest);
         recyclerViewProfile = binding.getRoot().findViewById(R.id.recyclerViewProfile);
-        selectedColor=selectedColor =getResources().getColor(R.color.colorschem_1);
+        selectedColor=-2;
 
         txtMail = binding.txtMale;
         txtFemail = binding.txtFemail;
@@ -90,12 +93,20 @@ public class CreateSeniorProfileActivity extends AppCompatActivity implements Vi
         txtMail.setOnClickListener(this);
         txtFemail.setOnClickListener(this);
         txtBinary.setOnClickListener(this);
+        setSeniorData();
         getAllLang();
         initCareList();
         initMobilityList();
         //setData();
         setInterestData();
         initColorList();
+        binding.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                isLocation=isChecked;
+            }
+        });
+
     }
     private void initToolBar(){
 
@@ -146,10 +157,29 @@ public class CreateSeniorProfileActivity extends AppCompatActivity implements Vi
                 createSeniorRequest.setName(giverResultResponse.getName());
                 createSeniorRequest.setCity(giverResultResponse.getCity());
                 createSeniorRequest.setPostalCode(giverResultResponse.getPostalCode());
+                createSeniorRequest.setStreet(giverResultResponse.getStreet());
+                createSeniorRequest.setHouseNumber(giverResultResponse.getHouseNumber());
                 createSeniorRequest.setUnitNumber(giverResultResponse.getUnitNumber());
+                createSeniorRequest.setProvince(giverResultResponse.getProvince());
             }
             setLanguageData();
+            if(giverResultResponse.getSex() != null ){
+                if(giverResultResponse.getSex().equalsIgnoreCase(Constants.S_MALE)){
+                    handleGender(Constants.MALE);
+                }else if(giverResultResponse.getSex().equalsIgnoreCase(Constants.FEMALE)){
+                    handleGender(Constants.FEMAIL);
+                }else {
+                    handleGender(Constants.BINARY);
+                }
+            }
+            if(giverResultResponse.getShareLocation()){
+                binding.checkBox.setChecked(true);
+            }else {
+                binding.checkBox.setChecked(false);
+            }
         }
+
+
         binding.setProfileModel(createSeniorRequest);
 
     }
@@ -175,6 +205,12 @@ public class CreateSeniorProfileActivity extends AppCompatActivity implements Vi
         CreateSeniorRequest createSeniorRequest = new CreateSeniorRequest();
         createSeniorRequest.setCity(binding.getProfileModel().getCity());
         binding.getProfileModel().setColourScheme(selectedColor);
+        binding.getProfileModel().setSex(gender);
+        if(isLocation)
+        binding.getProfileModel().setShareLocation("true");
+        else
+            binding.getProfileModel().setShareLocation("false");
+
         binding.getProfileModel().setCareSeekerID(PreferenceHelper.getInstance().getString(Constants.SEEKER_ID,""));
         WebServiceFactory.getInstance().init(this);
         WebServiceFactory.getInstance().apiInsertSenior(binding.getProfileModel(), new ApiCallback() {
@@ -218,14 +254,26 @@ public class CreateSeniorProfileActivity extends AppCompatActivity implements Vi
     }
     private void initColorList(){
          Integer colorArr[]={getResources().getColor(R.color.colorschem_1),getResources().getColor(R.color.colorschem_2),getResources().getColor(R.color.colorschem_3),getResources().getColor(R.color.colorschem_4),getResources().getColor(R.color.colorschem_5)};
-
-        ArrayList<InterestModel> languageModelArrayList = new ArrayList<>();
-        for (int i= 0; i < colorArr.length; i++){
-            InterestModel languageModel = new InterestModel();
-            languageModel.setIcone(colorArr[i]);
-            languageModelArrayList.add(languageModel);
+        if(ApplicationState.getInstance().isFromEdit()){
+            ArrayList<InterestModel> languageModelArrayList = new ArrayList<>();
+            for (int i= 0; i < colorArr.length; i++){
+                InterestModel languageModel = new InterestModel();
+                if(ApplicationState.getInstance().getGiverResultResponse().getColourScheme() == i+1)
+                    languageModel.setSelected(true);
+                languageModel.setIcone(colorArr[i]);
+                languageModelArrayList.add(languageModel);
+            }
+            setColorsRecyclerView(languageModelArrayList);
+        }else {
+            ArrayList<InterestModel> languageModelArrayList = new ArrayList<>();
+            for (int i= 0; i < colorArr.length; i++){
+                InterestModel languageModel = new InterestModel();
+                languageModel.setIcone(colorArr[i]);
+                languageModelArrayList.add(languageModel);
+            }
+            setColorsRecyclerView(languageModelArrayList);
         }
-        setColorsRecyclerView(languageModelArrayList);
+
     }
 
 
@@ -274,16 +322,19 @@ public class CreateSeniorProfileActivity extends AppCompatActivity implements Vi
         txtBinary.setBackgroundResource(R.drawable.rectangleshadow_2x);
         switch (GENDER_TYPE){
             case Constants.MALE:
+                gender = Constants.S_MALE;
                 txtMail.setTextColor(getResources().getColor(R.color.white));
                 txtMail.setCompoundDrawablesRelativeWithIntrinsicBounds(0,R.drawable.female_2x,0,0);
                 txtMail.setBackgroundResource(R.drawable.rectangleshadowselected_2x);
                 break;
             case Constants.FEMAIL:
+                gender = Constants.FEMALE;
                 txtFemail.setTextColor(getResources().getColor(R.color.white));
                 txtFemail.setCompoundDrawablesRelativeWithIntrinsicBounds(0,R.drawable.male_2x,0,0);
                 txtFemail.setBackgroundResource(R.drawable.rectangleshadowselected_2x);
                 break;
             case Constants.BINARY:
+                gender = Constants.S_BINARY;
                 txtBinary.setTextColor(getResources().getColor(R.color.white));
                 txtBinary.setCompoundDrawablesRelativeWithIntrinsicBounds(0,R.drawable.non_binary_2x,0,0);
                 txtBinary.setBackgroundResource(R.drawable.rectangleshadowselected_2x);
@@ -415,6 +466,6 @@ public class CreateSeniorProfileActivity extends AppCompatActivity implements Vi
 
     @Override
     public void selectedColorScheme(int color) {
-        selectedColor = color;
+        selectedColor = color+1;
     }
 }

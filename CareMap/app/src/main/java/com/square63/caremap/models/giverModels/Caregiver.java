@@ -15,7 +15,7 @@ public class Caregiver {
     private Object availabilityLocation;
     @SerializedName("availabilityDistance")
     @Expose
-    private Object availabilityDistance;
+    private String availabilityDistance;
     @SerializedName("driversLicense")
     @Expose
     private Object driversLicense;
@@ -30,10 +30,10 @@ public class Caregiver {
     private Object vettingAuthorization;
     @SerializedName("desiredWage")
     @Expose
-    private Object desiredWage;
+    private String desiredWage;
     @SerializedName("yearsOfExperience")
     @Expose
-    private Object yearsOfExperience;
+    private String yearsOfExperience;
     @SerializedName("description")
     @Expose
     private Object description;
@@ -96,12 +96,28 @@ public class Caregiver {
         this.availabilityLocation = availabilityLocation;
     }
 
-    public Object getAvailabilityDistance() {
+    public String getAvailabilityDistance() {
         return availabilityDistance;
     }
 
-    public void setAvailabilityDistance(Object availabilityDistance) {
+    public void setAvailabilityDistance(String availabilityDistance) {
         this.availabilityDistance = availabilityDistance;
+    }
+
+    public String getDesiredWage() {
+        return desiredWage;
+    }
+
+    public void setDesiredWage(String desiredWage) {
+        this.desiredWage = desiredWage;
+    }
+
+    public String getYearsOfExperience() {
+        return yearsOfExperience;
+    }
+
+    public void setYearsOfExperience(String yearsOfExperience) {
+        this.yearsOfExperience = yearsOfExperience;
     }
 
     public Object getDriversLicense() {
@@ -136,21 +152,7 @@ public class Caregiver {
         this.vettingAuthorization = vettingAuthorization;
     }
 
-    public Object getDesiredWage() {
-        return desiredWage;
-    }
 
-    public void setDesiredWage(Object desiredWage) {
-        this.desiredWage = desiredWage;
-    }
-
-    public Object getYearsOfExperience() {
-        return yearsOfExperience;
-    }
-
-    public void setYearsOfExperience(Object yearsOfExperience) {
-        this.yearsOfExperience = yearsOfExperience;
-    }
 
     public Object getDescription() {
         return description;

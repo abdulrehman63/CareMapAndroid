@@ -13,6 +13,8 @@ import com.square63.caremap.constants.Constants;
 import com.square63.caremap.models.ProviderChildModel;
 import com.square63.caremap.models.ProviderGroupModel;
 import com.square63.caremap.ui.ChatActivity;
+import com.square63.caremap.ui.SeekerProfileActivity;
+import com.square63.caremap.ui.seekerModule.SeniorProfileActivity;
 import com.square63.caremap.ui.views.ChildsViewHolder;
 import com.square63.caremap.ui.views.GroupsViewHolder;
 import com.thoughtbot.expandablerecyclerview.ExpandableRecyclerViewAdapter;
@@ -36,13 +38,13 @@ public class MarketPlaceAdapter extends ExpandableRecyclerAdapter<ProviderGroupM
     // onCreate ...
     @Override
     public GroupsViewHolder onCreateParentViewHolder(@NonNull ViewGroup parentViewGroup, int viewType) {
-        View recipeView = mInflater.inflate(R.layout.list_item_group, parentViewGroup, false);
+        View recipeView = mInflater.inflate(R.layout.list_item_provider_group, parentViewGroup, false);
         return new GroupsViewHolder(recipeView);
     }
 
     @Override
     public ChildsViewHolder onCreateChildViewHolder(@NonNull ViewGroup childViewGroup, int viewType) {
-        View ingredientView = mInflater.inflate(R.layout.list_item_child, childViewGroup, false);
+        View ingredientView = mInflater.inflate(R.layout.list_item_child_provider, childViewGroup, false);
         return new ChildsViewHolder(ingredientView);
     }
 
@@ -59,7 +61,17 @@ public class MarketPlaceAdapter extends ExpandableRecyclerAdapter<ProviderGroupM
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, ChatActivity.class);
-                intent.putExtra(Constants.ID,ingredient.getId());
+                intent.putExtra(Constants.ID,ingredient.getSeekerId());
+                intent.putExtra(Constants.PREF_NAMES,ingredient.getName());
+                context.startActivity(intent);
+            }
+        });
+        ingredientViewHolder.lnrProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, SeekerProfileActivity.class);
+                intent.putExtra(Constants.SENIOR_ID,ingredient.getId());
+                intent.putExtra(Constants.SEEKER_ID,ingredient.getSeekerId());
                 context.startActivity(intent);
             }
         });

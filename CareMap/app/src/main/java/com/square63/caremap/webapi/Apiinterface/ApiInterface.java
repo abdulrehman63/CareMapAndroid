@@ -15,6 +15,7 @@ import com.square63.caremap.webapi.requests.GetGiverProfileRequest;
 import com.square63.caremap.webapi.requests.GetGiverSkilsById;
 import com.square63.caremap.webapi.requests.GetMaeesageByIdRequest;
 import com.square63.caremap.webapi.requests.GetSeekersRequest;
+import com.square63.caremap.webapi.requests.GetUserThread;
 import com.square63.caremap.webapi.requests.GiverRequest;
 import com.square63.caremap.webapi.requests.InsertAvailabilityRequest;
 import com.square63.caremap.webapi.requests.InsertGiverEducationRequest;
@@ -79,6 +80,7 @@ public interface ApiInterface {
         String SAVE_USER_IMAGE = "home/saveProfileImage";
         String GET_SEEKER_BY_FILTER = "api/services/app/careseeker/GetCareseekersByFilter";
         String GET_AVAILABILITY_BY_FILTER = " api/services/app/availability/GetAvailabilitiesByFilter";
+        String GET_SENIOR_INTEREST = "api/services/app/seniorInterest/GetSeniorInterestsByFilter";
 
 
 
@@ -136,7 +138,7 @@ public interface ApiInterface {
     @POST(Request.GET_MESSAGE_BY_ID)
     Call<MainResponse2> apiGetMessageById(@Body GetMaeesageByIdRequest request);
     @POST(Request.GET_MESSAGE_THREAD_BY_ID)
-    Call<MainResponse> apiGetMessageThresdById(@Body GetMaeesageByIdRequest request);
+    Call<MainResponse2> apiGetMessageThresdById(@Body GetUserThread request);
 
     @POST(Request.INSERT_MESSAGE)
     Call<MainResponse> apiInsertMessage(@Body CreateMessageRequest request);
@@ -166,5 +168,7 @@ public interface ApiInterface {
     //@Headers("Content-Type: application/x-www-form-urlencoded")
     Call<MainResponse> apiSaveUserImage(@Body  UploadImageRequest uploadImageRequest
     );
+    @POST(Request.GET_SENIOR_INTEREST)
+    Call<MainResponse2> apiGetSeniorInterests(@Body GetSeekersRequest userLangRequest);
 
 }

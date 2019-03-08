@@ -1,11 +1,13 @@
 
 package com.square63.caremap.models.chatModule;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Thread {
+public class Thread implements Serializable{
 
     @SerializedName("firstUser")
     @Expose
@@ -15,7 +17,7 @@ public class Thread {
     private String secondUser;
     @SerializedName("messages")
     @Expose
-    private List<Message> messages = null;
+    private ArrayList<Message> messages = null;
     @SerializedName("id")
     @Expose
     private String id;
@@ -32,17 +34,18 @@ public class Thread {
         return secondUser;
     }
 
+    public ArrayList<Message> getMessages() {
+        return messages;
+    }
+
+    public void setMessages(ArrayList<Message> messages) {
+        this.messages = messages;
+    }
+
     public void setSecondUser(String secondUser) {
         this.secondUser = secondUser;
     }
 
-    public List<Message> getMessages() {
-        return messages;
-    }
-
-    public void setMessages(List<Message> messages) {
-        this.messages = messages;
-    }
 
     public String getId() {
         return id;

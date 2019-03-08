@@ -26,9 +26,9 @@ import com.square63.caremap.utils.UIHelper;
 
 public class HomeActivity extends AppCompatActivity {
 
-    private TextView mTextMessage,titileToolbar,toolbarTitleRight;
+    public TextView mTextMessage,titileToolbar,toolbarTitleRight;
 
-
+    boolean isHome, message, profile;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -37,29 +37,46 @@ public class HomeActivity extends AppCompatActivity {
             Fragment fragment;
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    if(type.equalsIgnoreCase(Constants.PROVIDER)) {
-                        addFragment(HomeFragment.newInstance(), "home");
-                    }else {
-                        addFragment(SeekerHomeFragment.newInstance(), "home");
+                    if(!isHome) {
+
+                        if (type.equalsIgnoreCase(Constants.PROVIDER)) {
+                            addFragment(SeekerHomeFragment.newInstance(), "home");
+                        } else {
+                            addFragment(HomeFragment.newInstance(), "home");
+                        }
+                        titileToolbar.setText(R.string.title_home);
+                        imgShare.setVisibility(View.GONE);
+                        isHome = true;
+                        profile = false;
+                        message = false;
                     }
-                    titileToolbar.setText(R.string.title_home);
-                    imgShare.setVisibility(View.GONE);
                     return true;
                 case R.id.navigation_dashboard:
-                    addFragment(MessagesFragment.newInstance(),"MessagesFragment");
-                    titileToolbar.setText(R.string.title_dashboard);
-                    imgShare.setVisibility(View.GONE);
+                    if(!message) {
+                        addFragment(MessagesFragment.newInstance(), "MessagesFragment");
+                        titileToolbar.setText(R.string.title_dashboard);
+                        imgShare.setVisibility(View.GONE);
+                        isHome = false;
+                        profile = false;
+                        message =true;
+                    }
                     return true;
                 case R.id.navigation_notifications:
-                    if(type.equalsIgnoreCase(Constants.PROVIDER)) {
-                        addFragment(ProfileFragment.newInstance(), "ProfileFragment");
-                        titileToolbar.setText("");
-                    }else {
-                        addFragment(SeniorProfileFragment.newInstance(), "ProfileFragment");
-                        titileToolbar.setText("F.C");
+                    if(!profile) {
+                        if (type.equalsIgnoreCase(Constants.PROVIDER)) {
+                            addFragment(ProfileFragment.newInstance(), "ProfileFragment");
+                            titileToolbar.setText("");
+                        } else {
+                            addFragment(SeniorProfileFragment.newInstance(), "ProfileFragment");
+                            titileToolbar.setText("F.C");
+                        }
+
+                        imgShare.setVisibility(View.VISIBLE);
+                        isHome = false;
+                        profile =true;
+                        message =false;
                     }
 
-                    imgShare.setVisibility(View.VISIBLE);
                    // toolbarTitleRight.setText("Settings");
                     return true;
             }
@@ -106,16 +123,17 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         PreferenceHelper.getInstance().init(this);
-        type = PreferenceHelper.getInstance().getString(Constants.TYPE,"");
+
         mTextMessage = (TextView) findViewById(R.id.message);
         container_body = (FrameLayout) findViewById(R.id.container_body);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         initToolBar();
+        type = PreferenceHelper.getInstance().getString(Constants.TYPE,"");
         if(type.equalsIgnoreCase(Constants.PROVIDER)) {
-            addFragment(HomeFragment.newInstance(), "home");
+            addFragment(SeekerHomeFragment.newInstance(), "home");
         }else {
-            addFragment(SeekerHomeFragment.newInstance(), "homes");
+            addFragment(HomeFragment.newInstance(), "homes");
         }
        // addFragment(HomeFragment.newInstance(),"home");;
     }

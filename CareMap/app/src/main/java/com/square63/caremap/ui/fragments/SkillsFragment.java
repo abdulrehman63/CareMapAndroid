@@ -7,8 +7,10 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 
 import com.square63.caremap.ApplicationState;
 import com.square63.caremap.R;
@@ -31,8 +33,14 @@ public class SkillsFragment extends Fragment {
 
 
     private TagGroup mTagGroup;
+    private String giverId;
 
     public SkillsFragment() {
+        // Required empty public constructor
+    }
+
+    public SkillsFragment(String giverId) {
+        this.giverId = giverId;
         // Required empty public constructor
     }
 
@@ -48,6 +56,7 @@ public class SkillsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+       // getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         if (getArguments() != null) {
 
         }
@@ -57,7 +66,7 @@ public class SkillsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view =  inflater.inflate(R.layout.fragment_skills, container, false);
+        View view = inflater.inflate(R.layout.fragment_skills, container, false);
         return view;
     }
 
@@ -65,22 +74,37 @@ public class SkillsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mTagGroup = (TagGroup) view.findViewById(R.id.tag_group);
+        mTagGroup.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return true;
+            }
+        });
+
+
         apiGetGiverSkills();
 
     }
-    private void apiGetGiverSkills(){
+
+    private void apiGetGiverSkills() {
         GetGiverSkilsById giverSkilsById = new GetGiverSkilsById();
-        giverSkilsById.getFilterCaregiver().setCaregiverId(PreferenceHelper.getInstance().getString(Constants.GIVER_ID,""));
+        if (giverId != null)
+            giverSkilsById.getFilterCaregiver().setCaregiverId(giverId);
+        else
+            giverSkilsById.getFilterCaregiver().setCaregiverId(PreferenceHelper.getInstance().getString(Constants.GIVER_ID, ""));
         WebServiceFactory.getInstance().init(getContext());
         WebServiceFactory.getInstance().apiGetGiverSkillsById(giverSkilsById, new ApiCallback() {
             @Override
             public void onSuccess(MainResponse mainResponse) {
-                ArrayList<String> tagsList = new ArrayList<>();
-                ApplicationState.getInstance().setSkillsModelArrayList(mainResponse.getResultResponse().getCaregiverSkills());
-                for (SkillsMainModel skillsModel:mainResponse.getResultResponse().getCaregiverSkills()){
-                    tagsList.add(skillsModel.getSkill().getName());
+                if(mainResponse.getResultResponse().getCaregiverSkills() != null) {
+                    ArrayList<String> tagsList = new ArrayList<>();
+                    ApplicationState.getInstance().setSkillsModelArrayList(mainResponse.getResultResponse().getCaregiverSkills());
+                    for (SkillsMainModel skillsModel : mainResponse.getResultResponse().getCaregiverSkills()) {
+                        tagsList.add(skillsModel.getSkill().getName());
+                    }
+                    mTagGroup.setTags(tagsList);
                 }
-                mTagGroup.setTags(tagsList);
+
             }
         });
     }

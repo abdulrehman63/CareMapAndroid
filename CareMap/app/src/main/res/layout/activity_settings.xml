@@ -9,12 +9,12 @@
     tools:context=".ui.SettingsActivity">
     <include
         android:layout_width="match_parent"
-        android:layout_height="52dp"
+        android:layout_height="wrap_content"
         layout="@layout/colored_tool_bar"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="12dp"
+        android:padding="@dimen/x12"
         android:gravity="center|start"
         android:onClick="onEditProfileClick"
         style="@style/setting_text_style"

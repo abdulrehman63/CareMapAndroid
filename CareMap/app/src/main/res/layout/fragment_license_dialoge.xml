@@ -37,7 +37,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             style="@style/profile_margin"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="@dimen/x16"
             android:orientation="vertical"
             >
             <TextView
@@ -53,7 +53,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="5dp"
                 style="@style/edit_text_style_profile"
-                android:text="@{licenseModel.licenseNo}"
+                android:text="@={licenseModel.licenseNo}"
                 />
         </LinearLayout>
 
@@ -63,7 +63,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             style="@style/profile_margin"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="@dimen/x5"
             android:orientation="vertical"
             >
             <TextView
@@ -79,7 +79,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="5dp"
-                android:text="@{licenseModel.credentialName}"
+                android:text="@={licenseModel.credentialName}"
                 android:hint=""/>
         </LinearLayout>
 
@@ -109,7 +109,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="14sp"
                     android:layout_marginStart="5dp"
-                    android:text="@{licenseModel.issueDate}"
+                    android:text="@={licenseModel.issueDate}"
                     android:background="@null"
                     android:layout_marginEnd="5dp"
                     android:hint="mm/dd/yyyy"/>
@@ -141,7 +141,7 @@
                     android:layout_marginEnd="5dp"
                     android:textSize="14sp"
                     android:background="@null"
-                    android:text="@{licenseModel.expDate}"
+                    android:text="@={licenseModel.expDate}"
                     android:hint="mm/dd/yyyy"/>
             </LinearLayout>
         </LinearLayout>
@@ -159,7 +159,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             style="@style/profile_margin"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="@dimen/x5"
             android:orientation="vertical"
             >
             <TextView
@@ -175,7 +175,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
 
-                android:text="@{licenseModel.vettingDocuments}"
+                android:text="@={licenseModel.vettingDocuments}"
                 android:hint=""/>
         </LinearLayout>
     </LinearLayout>

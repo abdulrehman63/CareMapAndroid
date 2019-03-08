@@ -21,6 +21,7 @@ import com.square63.caremap.models.InterestModel;
 import com.square63.caremap.models.giverModels.UserLanguage;
 import com.square63.caremap.models.seekerModels.Senior;
 import com.square63.caremap.models.seekerModels.SeniorLanguageModel;
+import com.square63.caremap.ui.HomeActivity;
 import com.square63.caremap.ui.adapters.InterestAdapter;
 import com.square63.caremap.ui.adapters.SeniorInterestAdapter;
 import com.square63.caremap.utils.CircleImageView;
@@ -81,12 +82,16 @@ public class SeniorProfileFragment extends Fragment {
     }
 
     private void getSenior() {
+       final Integer colorArr[]={getResources().getColor(R.color.colorschem_1),getResources().getColor(R.color.colorschem_2),getResources().getColor(R.color.colorschem_3),getResources().getColor(R.color.colorschem_4),getResources().getColor(R.color.colorschem_5)};
+
         GetSeekersRequest profileRequest = new GetSeekersRequest();
         profileRequest.getFilterSenior().setSeniorId(PreferenceHelper.getInstance().getString(Constants.SENIOR_ID, ""));
         WebServiceFactory.getInstance().init(getActivity());
         WebServiceFactory.getInstance().apiSeniorById(profileRequest, new ApiCallBack2() {
             @Override
             public void onSuccess(MainResponse2 mainResponse) {
+                if( ((HomeActivity)getActivity())  != null)
+                ((HomeActivity)getActivity()).titileToolbar.setText(mainResponse.getResultResponse().getName());
                 //if(mainResponse.getResultResponse().getSeniors().size() > 0) {
                     txtAge.setText(mainResponse.getResultResponse().getAge());
                     ApplicationState.getInstance().setGiverResultResponse(mainResponse.getResultResponse());
@@ -98,7 +103,8 @@ public class SeniorProfileFragment extends Fragment {
                         }
                     }
                 if(mainResponse.getResultResponse().getColourScheme() != null ) {
-                        circleImageView.setBorderColor(mainResponse.getResultResponse().getColourScheme());
+                        if(mainResponse.getResultResponse().getColourScheme() >0 && mainResponse.getResultResponse().getColourScheme() < 6 )
+                        circleImageView.setBorderColor(colorArr[mainResponse.getResultResponse().getColourScheme()-1]);
                 }
 
                // }
@@ -158,28 +164,31 @@ public class SeniorProfileFragment extends Fragment {
     }
     private void getUserInterests(){
         WebServiceFactory.getInstance().init(getActivity());
-        GetGiverInterestById profileRequest = new GetGiverInterestById();
-        profileRequest.getFilterCaregiver().setUserId(PreferenceHelper.getInstance().getString(Constants.USER_ID, ""));
+        GetSeekersRequest profileRequest = new GetSeekersRequest();
+        profileRequest.getFilterSeniorInterest().setSeniorId(PreferenceHelper.getInstance().getString(Constants.SENIOR_ID, ""));
 
-        WebServiceFactory.getInstance().apiGetGiverInterestById(profileRequest, new ApiCallBack2() {
+        WebServiceFactory.getInstance().apiGetSeniorInterestById(profileRequest, new ApiCallBack2() {
             @Override
             public void onSuccess(MainResponse2 mainResponse) {
                 ArrayList<InterestModel> data = new ArrayList<>();
-                ApplicationState.getInstance().setInterestModelArrayList(mainResponse.getResultResponse().getInterestModelArrayList());
-                for (int i= 0; i <  mainResponse.getResultResponse().getInterestModelArrayList().size(); i++){
-                    InterestModel dayModel = new InterestModel();
+                ApplicationState.getInstance().setInterestModelArrayList(mainResponse.getResultResponse().getSeniorInterests());
+                for (int i= 0; i <  mainResponse.getResultResponse().getSeniorInterests().size(); i++){
+                    if(mainResponse.getResultResponse().getSeniorInterests().get(i).getInterest() != null) {
+                        InterestModel dayModel = new InterestModel();
 
-                    dayModel.setName(mainResponse.getResultResponse().getInterestModelArrayList().get(i).getInterest().getName());
-                    dayModel.setSelected(true);
-                    for (int j= 0; j < interestIcons.length; j++){
-                        if(interestIds[j].equalsIgnoreCase(mainResponse.getResultResponse().getInterestModelArrayList().get(i).getInterest().getId())){
-                            dayModel.setIcone(interestIcons[j]);
-                            break;
+                        dayModel.setName(mainResponse.getResultResponse().getSeniorInterests().get(i).getInterest().getName());
+                        dayModel.setSelected(true);
+                        for (int j = 0; j < interestIcons.length; j++) {
+                            if (interestIds[j].equalsIgnoreCase(mainResponse.getResultResponse().getSeniorInterests().get(i).getInterest().getId())) {
+                                dayModel.setIcone(interestIcons[j]);
+                                break;
 
+                            }
                         }
+                        data.add(dayModel);
                     }
-                    data.add(dayModel);
                 }
+
                 setInterestRecyclerView(data);
             }
         });

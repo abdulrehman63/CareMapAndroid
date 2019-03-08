@@ -24,6 +24,7 @@ public class GetStartedActivity extends AppCompatActivity {
         PreferenceHelper.getInstance().setString(Constants.TYPE,Constants.SEEKER);
         Intent intent = new Intent(GetStartedActivity.this,HomeActivity.class);
         intent.putExtra(Constants.TYPE,Constants.SEEKER);
+        intent.addFlags(  Intent.FLAG_ACTIVITY_CLEAR_TASK| Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
 
     }

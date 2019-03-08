@@ -37,7 +37,7 @@ public class ProfileFragment extends Fragment {
     private ViewPager viewPagerSkills;
     private TabAvailabilityAdapter adapterSkills;
     private TextView txtName;
-    private TextView txtLanguage;
+    private TextView txtLanguage,txtExperience,txtPrice,txtDistance;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -77,6 +77,9 @@ public class ProfileFragment extends Fragment {
 
     private void initTabs(View view) {
         txtName = (TextView) view.findViewById(R.id.textView14);
+        txtExperience = (TextView) view.findViewById(R.id.txtExperience);
+        txtPrice = (TextView) view.findViewById(R.id.txtPrice);
+        txtDistance = (TextView) view.findViewById(R.id.txtDistance);
         txtLanguage = (TextView) view.findViewById(R.id.txtLanguage);
         viewPager = (ViewPager) view.findViewById(R.id.viewPager);
         tabLayout = (TabLayout) view.findViewById(R.id.tabLayout);
@@ -101,8 +104,13 @@ public class ProfileFragment extends Fragment {
         WebServiceFactory.getInstance().apiGetAllCareGivers(profileRequest, new ApiCallback() {
             @Override
             public void onSuccess(MainResponse mainResponse) {
-                ApplicationState.getInstance().setCaregiver(mainResponse.getResultResponse().getCaregivers().get(0));
-                txtName.setText(mainResponse.getResultResponse().getCaregivers().get(0).getUser().getFirstName() + " " + mainResponse.getResultResponse().getCaregivers().get(0).getUser().getLastName());
+                if(mainResponse.getResultResponse() !=null && mainResponse.getResultResponse().getCaregivers().size() >0) {
+                    ApplicationState.getInstance().setCaregiver(mainResponse.getResultResponse().getCaregivers().get(0));
+                    txtName.setText(mainResponse.getResultResponse().getCaregivers().get(0).getUser().getFirstName() + " " + mainResponse.getResultResponse().getCaregivers().get(0).getUser().getLastName());
+                }
+               /* txtExperience.setText(mainResponse.getResultResponse().getCaregivers().get(0).getYearsOfExperience());
+                txtDistance.setText(mainResponse.getResultResponse().getCaregivers().get(0).getAvailabilityDistance());
+                txtPrice.setText(mainResponse.getResultResponse().getCaregivers().get(0).getDesiredWage());*/
             }
         });
     }
@@ -114,17 +122,18 @@ public class ProfileFragment extends Fragment {
         WebServiceFactory.getInstance().apiGetGiverLanguageById(profileRequest, new ApiCallback() {
             @Override
             public void onSuccess(MainResponse mainResponse) {
+                if(mainResponse.getResultResponse().getUserLanguages() !=null) {
                     ApplicationState.getInstance().setLanguageModelArrayList(mainResponse.getResultResponse().getUserLanguages());
-                   String languages = "";
-                        for (UserLanguage languageModel:mainResponse.getResultResponse().getUserLanguages()){
+                    String languages = "";
+                    for (UserLanguage languageModel : mainResponse.getResultResponse().getUserLanguages()) {
 
-                                languages = languages+languageModel.getLanguage().getName()+", ";
-                        }
-                        if (languages != null && languages.length() > 0 && languages.charAt(languages.length() - 1) == ',') {
-                            languages = languages.substring(0, languages.length() - 1);
-                        }
-                        txtLanguage.setText(languages);
-
+                        languages = languages + languageModel.getLanguage().getName() + ", ";
+                    }
+                    if (languages != null && languages.length() > 0 && languages.charAt(languages.length() - 1) == ',') {
+                        languages = languages.substring(0, languages.length() - 1);
+                    }
+                    txtLanguage.setText(languages);
+                }
             }
         });
     }

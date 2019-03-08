@@ -2,6 +2,26 @@ package com.square63.caremap.models;
 
 public class ProviderChildModel {
     private String id;
+    private String name;
+    private String seekerId;
+
+    public String getSeekerId() {
+        return seekerId;
+    }
+
+    public void setSeekerId(String seekerId) {
+        this.seekerId = seekerId;
+    }
+
+    public String getGiverId() {
+        return giverId;
+    }
+
+    public void setGiverId(String giverId) {
+        this.giverId = giverId;
+    }
+
+    private String giverId;
     private String date;
 
     public String getId() {
@@ -10,6 +30,14 @@ public class ProviderChildModel {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getDate() {

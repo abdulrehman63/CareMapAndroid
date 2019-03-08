@@ -22,7 +22,7 @@
         android:layout_marginTop="8dp"
         android:text="Welcome To"
         android:textStyle="bold"
-        android:textSize="18sp"
+        android:textSize="@dimen/s18"
         android:textAllCaps="true"
         android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
@@ -33,7 +33,7 @@
         android:id="@+id/imageView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="@dimen/x8"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView8"
@@ -43,7 +43,7 @@
         android:id="@+id/textView9"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="@dimen/x8"
         android:text="by uCarenet"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
@@ -86,9 +86,9 @@
             android:layout_height="wrap_content"
             android:text="I am a Care Provider"
             android:textColor="@color/blue_title"
-            android:textSize="14sp"
+            android:textSize="@dimen/s14"
             android:layout_gravity="center"
-            android:layout_marginTop="8dp"/>
+            android:layout_marginTop="@dimen/x8"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -96,7 +96,7 @@
             android:layout_gravity="center"
             android:layout_marginStart="18dp"
             android:layout_marginEnd="18dp"
-            android:textSize="16sp"
+            android:textSize="@dimen/s16"
             android:gravity="center"
             android:layout_marginBottom="8dp"
             android:layout_marginTop="8dp"/>

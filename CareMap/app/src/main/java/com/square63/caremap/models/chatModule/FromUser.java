@@ -5,7 +5,9 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.square63.caremap.models.giverModels.UserRole;
 
-public class FromUser {
+import java.io.Serializable;
+
+public class FromUser implements Serializable{
 
     @SerializedName("country")
     @Expose

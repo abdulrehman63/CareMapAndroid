@@ -8,15 +8,14 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
-    <uses-feature android:name="android.hardware.camera" >
-    </uses-feature>
+    <uses-feature android:name="android.hardware.camera" />
+
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-
         android:theme="@style/AppTheme">
         <activity android:name=".ui.SplashActivity">
             <intent-filter>
@@ -25,42 +24,75 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.RegistrationActivity"
+        <activity
+            android:name=".ui.RegistrationActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"/>
-        <activity android:name=".ui.ForgotPasswordActivity"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".ui.ForgotPasswordActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"/>
-        <activity android:name=".ui.WelcomeActivity" />
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".ui.WelcomeActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.providerModule.CreateProviderProfileActivity"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"/>
-        <activity android:name=".ui.providerModule.PersonalInfoActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"/>
-        <activity android:name=".ui.DaysSelectionActivity" />
-        <activity android:name=".ui.InterestsActivity" />
-        <activity android:name=".ui.LoginActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"/>
+            android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".ui.HomeActivity"
-            android:label="@string/title_activity_home" />
-        <activity android:name=".ui.SettingsActivity" />
-        <activity android:name=".ui.SkillsActivity" />
-        <activity android:name=".ui.ChatActivity" />
-        <activity android:name=".ui.AboutActivity" />
-        <activity android:name=".ui.ConfirmationActivity" />
-        <activity android:name=".ui.seekerModule.CreateSeekerProfileActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"/>
-        <activity android:name=".ui.seekerModule.CreateSeniorProfileActivity"
+            android:name=".ui.providerModule.PersonalInfoActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
-        <activity android:name=".ui.seekerModule.SeniorProfileActivity" />
-        <activity android:name=".ui.views.GetStartedActivity"></activity>
+        <activity
+            android:name=".ui.DaysSelectionActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.InterestsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.LoginActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".ui.HomeActivity"
+            android:label="@string/title_activity_home"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.SettingsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.SkillsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.ChatActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.AboutActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.ConfirmationActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.seekerModule.CreateSeekerProfileActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".ui.seekerModule.CreateSeniorProfileActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".ui.seekerModule.SeniorProfileActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.views.GetStartedActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.ProviderProfileActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.SeekerProfileActivity"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

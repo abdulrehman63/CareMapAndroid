@@ -7,25 +7,7 @@
     android:background="@color/line_color"
     android:orientation="vertical"
     tools:context=".ui.fragments.HomeFragment">
-    <TextView
-        android:id="@+id/toolbarTittle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:text="Find Care"
-        android:background="@color/colorPrimary"
-        android:textColor="@android:color/white"
-        android:gravity="center"
-        android:padding="5dp"
-        style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
-        android:textSize="14sp"
-        android:visibility="visible"
-        />
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="@color/red"/>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"

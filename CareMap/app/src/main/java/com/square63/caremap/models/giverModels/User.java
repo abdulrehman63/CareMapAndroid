@@ -14,7 +14,7 @@ public class User {
     private Object nationality;
     @SerializedName("state")
     @Expose
-    private Object state;
+    private String state;
     @SerializedName("userRole")
     @Expose
     private UserRole userRole;
@@ -41,31 +41,31 @@ public class User {
     private String lastName;
     @SerializedName("dateOfBirth")
     @Expose
-    private Object dateOfBirth;
+    private String dateOfBirth;
     @SerializedName("address")
     @Expose
-    private Object address;
+    private String address;
     @SerializedName("address2")
     @Expose
-    private Object address2;
+    private String address2;
     @SerializedName("city")
     @Expose
     private String city;
     @SerializedName("countryID")
     @Expose
-    private Object countryID;
+    private String countryID;
     @SerializedName("stateID")
     @Expose
-    private Object stateID;
+    private String stateID;
     @SerializedName("nationalityID")
     @Expose
-    private Object nationalityID;
+    private String nationalityID;
     @SerializedName("postalCode")
     @Expose
     private String postalCode;
     @SerializedName("phone")
     @Expose
-    private Object phone;
+    private String phone;
     @SerializedName("contactDetails")
     @Expose
     private Object contactDetails;
@@ -74,7 +74,7 @@ public class User {
     private String gender;
     @SerializedName("hasPicture")
     @Expose
-    private Object hasPicture;
+    private String hasPicture;
     @SerializedName("profileDescription")
     @Expose
     private Object profileDescription;
@@ -135,9 +135,6 @@ public class User {
     @SerializedName("referCode")
     @Expose
     private Object referCode;
-    @SerializedName("referredBy")
-    @Expose
-    private Object referredBy;
 
     public Object getCountry() {
         return country;
@@ -155,11 +152,11 @@ public class User {
         this.nationality = nationality;
     }
 
-    public Object getState() {
+    public String getState() {
         return state;
     }
 
-    public void setState(Object state) {
+    public void setState(String state) {
         this.state = state;
     }
 
@@ -227,27 +224,27 @@ public class User {
         this.lastName = lastName;
     }
 
-    public Object getDateOfBirth() {
+    public String getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(Object dateOfBirth) {
+    public void setDateOfBirth(String dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public Object getAddress() {
+    public String getAddress() {
         return address;
     }
 
-    public void setAddress(Object address) {
+    public void setAddress(String address) {
         this.address = address;
     }
 
-    public Object getAddress2() {
+    public String getAddress2() {
         return address2;
     }
 
-    public void setAddress2(Object address2) {
+    public void setAddress2(String address2) {
         this.address2 = address2;
     }
 
@@ -259,27 +256,27 @@ public class User {
         this.city = city;
     }
 
-    public Object getCountryID() {
+    public String getCountryID() {
         return countryID;
     }
 
-    public void setCountryID(Object countryID) {
+    public void setCountryID(String countryID) {
         this.countryID = countryID;
     }
 
-    public Object getStateID() {
+    public String getStateID() {
         return stateID;
     }
 
-    public void setStateID(Object stateID) {
+    public void setStateID(String stateID) {
         this.stateID = stateID;
     }
 
-    public Object getNationalityID() {
+    public String getNationalityID() {
         return nationalityID;
     }
 
-    public void setNationalityID(Object nationalityID) {
+    public void setNationalityID(String nationalityID) {
         this.nationalityID = nationalityID;
     }
 
@@ -291,11 +288,11 @@ public class User {
         this.postalCode = postalCode;
     }
 
-    public Object getPhone() {
+    public String getPhone() {
         return phone;
     }
 
-    public void setPhone(Object phone) {
+    public void setPhone(String phone) {
         this.phone = phone;
     }
 
@@ -315,11 +312,11 @@ public class User {
         this.gender = gender;
     }
 
-    public Object getHasPicture() {
+    public String getHasPicture() {
         return hasPicture;
     }
 
-    public void setHasPicture(Object hasPicture) {
+    public void setHasPicture(String hasPicture) {
         this.hasPicture = hasPicture;
     }
 
@@ -490,5 +487,11 @@ public class User {
     public void setReferredBy(Object referredBy) {
         this.referredBy = referredBy;
     }
+
+    @SerializedName("referredBy")
+    @Expose
+    private Object referredBy;
+
+
 
 }

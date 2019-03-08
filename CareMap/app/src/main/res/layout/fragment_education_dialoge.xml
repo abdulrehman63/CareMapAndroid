@@ -62,7 +62,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         style="@style/profile_margin"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="@dimen/x5"
         android:orientation="vertical"
         >
         <TextView
@@ -87,7 +87,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             style="@style/profile_margin"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="@dimen/x5"
             android:orientation="vertical"
             >
             <TextView

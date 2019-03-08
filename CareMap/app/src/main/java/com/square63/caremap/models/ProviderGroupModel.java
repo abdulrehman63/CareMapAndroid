@@ -9,6 +9,16 @@ public class ProviderGroupModel implements Parent<ProviderChildModel> {
     private List<ProviderChildModel> mIngredients;
     private boolean isExpanded = false;
     private String name;
+
+    public String getAge() {
+        return age ;
+    }
+
+    public void setAge(String age) {
+        this.age = age;
+    }
+
+    private String age ="";
     private String id;
     private String desc;
 

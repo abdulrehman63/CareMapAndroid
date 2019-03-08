@@ -74,7 +74,7 @@ public class ColorSchemeAdapter extends RecyclerView.Adapter<ColorSchemeAdapter.
                     }
 
                     filteredData.get(position).setSelected(true);
-                    iSkills.selectedColorScheme(filteredData.get(position).getIcone());
+                    iSkills.selectedColorScheme(position);
                     notifyDataSetChanged();
 
                     // iSkills.selectedSkills(filteredData);

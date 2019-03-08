@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.google.gson.JsonObject;
 import com.square63.caremap.R;
+import com.square63.caremap.constants.Constants;
 import com.square63.caremap.listeners.RegisterApiCallBack;
 import com.square63.caremap.models.EducationModel;
 import com.square63.caremap.models.LicenseModel;
@@ -19,6 +20,7 @@ import com.square63.caremap.models.RegistrationModel;
 import com.square63.caremap.models.chatModule.CreateMessageRequest;
 import com.square63.caremap.models.seekerModels.CreateSeekerRequest;
 import com.square63.caremap.models.seekerModels.CreateSeniorRequest;
+import com.square63.caremap.utils.PreferenceHelper;
 import com.square63.caremap.utils.UIHelper;
 import com.square63.caremap.webapi.ApiClient;
 import com.square63.caremap.webapi.Apiinterface.ApiCallBack2;
@@ -32,6 +34,7 @@ import com.square63.caremap.webapi.requests.GetGiverProfileRequest;
 import com.square63.caremap.webapi.requests.GetGiverSkilsById;
 import com.square63.caremap.webapi.requests.GetMaeesageByIdRequest;
 import com.square63.caremap.webapi.requests.GetSeekersRequest;
+import com.square63.caremap.webapi.requests.GetUserThread;
 import com.square63.caremap.webapi.requests.GiverRequest;
 import com.square63.caremap.webapi.requests.InsertAvailabilityRequest;
 import com.square63.caremap.webapi.requests.InsertGiverEducationRequest;
@@ -330,8 +333,8 @@ public class WebServiceFactory {
     public void apiAddExperience(InsertGiverExperienceRequest signUpModel, final ApiCallback apiCallback) {
         checkNetworkState();
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-        final ProgressDialog loading;
-        loading = ProgressDialog.show(context_, context_.getResources().getString(R.string.loading), "", true, false);
+        //final ProgressDialog loading;
+        //loading = ProgressDialog.show(context_, context_.getResources().getString(R.string.loading), "", true, false);
 
 
         Call<MainResponse> signUpResponseCall = apiInterface.apiInsertExperience(signUpModel);
@@ -346,14 +349,14 @@ public class WebServiceFactory {
                     //   UIHelper.showLongToastInCenter(context_, response.body().getStoreResponse().getMessage());
                 }
 
-                loading.dismiss();
+                //loading.dismiss();
             }
 
             @Override
             public void onFailure(Call<MainResponse> call, Throwable t) {
                 //  UIHelper.showLongToastInCenter(context_, t.getMessage());
                 Log.d("fail", t.getMessage());
-                loading.dismiss();
+                //loading.dismiss();
 
             }
         });
@@ -427,7 +430,7 @@ public class WebServiceFactory {
     public void apiGetAllCareGivers(GiverRequest signUpModel, final ApiCallback apiCallback) {
         checkNetworkState();
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-        final ProgressDialog loading;
+       final ProgressDialog loading;
         loading = ProgressDialog.show(context_, context_.getResources().getString(R.string.loading), "", true, false);
 
 
@@ -491,8 +494,8 @@ public class WebServiceFactory {
     public void apiGetGiverLanguageById(GetGiverLanguageRequest signUpModel, final ApiCallback apiCallback) {
         checkNetworkState();
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-        final ProgressDialog loading;
-        loading = ProgressDialog.show(context_, context_.getResources().getString(R.string.loading), "", true, false);
+        //final ProgressDialog loading;
+        //loading = ProgressDialog.show(context_, context_.getResources().getString(R.string.loading), "", true, false);
 
 
         Call<MainResponse> signUpResponseCall = apiInterface.apiGetGiverLanguageById(signUpModel);
@@ -507,14 +510,14 @@ public class WebServiceFactory {
                     //   UIHelper.showLongToastInCenter(context_, response.body().getStoreResponse().getMessage());
                 }
 
-                loading.dismiss();
+               // loading.dismiss();
             }
 
             @Override
             public void onFailure(Call<MainResponse> call, Throwable t) {
                 //  UIHelper.showLongToastInCenter(context_, t.getMessage());
                 Log.d("fail", t.getMessage());
-                loading.dismiss();
+               // loading.dismiss();
 
             }
         });
@@ -555,11 +558,43 @@ public class WebServiceFactory {
     public void apiGetGiverInterestById(GetGiverInterestById signUpModel, final ApiCallBack2 apiCallback) {
         checkNetworkState();
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+       // final ProgressDialog loading;
+        //loading = ProgressDialog.show(context_, context_.getResources().getString(R.string.loading), "", true, false);
+
+
+        Call<MainResponse2> signUpResponseCall = apiInterface.apiGetGiverInterestById(signUpModel);
+        signUpResponseCall.enqueue(new Callback<MainResponse2>() {
+            @Override
+            public void onResponse(Call<MainResponse2> call, retrofit2.Response<MainResponse2> response) {
+                if (response.isSuccessful() && response.body().isStatus()) {
+                    // UIHelper.showLongToastInCenter(context_, response.body().getStoreResponse().getMessage());
+                    apiCallback.onSuccess(response.body());
+
+                }else {
+                    //   UIHelper.showLongToastInCenter(context_, response.body().getStoreResponse().getMessage());
+                }
+
+               // loading.dismiss();
+            }
+
+            @Override
+            public void onFailure(Call<MainResponse2> call, Throwable t) {
+                //  UIHelper.showLongToastInCenter(context_, t.getMessage());
+                Log.d("fail", t.getMessage());
+             //   loading.dismiss();
+
+            }
+        });
+
+    }
+    public void apiGetSeniorInterestById(GetSeekersRequest signUpModel, final ApiCallBack2 apiCallback) {
+        checkNetworkState();
+        ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
         final ProgressDialog loading;
         loading = ProgressDialog.show(context_, context_.getResources().getString(R.string.loading), "", true, false);
 
 
-        Call<MainResponse2> signUpResponseCall = apiInterface.apiGetGiverInterestById(signUpModel);
+        Call<MainResponse2> signUpResponseCall = apiInterface.apiGetSeniorInterests(signUpModel);
         signUpResponseCall.enqueue(new Callback<MainResponse2>() {
             @Override
             public void onResponse(Call<MainResponse2> call, retrofit2.Response<MainResponse2> response) {
@@ -716,8 +751,8 @@ public class WebServiceFactory {
     public void apiInsertMessage(CreateMessageRequest signUpModel, final ApiCallback apiCallback) {
         checkNetworkState();
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-        final ProgressDialog loading;
-        loading = ProgressDialog.show(context_, context_.getResources().getString(R.string.loading), "", true, false);
+      //  final ProgressDialog loading;
+        //loading = ProgressDialog.show(context_, context_.getResources().getString(R.string.loading), "", true, false);
 
 
         Call<MainResponse> signUpResponseCall = apiInterface.apiInsertMessage(signUpModel);
@@ -732,14 +767,14 @@ public class WebServiceFactory {
                     //   UIHelper.showLongToastInCenter(context_, response.body().getStoreResponse().getMessage());
                 }
 
-                loading.dismiss();
+              //  loading.dismiss();
             }
 
             @Override
             public void onFailure(Call<MainResponse> call, Throwable t) {
                 //  UIHelper.showLongToastInCenter(context_, t.getMessage());
                 Log.d("fail", t.getMessage());
-                loading.dismiss();
+              //  loading.dismiss();
 
             }
         });
@@ -1037,8 +1072,8 @@ public class WebServiceFactory {
     public void apiGetGiverSkillsById(GetGiverSkilsById signUpModel, final ApiCallback apiCallback) {
         checkNetworkState();
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-        final ProgressDialog loading;
-        loading = ProgressDialog.show(context_, context_.getResources().getString(R.string.loading), "", true, false);
+       // final ProgressDialog loading;
+        //loading = ProgressDialog.show(context_, context_.getResources().getString(R.string.loading), "", true, false);
 
 
         Call<MainResponse> signUpResponseCall = apiInterface.apiGetGiverSkillsById(signUpModel);
@@ -1053,14 +1088,14 @@ public class WebServiceFactory {
                     //   UIHelper.showLongToastInCenter(context_, response.body().getStoreResponse().getMessage());
                 }
 
-                loading.dismiss();
+                //loading.dismiss();
             }
 
             @Override
             public void onFailure(Call<MainResponse> call, Throwable t) {
                 //  UIHelper.showLongToastInCenter(context_, t.getMessage());
                 Log.d("fail", t.getMessage());
-                loading.dismiss();
+              //  loading.dismiss();
 
             }
         });
@@ -1069,8 +1104,8 @@ public class WebServiceFactory {
     public void apiGetGiverAvailById(GetGiverSkilsById signUpModel, final ApiCallback apiCallback) {
         checkNetworkState();
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-        final ProgressDialog loading;
-        loading = ProgressDialog.show(context_, context_.getResources().getString(R.string.loading), "", true, false);
+      //  final ProgressDialog loading;
+       // loading = ProgressDialog.show(context_, context_.getResources().getString(R.string.loading), "", true, false);
 
 
         Call<MainResponse> signUpResponseCall = apiInterface.apiGetGiverAvailabilityById(signUpModel);
@@ -1085,11 +1120,44 @@ public class WebServiceFactory {
                     //   UIHelper.showLongToastInCenter(context_, response.body().getStoreResponse().getMessage());
                 }
 
-                loading.dismiss();
+             //   loading.dismiss();
             }
 
             @Override
             public void onFailure(Call<MainResponse> call, Throwable t) {
+                //  UIHelper.showLongToastInCenter(context_, t.getMessage());
+                Log.d("fail", t.getMessage());
+               // loading.dismiss();
+
+            }
+        });
+
+    }
+    public void apiGetThreads( GetUserThread userThread, final ApiCallBack2 apiCallback) {
+        checkNetworkState();
+
+        ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        final ProgressDialog loading;
+        loading = ProgressDialog.show(context_, context_.getResources().getString(R.string.loading), "", true, false);
+
+
+        Call<MainResponse2> signUpResponseCall = apiInterface.apiGetMessageThresdById(userThread);
+        signUpResponseCall.enqueue(new Callback<MainResponse2>() {
+            @Override
+            public void onResponse(Call<MainResponse2> call, retrofit2.Response<MainResponse2> response) {
+                if (response.isSuccessful() && response.body().isStatus()) {
+                    // UIHelper.showLongToastInCenter(context_, response.body().getStoreResponse().getMessage());
+                    apiCallback.onSuccess(response.body());
+
+                }else {
+                    //   UIHelper.showLongToastInCenter(context_, response.body().getStoreResponse().getMessage());
+                }
+
+                loading.dismiss();
+            }
+
+            @Override
+            public void onFailure(Call<MainResponse2> call, Throwable t) {
                 //  UIHelper.showLongToastInCenter(context_, t.getMessage());
                 Log.d("fail", t.getMessage());
                 loading.dismiss();

@@ -4,7 +4,9 @@ package com.square63.caremap.models.giverModels;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class UserRole {
+import java.io.Serializable;
+
+public class UserRole implements Serializable{
 
     @SerializedName("id")
     @Expose

@@ -44,10 +44,10 @@
 
                     <com.square63.caremap.utils.CircleImageView
                         android:id="@+id/imgProfile"
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
+                        android:layout_width="@dimen/x60"
+                        android:layout_height="@dimen/x60"
                         android:layout_gravity="center"
-                        android:layout_marginTop="8dp"
+                        android:layout_marginTop="@dimen/x8"
                         android:onClick="onPickImageClick"
                         android:src="@drawable/profile_default" />
 
@@ -55,9 +55,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginBottom="8dp"
-                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="@dimen/x8"
+                        android:layout_marginTop="@dimen/x8"
                         android:text="Add Photo"
+                        android:textSize="@dimen/s14"
                         android:textColor="@color/text_grey" />
                 </LinearLayout>
 
@@ -101,17 +102,17 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="@dimen/x5"
                     android:gravity="center"
                     android:text="Sex"
                     android:textColor="@color/black"
-                    android:textSize="16sp"
+                    android:textSize="@dimen/s16"
                     android:textStyle="bold" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="78dp"
-                    android:layout_marginTop="5dp"
+                    android:layout_height="@dimen/x78"
+                    android:layout_marginTop="@dimen/x5"
                     android:orientation="horizontal"
 
                     android:weightSum="3">
@@ -127,7 +128,7 @@
 
                         android:gravity="center"
                         android:paddingBottom="10dp"
-                        android:paddingTop="15dp"
+                        android:paddingTop="@dimen/x15"
                         android:text="Male"
                         android:textColor="@color/text_grey" />
 
@@ -142,7 +143,7 @@
                         android:gravity="center"
 
                         android:paddingBottom="10dp"
-                        android:paddingTop="15dp"
+                        android:paddingTop="@dimen/x15"
                         android:text="Female"
                         android:textColor="@color/text_grey" />
 
@@ -156,7 +157,7 @@
                         android:drawableTop="@drawable/nonbinarydark_2x"
                         android:gravity="center"
                         android:paddingBottom="10dp"
-                        android:paddingTop="15dp"
+                        android:paddingTop="@dimen/x15"
                         android:text="Non Binary"
                         android:textColor="@color/text_grey" />
                 </LinearLayout>
@@ -165,16 +166,16 @@
                     style="@style/line_style"
                     android:layout_width="match_parent"
                     android:layout_height="1px"
-                    android:layout_marginTop="20dp" />
+                    android:layout_marginTop="@dimen/x20" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="@dimen/x10"
                     android:gravity="center"
                     android:text="Reason For Care"
                     android:textColor="@color/black"
-                    android:textSize="16sp"
+                    android:textSize="@dimen/s16"
                     android:textStyle="bold" />
 
                 <android.support.v7.widget.RecyclerView
@@ -183,22 +184,22 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
                     android:layout_marginStart="8dp"
-                    android:layout_marginTop="10dp"></android.support.v7.widget.RecyclerView>
+                    android:layout_marginTop="@dimen/x10"></android.support.v7.widget.RecyclerView>
 
                 <View
                     style="@style/line_style"
                     android:layout_width="match_parent"
                     android:layout_height="1px"
-                    android:layout_marginTop="20dp" />
+                    android:layout_marginTop="@dimen/x20" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="@dimen/x10"
                     android:gravity="center"
                     android:text="Mobility"
                     android:textColor="@color/black"
-                    android:textSize="16sp"
+                    android:textSize="@dimen/s16"
                     android:textStyle="bold" />
 
                 <android.support.v7.widget.RecyclerView
@@ -207,22 +208,22 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
                     android:layout_marginStart="8dp"
-                    android:layout_marginTop="10dp"></android.support.v7.widget.RecyclerView>
+                    android:layout_marginTop="@dimen/x10"></android.support.v7.widget.RecyclerView>
 
                 <View
                     style="@style/line_style"
                     android:layout_width="match_parent"
                     android:layout_height="1px"
-                    android:layout_marginTop="20dp" />
+                    android:layout_marginTop="@dimen/x20" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="@dimen/x10"
                     android:gravity="center"
                     android:text="Interests"
                     android:textColor="@color/black"
-                    android:textSize="16sp"
+                    android:textSize="@dimen/s16"
                     android:textStyle="bold" />
 
                 <android.support.v7.widget.RecyclerView
@@ -231,7 +232,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
                     android:layout_marginStart="8dp"
-                    android:layout_marginTop="10dp">
+                    android:layout_marginTop="@dimen/x10">
 
                 </android.support.v7.widget.RecyclerView>
 
@@ -239,7 +240,7 @@
                     style="@style/line_style"
                     android:layout_width="match_parent"
                     android:layout_height="1px"
-                    android:layout_marginTop="20dp" />
+                    android:layout_marginTop="@dimen/x20" />
 
                 <TextView
                     android:id="@+id/txtLanguage"
@@ -248,48 +249,50 @@
                     android:layout_gravity="center"
                     android:layout_marginEnd="24dp"
                     android:layout_marginStart="24dp"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="@dimen/x16"
                     android:background="#f5f5f5"
                     android:drawableEnd="@drawable/ic_back_grey"
                     android:gravity="center|start"
+                    android:maxLines="1"
+                    
                     android:onClick="onLanguageSelectionClick"
                     android:padding="8dp"
                     android:text="Language(s)"
                     android:textColor="#6d6d70"
-                    android:textSize="14sp" />
+                    android:textSize="@dimen/s14" />
 
                 <View
                     style="@style/line_style"
                     android:layout_width="match_parent"
                     android:layout_height="1px"
-                    android:layout_marginTop="20dp" />
+                    android:layout_marginTop="@dimen/x20" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="@dimen/x10"
                     android:gravity="center"
                     android:text="Address"
                     android:textColor="@color/black"
-                    android:textSize="16sp"
+                    android:textSize="@dimen/s16"
                     android:textStyle="bold" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="@dimen/x5"
                     android:gravity="center"
                     android:paddingEnd="24dp"
                     android:paddingStart="24dp"
                     android:text="Only approximate location will be shared to determine travel distance. "
                     android:textColor="@color/black"
-                    android:textSize="14sp" />
+                    android:textSize="@dimen/s14" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="@dimen/x20"
                     android:orientation="horizontal">
 
                     <LinearLayout
@@ -364,7 +367,7 @@
 
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="@dimen/x5"
                     android:layout_weight="1"
                     android:orientation="vertical">
 
@@ -392,7 +395,7 @@
 
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="@dimen/x5"
                     android:layout_weight="1"
                     android:orientation="vertical">
 
@@ -419,7 +422,7 @@
 
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="@dimen/x5"
 
                     android:layout_weight="1"
                     android:orientation="vertical">
@@ -447,7 +450,7 @@
 
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="@dimen/x5"
 
                     android:layout_weight="1"
                     android:orientation="vertical">
@@ -476,24 +479,25 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="@dimen/x5"
                     android:gravity="center"
                     android:paddingEnd="32dp"
                     android:paddingStart="32dp"
                     android:text="Sharing approximate location will provide you with the best match of care. Click here if you wish to remove your address. Note: city will be shown "
                     android:textColor="@color/black"
-                    android:textSize="14sp" />
+                    android:textSize="@dimen/s14" />
 
                 <android.support.v7.widget.AppCompatCheckBox
+                    android:id="@+id/checkBox"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="@dimen/x5"
                     android:layoutDirection="rtl"
                     android:text="Do not share location "
                     android:textColor="@color/text_color"
 
-                    android:textSize="14sp" />
+                    android:textSize="@dimen/s14" />
 
                 <View
                     android:layout_width="match_parent"
@@ -508,7 +512,7 @@
                     android:gravity="center"
                     android:text="Profile Color Scheme"
                     android:textColor="@color/black"
-                    android:textSize="16sp"
+                    android:textSize="@dimen/s16"
                     android:textStyle="bold" />
 
                 <TextView
@@ -521,7 +525,7 @@
                     android:paddingStart="16dp"
                     android:text="Did you know you can care for more than one senior on this app? Choosing a colour profile can help distinguish between multiple profiles"
                     android:textColor="@color/black"
-                    android:textSize="14sp" />
+                    android:textSize="@dimen/s14" />
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/recyclerViewProfile"

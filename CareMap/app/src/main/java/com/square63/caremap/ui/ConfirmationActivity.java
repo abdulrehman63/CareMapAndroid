@@ -23,6 +23,7 @@ public class ConfirmationActivity extends AppCompatActivity {
         PreferenceHelper.getInstance().setString(Constants.TYPE,Constants.PROVIDER);
         Intent intent = new Intent(ConfirmationActivity.this,HomeActivity.class);
         intent.putExtra(Constants.TYPE,Constants.PROVIDER);
+        intent.addFlags(  Intent.FLAG_ACTIVITY_CLEAR_TASK| Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
 
     }

@@ -54,7 +54,12 @@ public class SettingsActivity extends AppCompatActivity {
     }
     public void onLogoutClick(View view){
         PreferenceHelper.getInstance().setString(Constants.ID,"");
+        PreferenceHelper.getInstance().setString(Constants.USER_ID,"");
+        PreferenceHelper.getInstance().setString(Constants.SEEKER_ID,"");
+        PreferenceHelper.getInstance().setString(Constants.GIVER_ID,"");
+        PreferenceHelper.getInstance().setString(Constants.SENIOR_ID,"");
         PreferenceHelper.getInstance().setString(Constants.TYPE,"");
+        ApplicationState.getInstance().clearInstance();
         UIHelper.openAndClearActivity(SettingsActivity.this,LoginActivity.class);
     }
 

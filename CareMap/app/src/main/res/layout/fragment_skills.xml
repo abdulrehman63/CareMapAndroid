@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,11 +7,17 @@
     tools:context=".ui.fragments.SkillsFragment">
 
     <me.gujun.android.taggroup.TagGroup
-        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/x10"
         android:id="@+id/tag_group"
-        style="@style/TagGroup"
+        app:atg_checkedBackgroundColor="#6cc9d8"
         app:layout_constraintTop_toTopOf="parent"
         app:atg_backgroundColor ="#6cc9d8"
-        app:atg_textColor = "@color/white"/>
+        app:atg_checkedMarkerColor="#6cc9d8"
+        app:atg_pressedBackgroundColor="#6cc9d8"
+        app:atg_textColor = "@color/white"
+        app:atg_borderColor="@color/tranparent"
+        />
 
-</android.support.constraint.ConstraintLayout>
+</RelativeLayout>

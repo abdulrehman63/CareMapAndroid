@@ -28,6 +28,7 @@ import com.square63.caremap.utils.UIHelper;
 import com.square63.caremap.utils.Validations;
 import com.square63.caremap.webapi.Apiinterface.ApiCallback;
 import com.square63.caremap.webapi.requests.GenericGetRequest;
+import com.square63.caremap.webapi.requests.InsertGiverExperienceRequest;
 import com.square63.caremap.webapi.requests.InsertUserLangRequest;
 import com.square63.caremap.webapi.responses.MainResponse;
 import com.square63.caremap.webapi.webservices.WebServiceFactory;
@@ -109,6 +110,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
         toolbarTitleRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                insertExperience();
                 UIHelper.openActivity(PersonalInfoActivity.this,AboutActivity.class);
                      }
         });
@@ -155,6 +157,21 @@ public class PersonalInfoActivity extends AppCompatActivity {
             }
         });
 
+    }
+    private void insertExperience(){
+        InsertGiverExperienceRequest experienceRequest = new InsertGiverExperienceRequest();
+        PreferenceHelper.getInstance().init(this);
+        experienceRequest.setCaregiverID(PreferenceHelper.getInstance().getString(Constants.GIVER_ID,""));
+        experienceRequest.setYears(binding.edtExperience.getText().toString());
+        experienceRequest.setDesiredWage(binding.edtHourlyRate.getText().toString());
+        experienceRequest.setAvailabilityDistance(binding.txtDistance.getText().toString());
+        WebServiceFactory.getInstance().init(this);
+        WebServiceFactory.getInstance().apiAddExperience(experienceRequest, new ApiCallback() {
+            @Override
+            public void onSuccess(MainResponse mainResponse) {
+
+            }
+        });
     }
     private void getAllLang(){
         WebServiceFactory.getInstance().init(this);

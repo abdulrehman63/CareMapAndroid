@@ -85,18 +85,21 @@ public class LicenseDialoge extends DialogFragment {
             public void onClick(View v) {
                 addLicense();
 
-                dismiss();
+
 
             }
         });
     }
     private void addLicense(){
+        UIHelper.showAlert(Constants.Success,Constants.license_added,getContext());
+        dismiss();
         WebServiceFactory.getInstance().init(getContext());
         binding.getLicenseModel().setCaregiverID(PreferenceHelper.getInstance().getString(Constants.GIVER_ID,""));
         WebServiceFactory.getInstance().apiAddLicense(binding.getLicenseModel(), new ApiCallback() {
             @Override
             public void onSuccess(MainResponse mainResponse) {
-                UIHelper.showAlert(Constants.Success,Constants.license_added,getContext());
+
+
             }
         });
     }

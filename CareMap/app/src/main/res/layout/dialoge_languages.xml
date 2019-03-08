@@ -24,11 +24,11 @@
         <android.support.v7.widget.SearchView
             android:id="@+id/searchView"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="@dimen/x46"
             android:layout_gravity="center"
             android:layout_marginStart="5dp"
             android:layout_weight="1"
-            android:layout_margin="10dp"
+            android:layout_margin="@dimen/x10"
             android:gravity="center"
 
             android:background="@drawable/search_bg"
@@ -38,7 +38,7 @@
     <View
         android:id="@+id/view"
         android:layout_width="match_parent"
-        android:layout_height="35dp"
+        android:layout_height="@dimen/x35"
         android:background="@color/line_color"
         android:layout_below="@+id/lnrSearch"/>
     <!-- TODO: Update blank fragment layout -->

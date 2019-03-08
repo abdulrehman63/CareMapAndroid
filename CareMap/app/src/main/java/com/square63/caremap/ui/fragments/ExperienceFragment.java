@@ -64,11 +64,11 @@ public class ExperienceFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         ArrayList<SkillsModel> skillsModelArrayList = new ArrayList<>();
-        for(int i = 0;i < 5 ; i++){
+       /* for(int i = 0;i < 1 ; i++){
             SkillsModel skillsModel = new SkillsModel();
             skillsModelArrayList.add(skillsModel);
         }
-        setRecyclerView(skillsModelArrayList);
+        setRecyclerView(skillsModelArrayList);*/
     }
     private void setRecyclerView(ArrayList<SkillsModel> data) {
         experienceAdapter=new ExperienceAdapter(getContext(), data);

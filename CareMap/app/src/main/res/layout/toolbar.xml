@@ -6,13 +6,13 @@
     android:id="@+id/toolbar"
     app:contentInsetStart="0dp"
     android:layout_width="match_parent"
-    android:layout_height="?attr/actionBarSize"
+    android:layout_height="@dimen/x53"
     android:background="@android:color/transparent">
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/parent"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize">
+        android:layout_height="@dimen/x53">
 
         <ImageButton
             android:id="@+id/imgBackbtn"

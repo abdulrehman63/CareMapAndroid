@@ -38,11 +38,11 @@
         android:layout_height="wrap_content"
         android:text="Credentials"
         android:textAllCaps="true"
-        android:textSize="14sp"
+        android:textSize="@dimen/s14"
         android:background="@color/line_color_light"
         app:layout_constraintStart_toStartOf="parent"
 
-        android:padding="10dp"/>
+        android:padding="@dimen/x10"/>
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
@@ -52,7 +52,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
 
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="@dimen/x16"
 
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtCredentials">
@@ -65,11 +65,11 @@
         android:layout_height="wrap_content"
         android:text="Skills"
         android:textAllCaps="true"
-        android:textSize="14sp"
+        android:textSize="@dimen/s14"
         android:background="@color/line_color_light"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/recyclerViewServices"
-        android:padding="10dp"/>
+        android:padding="@dimen/x10"/>
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
@@ -78,7 +78,7 @@
         android:id="@+id/recyclerViewSkills"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="@dimen/x16"
         android:nestedScrollingEnabled="false"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtSkills">
@@ -90,11 +90,11 @@
         android:layout_height="wrap_content"
         android:text="Services"
         android:textAllCaps="true"
-        android:textSize="14sp"
+        android:textSize="@dimen/s14"
         android:background="@color/line_color_light"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/recyclerView"
-        android:padding="10dp"/>
+        android:padding="@dimen/x10"/>
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
@@ -103,7 +103,7 @@
         android:id="@+id/recyclerViewServices"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="@dimen/x16"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtServices">
 

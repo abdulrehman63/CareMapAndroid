@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="40dp"
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="@dimen/x40"
     android:layout_height="wrap_content">
     <RelativeLayout
         android:id="@+id/relMain"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="@dimen/x40"
+        android:layout_height="@dimen/x40"
         android:background="@drawable/day_rectangle">
         <ImageView
             android:id="@+id/imgDot"
-            android:layout_width="8dp"
-            android:layout_height="8dp"
+            android:layout_width="@dimen/x8"
+            android:layout_height="@dimen/x8"
             android:src="@drawable/red_circle"
             android:layout_centerInParent="true"/>
     </RelativeLayout>

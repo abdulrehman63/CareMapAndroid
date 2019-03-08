@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_gravity="center"
     android:background="@android:color/white"
     tools:context=".ui.DaysSelectionActivity">
 
@@ -16,6 +17,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/x24"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/include">
     <LinearLayout
 
         android:layout_width="wrap_content"
@@ -52,11 +60,11 @@
         android:id="@+id/lnrDays"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/include"
+
         app:layout_constraintStart_toStartOf="@id/recyclerView"
         app:layout_constraintEnd_toEndOf="@id/recyclerView"
 
-        android:layout_marginTop="24dp"
+
         android:orientation="horizontal">
         <TextView
             android:layout_width="40dp"
@@ -113,8 +121,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
-        android:layout_marginTop="16dp"
-
+        android:layout_marginTop="@dimen/x16"
+        tools:listitem="@layout/list_item_day"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/lnrDays">
 
@@ -123,7 +131,7 @@
         android:layout_width="3dp"
         android:layout_height="300dp"
         android:background="@android:color/white"
-        app:layout_constraintTop_toBottomOf="@+id/include"
+
         app:layout_constraintEnd_toEndOf="@id/recyclerView"
 
 
@@ -137,4 +145,5 @@
         app:layout_constraintStart_toStartOf="@id/recyclerView"
 
         />
+    </android.support.constraint.ConstraintLayout>
 </android.support.constraint.ConstraintLayout>

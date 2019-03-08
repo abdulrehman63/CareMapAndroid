@@ -4,6 +4,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.square63.caremap.models.InterestModel;
 import com.square63.caremap.models.chatModule.Message;
+import com.square63.caremap.models.chatModule.Thread;
 import com.square63.caremap.models.seekerModels.CareSeeker;
 import com.square63.caremap.models.seekerModels.Country;
 import com.square63.caremap.models.seekerModels.Senior;
@@ -52,6 +53,18 @@ public class GiverResultResponse {
 
     @SerializedName("userInterests")
     private ArrayList<InterestModel> interestModelArrayList;
+
+    @SerializedName("seniorInterests")
+    private ArrayList<InterestModel> seniorInterests;
+
+    public ArrayList<InterestModel> getSeniorInterests() {
+        return seniorInterests;
+    }
+
+    public void setSeniorInterests(ArrayList<InterestModel> seniorInterests) {
+        this.seniorInterests = seniorInterests;
+    }
+
     @SerializedName("messages")
     @Expose
     private ArrayList<Message> messages = new ArrayList<>();
@@ -77,6 +90,18 @@ public class GiverResultResponse {
 
     public void setSeniors(ArrayList<Senior> seniors) {
         this.seniors = seniors;
+    }
+
+    @SerializedName("threads")
+    @Expose
+    private ArrayList<Thread> threadArrayList = new ArrayList<>();
+
+    public ArrayList<Thread> getThreadArrayList() {
+        return threadArrayList;
+    }
+
+    public void setThreadArrayList(ArrayList<Thread> threadArrayList) {
+        this.threadArrayList = threadArrayList;
     }
 
     @SerializedName("seniors")

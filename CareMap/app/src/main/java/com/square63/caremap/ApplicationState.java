@@ -24,6 +24,9 @@ public class ApplicationState {
             instance = new ApplicationState();
         return instance;
     }
+    public void clearInstance(){
+        instance =null;
+    }
     public  void init(Context context){
         this.context = context;
     }

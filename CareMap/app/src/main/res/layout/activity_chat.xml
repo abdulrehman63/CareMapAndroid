@@ -17,16 +17,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
     <TextView
+        android:id="@+id/txtNoMessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/black"
         android:background="@drawable/chat_title_bg"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="66dp"
-        android:layout_marginTop="8dp"
-        android:textSize="17sp"
-
-        android:padding="6dp"
+        android:layout_marginStart="@dimen/x24"
+        android:layout_marginEnd="@dimen/x60"
+        android:layout_marginTop="@dimen/x8"
+        android:textSize="@dimen/s16"
+        android:visibility="gone"
+        android:padding="@dimen/x8"
         android:text="Welcome to Care Map, you currently have no messages. Please visit the marketplace."/>
     <ListView
         android:layout_width="match_parent"
@@ -60,10 +61,10 @@
             android:layout_weight="2"
             android:ems="10"
             android:padding="5dp"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="@dimen/x10"
             android:background="@drawable/chat_bg"
             android:hint="New Message"
-            android:textSize="14sp"
+            android:textSize="@dimen/s14"
             android:textColor="@color/text_grey"
             android:inputType="text"
             android:paddingHorizontal="10dp"
@@ -75,9 +76,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:scaleType="fitCenter"
-            android:padding="10dp"
+            android:padding="@dimen/x10"
             android:textStyle="bold"
-            android:layout_marginHorizontal="10dp"
+            android:layout_marginHorizontal="@dimen/x10"
             android:text="Send"
             android:textColor="@color/text_grey"
             android:onClick="sendMessage"/>

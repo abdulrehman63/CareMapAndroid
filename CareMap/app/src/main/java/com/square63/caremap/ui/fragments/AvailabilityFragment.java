@@ -36,11 +36,16 @@ public class AvailabilityFragment extends Fragment {
     private RecyclerView recyclerView;
     private DaysAdpater daysAdapter;
     private ArrayList<DayModel> data;
+    private String userID;
 
     public AvailabilityFragment() {
         // Required empty public constructor
     }
 
+    public AvailabilityFragment(String userId) {
+        this.userID = userId;
+        // Required empty public constructor
+    }
 
 
     public static AvailabilityFragment newInstance(String param1, String param2) {
@@ -64,8 +69,8 @@ public class AvailabilityFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view =  inflater.inflate(R.layout.fragment_availability, container, false);
-        return  view;
+        View view = inflater.inflate(R.layout.fragment_availability, container, false);
+        return view;
     }
 
     @Override
@@ -73,25 +78,25 @@ public class AvailabilityFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         data = new ArrayList<>();
-        for (int i= 1; i <=  7; i++){
+        for (int i = 1; i <= 7; i++) {
             DayModel dayModel = new DayModel();
             dayModel.setDay(i);
             dayModel.setDayTime(1);
             data.add(dayModel);
         }
-        for (int i= 1; i <=  7; i++){
+        for (int i = 1; i <= 7; i++) {
             DayModel dayModel = new DayModel();
             dayModel.setDay(i);
             dayModel.setDayTime(2);
             data.add(dayModel);
         }
-        for (int i= 1; i <=  7; i++){
+        for (int i = 1; i <= 7; i++) {
             DayModel dayModel = new DayModel();
             dayModel.setDay(i);
             dayModel.setDayTime(3);
             data.add(dayModel);
         }
-        for (int i= 1; i <=  7; i++){
+        for (int i = 1; i <= 7; i++) {
             DayModel dayModel = new DayModel();
             dayModel.setDay(i);
             dayModel.setDayTime(4);
@@ -100,16 +105,19 @@ public class AvailabilityFragment extends Fragment {
         setRecyclerView(data);
         GetGiverSkilsById giverSkilsById = new GetGiverSkilsById();
         PreferenceHelper.getInstance().init(getContext());
-        giverSkilsById.getFilterAvailability().setUserId(PreferenceHelper.getInstance().getString(Constants.USER_ID,""));
+        if (userID != null)
+            giverSkilsById.getFilterAvailability().setUserId(userID);
+        else
+            giverSkilsById.getFilterAvailability().setUserId(PreferenceHelper.getInstance().getString(Constants.USER_ID, ""));
         getAvailability(giverSkilsById);
 
     }
 
 
     private void setRecyclerView(ArrayList<DayModel> data) {
-        daysAdapter=new DaysAdpater(getActivity(), data);
+        daysAdapter = new DaysAdpater(getActivity(), data,true);
         recyclerView.setAdapter(daysAdapter);
-        RecyclerView.LayoutManager mManager =new GridLayoutManager(getContext(), 7);
+        RecyclerView.LayoutManager mManager = new GridLayoutManager(getContext(), 7);
         recyclerView.setLayoutManager(mManager);
         recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getContext(), new RecyclerItemClickListener.OnItemClickListener() {
             @Override
@@ -122,22 +130,25 @@ public class AvailabilityFragment extends Fragment {
         }));
 
     }
-    private void getAvailability(GetGiverSkilsById insertAvailabilityRequest){
+
+    private void getAvailability(GetGiverSkilsById insertAvailabilityRequest) {
         WebServiceFactory.getInstance().init(getContext());
         WebServiceFactory.getInstance().apiGetGiverAvailById(insertAvailabilityRequest, new ApiCallback() {
             @Override
             public void onSuccess(MainResponse mainResponse) {
-                ArrayList<Availability> dayModels = mainResponse.getResultResponse().getAvailabilities();
-                ApplicationState.getInstance().setAvailabilityArrayList(dayModels);
-                for (int i= 0; i < data.size(); i++){
-                   for (int j =0 ; j < dayModels.size();j++){
-                       if(data.get(i).getDayTime() == Integer.parseInt(dayModels.get(j).getFromHour()) && data.get(i).getDay() == dayModels.get(j).getDayOfWeek()){
-                           data.get(i).setSelected(true);
-                           break;
-                       }
-                   }
+                if(mainResponse.getResultResponse().getAvailabilities() != null) {
+                    ArrayList<Availability> dayModels = mainResponse.getResultResponse().getAvailabilities();
+                    ApplicationState.getInstance().setAvailabilityArrayList(dayModels);
+                    for (int i = 0; i < data.size(); i++) {
+                        for (int j = 0; j < dayModels.size(); j++) {
+                            if (data.get(i).getDayTime() == Integer.parseInt(dayModels.get(j).getFromHour()) && data.get(i).getDay() == dayModels.get(j).getDayOfWeek()) {
+                                data.get(i).setSelected(true);
+                                break;
+                            }
+                        }
+                    }
+                    daysAdapter.setData(data);
                 }
-                daysAdapter.setData(data);
             }
         });
     }

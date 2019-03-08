@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="textlarge">16sp</dimen>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="s14">16sp</dimen>
+    <dimen name="s15">22sp</dimen>
+
+
+    <dimen name="x20">30dp</dimen>
+    <dimen name="x8">12dp</dimen>
+    <dimen name="x46">66dp</dimen>
+    <dimen name="x16">24dp</dimen>
+    <dimen name="x5">8dp</dimen>
+    <dimen name="s16">24sp</dimen>
+    <dimen name="x10">15dp</dimen>
+    <dimen name="x62">90dp</dimen>
+    <dimen name="x32">48dp</dimen>
+    <dimen name="x36">50dp</dimen>
+    <dimen name="x60">90dp</dimen>
+    <dimen name="x24">34dp</dimen>
+    <dimen name="x82">110dp</dimen>
+    <dimen name="x50">70dp</dimen>
+    <dimen name="x56">75dp</dimen>
+    <dimen name="x52">72dp</dimen>
+    <dimen name="x3">5dp</dimen>
+    <dimen name="x55">75dp</dimen>
+    <dimen name="s26">34sp</dimen>
+    <dimen name="s12">16sp</dimen>
+    <dimen name="s11">14sp</dimen>
+
+    <dimen name="x280">400dp</dimen>
+    <dimen name="x250">280dp</dimen>
+    <dimen name="x15">20dp</dimen>
+    <dimen name="x12">16dp</dimen>
+    <dimen name="s18">22sp</dimen>
+    <dimen name="x35">45dp</dimen>
+    <dimen name="x100">140dp</dimen>
+    <dimen name="x30">40dp</dimen>
+    <dimen name="x40">55dp</dimen>
+    <dimen name="x130">180dp</dimen>
+    <dimen name="x88">120dp</dimen>
+    <dimen name="x80">112dp</dimen>
+    <dimen name="x96">125dp</dimen>
+    <dimen name="x94">127dp</dimen>
+    <dimen name="x300">400dp</dimen>
+    <dimen name="x78">110dp</dimen>
+    <dimen name="x53">73dp</dimen>
+</resources>

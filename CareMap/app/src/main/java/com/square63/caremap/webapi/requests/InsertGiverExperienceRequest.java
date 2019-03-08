@@ -5,9 +5,28 @@ public class InsertGiverExperienceRequest {
     private String CaregiverID;
     private String FromDate;
     private String ToDate;
-    private int Years;
+    private String Years;
     private String TitlePosition;
     private String Employer;
+    private String AvailabilityDistance;
+
+    public String getAvailabilityDistance() {
+        return AvailabilityDistance;
+    }
+
+    public void setAvailabilityDistance(String availabilityDistance) {
+        AvailabilityDistance = availabilityDistance;
+    }
+
+    public String getDesiredWage() {
+        return DesiredWage;
+    }
+
+    public void setDesiredWage(String desiredWage) {
+        DesiredWage = desiredWage;
+    }
+
+    private String DesiredWage;
 
     public String getCaregiverID() {
         return CaregiverID;
@@ -25,6 +44,14 @@ public class InsertGiverExperienceRequest {
         FromDate = fromDate;
     }
 
+    public String getYears() {
+        return Years;
+    }
+
+    public void setYears(String years) {
+        Years = years;
+    }
+
     public String getToDate() {
         return ToDate;
     }
@@ -33,13 +60,7 @@ public class InsertGiverExperienceRequest {
         ToDate = toDate;
     }
 
-    public int getYears() {
-        return Years;
-    }
 
-    public void setYears(int years) {
-        Years = years;
-    }
 
     public String getTitlePosition() {
         return TitlePosition;

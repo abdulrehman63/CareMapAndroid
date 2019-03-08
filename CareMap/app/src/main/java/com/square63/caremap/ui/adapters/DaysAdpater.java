@@ -24,6 +24,7 @@ public class DaysAdpater extends RecyclerView.Adapter<DaysAdpater.Viewholder> {
     private ArrayList<DayModel> data;
     private ISkills iSkills;
     private ArrayList<DayModel> filteredData;
+    private boolean isProfile = false;
 
     public DaysAdpater(Context context, ArrayList<DayModel> data,ISkills iSkills) {
         this.context = context;
@@ -36,6 +37,13 @@ public class DaysAdpater extends RecyclerView.Adapter<DaysAdpater.Viewholder> {
         this.data = data;
         this.filteredData = data;
         this.iSkills = iSkills;
+    }
+    public DaysAdpater(Context context, ArrayList<DayModel> data,boolean isProfile) {
+        this.context = context;
+        this.data = data;
+        this.filteredData = data;
+        this.iSkills = iSkills;
+        this.isProfile = true;
     }
 
     @Override
@@ -54,19 +62,21 @@ public class DaysAdpater extends RecyclerView.Adapter<DaysAdpater.Viewholder> {
             } else {
                 holder.imgDot.setVisibility(View.GONE);
             }
+            if(!isProfile) {
 
-            holder.relMain.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (filteredData.get(position).isSelected())
-                        filteredData.get(position).setSelected(false);
-                    else
-                        filteredData.get(position).setSelected(true);
-                    notifyDataSetChanged();
-                     iSkills.selectedSkills(filteredData);
+                holder.relMain.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (filteredData.get(position).isSelected())
+                            filteredData.get(position).setSelected(false);
+                        else
+                            filteredData.get(position).setSelected(true);
+                        notifyDataSetChanged();
+                        iSkills.selectedSkills(filteredData);
 
-                }
-            });
+                    }
+                });
+            }
         }
     }
     public void setData(ArrayList<DayModel> dayModelArrayList){

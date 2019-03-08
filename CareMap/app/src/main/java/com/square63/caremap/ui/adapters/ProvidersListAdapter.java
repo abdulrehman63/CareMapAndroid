@@ -13,6 +13,7 @@ import com.square63.caremap.constants.Constants;
 import com.square63.caremap.models.ProviderChildModel;
 import com.square63.caremap.models.ProviderGroupModel;
 import com.square63.caremap.ui.ChatActivity;
+import com.square63.caremap.ui.ProviderProfileActivity;
 import com.square63.caremap.ui.views.ChildsViewHolder;
 import com.square63.caremap.ui.views.GroupsViewHolder;
 
@@ -39,7 +40,7 @@ public class ProvidersListAdapter extends ExpandableRecyclerAdapter<ProviderGrou
 
     @Override
     public ChildsViewHolder onCreateChildViewHolder(@NonNull ViewGroup childViewGroup, int viewType) {
-        View ingredientView = mInflater.inflate(R.layout.list_item_child_provider, childViewGroup, false);
+        View ingredientView = mInflater.inflate(R.layout.list_item_child, childViewGroup, false);
         return new ChildsViewHolder(ingredientView);
     }
 
@@ -58,6 +59,16 @@ public class ProvidersListAdapter extends ExpandableRecyclerAdapter<ProviderGrou
             public void onClick(View v) {
                 Intent intent = new Intent(context, ChatActivity.class);
                 intent.putExtra(Constants.ID,ingredient.getId());
+                intent.putExtra(Constants.PREF_NAMES,ingredient.getName());
+                context.startActivity(intent);
+            }
+        });
+        ingredientViewHolder.lnrProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, ProviderProfileActivity.class);
+                intent.putExtra(Constants.USER_ID,ingredient.getId());
+                intent.putExtra(Constants.GIVER_ID,ingredient.getGiverId());
                 context.startActivity(intent);
             }
         });

@@ -45,11 +45,16 @@ public class LoginActivity extends AppCompatActivity {
         WebServiceFactory.getInstance().apiLogin(binding.getLoginModel(), new ApiCallback() {
             @Override
             public void onSuccess(MainResponse mainResponse) {
-                if(mainResponse.getResultResponse().getData().getUserRole().equalsIgnoreCase(Constants.caregiver)){
-                    PreferenceHelper.getInstance().setString(Constants.GIVER_ID,mainResponse.getResultResponse().getData().getId());
-                    PreferenceHelper.getInstance().setString(Constants.ID,"1");
-                    PreferenceHelper.getInstance().setString(Constants.TYPE,Constants.PROVIDER);
-                    UIHelper.openActivity(LoginActivity.this,HomeActivity.class);
+                if(mainResponse.getResultResponse().getStatus().equalsIgnoreCase(Constants.error)){
+                    UIHelper.showAlert("Login Failed","Please check your login credentials and try again",LoginActivity.this);
+                }
+                else {
+                    if (mainResponse.getResultResponse().getData().getUserRole().equalsIgnoreCase(Constants.caregiver)) {
+                        PreferenceHelper.getInstance().setString(Constants.GIVER_ID, mainResponse.getResultResponse().getData().getId());
+                        PreferenceHelper.getInstance().setString(Constants.ID, "1");
+                        PreferenceHelper.getInstance().setString(Constants.TYPE, Constants.PROVIDER);
+                        UIHelper.openActivity(LoginActivity.this, HomeActivity.class);
+                    }
                 }
             }
         });

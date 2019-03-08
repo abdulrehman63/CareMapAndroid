@@ -31,7 +31,7 @@ public class Constants {
     public static final String S_MALE= "male";
     public static final String FEMALE= "female";
     public static final String SENIOR_ID= "seniorId";
-
+    public static final String S_BINARY = "binary";
 
     public static final String USER_ID = "userId";
 }

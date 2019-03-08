@@ -84,6 +84,11 @@ public class CreateProviderProfileActivity extends AppCompatActivity implements 
                         registrationModel.setLastName(binding.getProfileModel().getLastName());
                         registrationModel.setGender("Male");
                         registrationModel.setPostalCode("1234");
+                        registrationModel.setDateOfBirth(binding.getProfileModel().getDob());
+                        registrationModel.setState(binding.getProfileModel().getProvince());
+                        registrationModel.setAddress(binding.getProfileModel().getAddress1());
+                        registrationModel.setAddress2(binding.getProfileModel().getAddress2());
+                        registrationModel.setPhone(binding.getProfileModel().getPhoneNumber());
                         apiCreateGiver();
                         // UIHelper.openActivity(CreateProviderProfileActivity.this,PersonalInfoActivity.class);
                     } else {
@@ -101,7 +106,12 @@ public class CreateProviderProfileActivity extends AppCompatActivity implements 
             if(caregiver !=null){
                 profileModel.setFirstName(caregiver.getUser().getFirstName());
                 profileModel.setLastName(caregiver.getUser().getLastName());
+                profileModel.setDob(caregiver.getUser().getDateOfBirth());
                 profileModel.setCity(caregiver.getUser().getCity());
+                profileModel.setProvince(caregiver.getUser().getState());
+                profileModel.setPhoneNumber(caregiver.getUser().getPhone());
+                profileModel.setAddress1(caregiver.getUser().getAddress());
+                profileModel.setAddress2(caregiver.getUser().getAddress2());
 
             }
         }

@@ -43,8 +43,8 @@
 
                     <com.square63.caremap.utils.CircleImageView
                         android:id="@+id/imgProfile"
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
+                        android:layout_width="@dimen/x60"
+                        android:layout_height="@dimen/x60"
                         android:layout_gravity="center"
                         android:layout_marginTop="8dp"
                         android:onClick="onPickImageClick"
@@ -54,8 +54,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginBottom="8dp"
-                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="@dimen/x8"
+                        android:layout_marginTop="@dimen/x8"
                         android:text="Add Photo"
                         android:textColor="@color/white" />
                 </LinearLayout>
@@ -64,7 +64,7 @@
                     style="@style/profile_margin"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="@dimen/x8"
                     android:orientation="horizontal">
 
                     <LinearLayout

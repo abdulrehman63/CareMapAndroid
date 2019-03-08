@@ -9,6 +9,18 @@ public class GetSeekersRequest {
     @SerializedName("filterSenior")
     @Expose
     private FilterSenior filterSenior = new FilterSenior();
+    @SerializedName("filterSeniorInterest")
+    @Expose
+    private FilterSenior filterSeniorInterest = new FilterSenior();
+
+    public FilterSenior getFilterSeniorInterest() {
+        return filterSeniorInterest;
+    }
+
+    public void setFilterSeniorInterest(FilterSenior filterSeniorInterest) {
+        this.filterSeniorInterest = filterSeniorInterest;
+    }
+
     @SerializedName("filterCareseeker")
     @Expose
     private FilterSenior filterCareseeker = new FilterSenior();
