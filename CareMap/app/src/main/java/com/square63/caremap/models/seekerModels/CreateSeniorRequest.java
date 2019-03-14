@@ -11,6 +11,19 @@ public class CreateSeniorRequest extends BaseObservable {
     @SerializedName("CareSeekerID")
     @Expose
     private String careSeekerID;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    @SerializedName("Id")
+    @Expose
+
+    private String id;
     @SerializedName("Name")
     @Expose
     private String name;

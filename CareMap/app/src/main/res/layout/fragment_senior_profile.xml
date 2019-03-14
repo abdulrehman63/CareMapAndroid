@@ -125,11 +125,14 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/view3" />
                 <TextView
-
+                    android:id="@+id/txtReason"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/x5"
-                    android:text="Cancer/Bathing and Toileting"
+                    android:paddingStart="@dimen/x16"
+                    android:paddingEnd="@dimen/x16"
+                    android:maxLines="1"
+                    android:text=""
                     android:textColor="@color/text_grey"
                     android:textSize="@dimen/s14"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -154,17 +157,18 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/view3" />
                 <TextView
-
+                    android:id="@+id/txtMobility"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/x5"
-                    android:text="Mobile + Cane"
+                    android:text=""
                     android:textSize="@dimen/s14"
                     android:textColor="@color/text_grey"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/view3" />
                 <ImageView
+                    android:id="@+id/imgAvatar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/x5"

@@ -166,16 +166,17 @@ public class GiverResultResponse {
         this.mobilityID = mobilityID;
     }
 
-    public Object getMobility() {
-        return mobility;
-    }
-
-    public void setMobility(Object mobility) {
-        this.mobility = mobility;
-    }
 
     public String getHouseNumber() {
         return houseNumber;
+    }
+
+    public String getMobility() {
+        return mobility;
+    }
+
+    public void setMobility(String mobility) {
+        this.mobility = mobility;
     }
 
     public void setHouseNumber(String houseNumber) {
@@ -265,7 +266,7 @@ public class GiverResultResponse {
     private String mobilityID;
     @SerializedName("mobility")
     @Expose
-    private Object mobility;
+    private String mobility;
     @SerializedName("houseNumber")
     @Expose
     private String houseNumber;

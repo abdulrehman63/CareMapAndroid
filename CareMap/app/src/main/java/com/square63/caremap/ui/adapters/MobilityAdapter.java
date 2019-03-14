@@ -27,6 +27,12 @@ public class MobilityAdapter extends RecyclerView.Adapter<MobilityAdapter.Viewho
         this.filteredData = data;
         this.iSkills = iSkills;
     }
+    public MobilityAdapter(Context context, ArrayList<InterestModel> data,ISkills iSkills) {
+        this.context = context;
+        this.data = data;
+        this.filteredData = data;
+        this.iSkills = iSkills;
+    }
 
     @Override
     public MobilityAdapter.Viewholder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -58,7 +64,7 @@ public class MobilityAdapter extends RecyclerView.Adapter<MobilityAdapter.Viewho
                     }
 
                     filteredData.get(position).setSelected(true);
-
+                    iSkills.selectedSkills(filteredData.get(position).getInterestID());
                     notifyDataSetChanged();
 
                     // iSkills.selectedSkills(filteredData);
@@ -89,7 +95,7 @@ public class MobilityAdapter extends RecyclerView.Adapter<MobilityAdapter.Viewho
 
 
     public interface ISkills {
-        public void selectedSkills(ArrayList<String> policies);
+        public void selectedSkills(String mobilityId);
 
     }
 }

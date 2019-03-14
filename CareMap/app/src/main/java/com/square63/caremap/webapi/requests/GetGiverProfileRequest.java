@@ -8,6 +8,18 @@ public class GetGiverProfileRequest {
     @SerializedName("filterUser")
     @Expose
     private FilterCaregiver filterCaregiver = new FilterCaregiver();
+    @SerializedName("filterSeniorSkill")
+    @Expose
+    private FilterCaregiver filterSeniorSkills = new FilterCaregiver();
+
+    public FilterCaregiver getFilterSeniorSkills() {
+        return filterSeniorSkills;
+    }
+
+    public void setFilterSeniorSkills(FilterCaregiver filterSeniorSkills) {
+        this.filterSeniorSkills = filterSeniorSkills;
+    }
+
     @SerializedName("offset")
     @Expose
     private String offset = "0";

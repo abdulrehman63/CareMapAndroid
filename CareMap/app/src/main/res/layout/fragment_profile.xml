@@ -12,10 +12,10 @@
     <android.support.v4.widget.NestedScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
-        android:background="@color/white"
+        android:layout_height="wrap_content"
 
         android:layout_below="@+id/include"
-        android:layout_height="wrap_content">
+        android:background="@color/white">
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
@@ -191,8 +191,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingStart="5dp"
-                android:textSize="@dimen/s12"
                 android:text="years \nexperience"
+                android:textSize="@dimen/s12"
                 app:layout_constraintBottom_toBottomOf="@+id/view2"
                 app:layout_constraintEnd_toEndOf="@+id/view2"
                 app:layout_constraintStart_toEndOf="@+id/txtWage"
@@ -220,10 +220,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
+                android:drawablePadding="5dp"
+                android:drawableStart="@drawable/locationmarkerblue_2x"
                 android:text="0 "
                 android:textSize="@dimen/s26"
-                android:drawableStart="@drawable/locationmarkerblue_2x"
-                android:drawablePadding="5dp"
                 app:layout_constraintBottom_toBottomOf="@+id/view3"
                 app:layout_constraintEnd_toStartOf="@+id/txtDrive"
                 app:layout_constraintHorizontal_chainStyle="packed"
@@ -237,8 +237,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
                 android:paddingStart="5dp"
-                android:textSize="@dimen/s14"
                 android:text="km \ndrive"
+                android:textSize="@dimen/s14"
                 app:layout_constraintBottom_toBottomOf="@+id/view3"
                 app:layout_constraintEnd_toEndOf="@+id/view3"
                 app:layout_constraintStart_toStartOf="@+id/view3"
@@ -250,8 +250,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/x10"
                 android:text="Language(s)"
-                android:textSize="@dimen/s14"
                 android:textColor="@color/black"
+                android:textSize="@dimen/s14"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/view3" />
@@ -262,31 +262,31 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/x3"
                 android:gravity="center"
+                android:maxLines="1"
                 android:paddingEnd="8dp"
                 android:paddingStart="8dp"
-                android:textSize="@dimen/s14"
                 android:textColor="@color/text_grey"
+                android:textSize="@dimen/s14"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txtlan" />
 
             <View
                 android:id="@+id/viw4"
+                style="@style/line_style"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginTop="@dimen/x10"
-                android:layout_marginStart="24dp"
                 android:layout_marginEnd="24dp"
-                style="@style/line_style"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="@dimen/x10"
                 app:layout_constraintTop_toBottomOf="@+id/txtLanguage" />
 
-            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
+            <LinearLayout
                 android:id="@+id/tabAvailability"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/x280"
-                android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
                 android:orientation="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -297,10 +297,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:minHeight="?actionBarSize"
-                    app:tabMaxWidth="0dp"
                     app:tabGravity="fill"
                     app:tabIndicatorColor="@color/red"
                     app:tabIndicatorHeight="4dp"
+                    app:tabMaxWidth="0dp"
                     app:tabMode="fixed"
                     app:tabTextAppearance="@style/CustomTextAppearanceTab"
 
@@ -314,21 +314,20 @@
 
             <View
                 android:id="@+id/viw5"
+                style="@style/line_style"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginTop="@dimen/x5"
-                android:layout_marginStart="24dp"
                 android:layout_marginEnd="24dp"
-                style="@style/line_style"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="@dimen/x5"
                 app:layout_constraintTop_toBottomOf="@+id/tabAvailability" />
 
-            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
+            <LinearLayout
                 android:id="@+id/tabSkills"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/x250"
-                android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
                 android:orientation="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -339,15 +338,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:minHeight="?actionBarSize"
-                    app:tabTextAppearance="@style/CustomTextAppearanceTab"
                     app:tabGravity="fill"
-                    app:tabMaxWidth="0dp"
                     app:tabIndicatorColor="@color/red"
-
                     app:tabIndicatorHeight="4dp"
+                    app:tabMaxWidth="0dp"
                     app:tabMode="fixed"
-                    app:tabTextColor="@color/black"
-                    ></android.support.design.widget.TabLayout>
+                    app:tabTextAppearance="@style/CustomTextAppearanceTab"
+                    app:tabTextColor="@color/black"></android.support.design.widget.TabLayout>
 
                 <android.support.v4.view.ViewPager
                     android:id="@+id/viewPagerSkills"

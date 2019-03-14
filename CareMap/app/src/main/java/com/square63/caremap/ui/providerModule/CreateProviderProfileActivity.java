@@ -47,6 +47,7 @@ public class CreateProviderProfileActivity extends AppCompatActivity implements 
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_create_provider_profile);
         registrationModel = (RegistrationModel) getIntent().getSerializableExtra(Constants.DATA);
+        PreferenceHelper.getInstance().init(this);
         initToolBar();
     }
 
@@ -74,9 +75,9 @@ public class CreateProviderProfileActivity extends AppCompatActivity implements 
         toolbarTitleRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(ApplicationState.getInstance().isFromEdit()){
-                    UIHelper.openActivity(CreateProviderProfileActivity.this,PersonalInfoActivity.class);
-                }else {
+                if (ApplicationState.getInstance().isFromEdit()) {
+                    UIHelper.openActivity(CreateProviderProfileActivity.this, PersonalInfoActivity.class);
+                } else {
                     if (validations.validateCreateProfile(binding.txtFirstName, binding.edtLastName, binding.edtDob, binding.edtPhone, binding.edtCity, binding.edtProvince, binding.edtAddress1
                             , binding.fName, binding.lName, binding.dob, binding.pNumber, binding.city, binding.province, binding.addres1) == Constants.SUCCESS) {
                         registrationModel.setCity(binding.getProfileModel().getCity());
@@ -89,7 +90,10 @@ public class CreateProviderProfileActivity extends AppCompatActivity implements 
                         registrationModel.setAddress(binding.getProfileModel().getAddress1());
                         registrationModel.setAddress2(binding.getProfileModel().getAddress2());
                         registrationModel.setPhone(binding.getProfileModel().getPhoneNumber());
-                        apiCreateGiver();
+                        if (ApplicationState.getInstance().isFromEdit())
+                            apiUpdateGiver();
+                        else
+                            apiCreateGiver();
                         // UIHelper.openActivity(CreateProviderProfileActivity.this,PersonalInfoActivity.class);
                     } else {
 
@@ -99,11 +103,12 @@ public class CreateProviderProfileActivity extends AppCompatActivity implements 
             }
         });
     }
-    private void setData(){
+
+    private void setData() {
         final ProfileModel profileModel = new ProfileModel();
-        if(ApplicationState.getInstance().isFromEdit()){
+        if (ApplicationState.getInstance().isFromEdit()) {
             Caregiver caregiver = ApplicationState.getInstance().getCaregiver();
-            if(caregiver !=null){
+            if (caregiver != null) {
                 profileModel.setFirstName(caregiver.getUser().getFirstName());
                 profileModel.setLastName(caregiver.getUser().getLastName());
                 profileModel.setDob(caregiver.getUser().getDateOfBirth());
@@ -131,7 +136,25 @@ public class CreateProviderProfileActivity extends AppCompatActivity implements 
             public void onSuccess(MainResponse mainResponse) {
                 PreferenceHelper.getInstance().setString(Constants.GIVER_ID, mainResponse.getResultResponse().getId());
                 PreferenceHelper.getInstance().setString(Constants.USER_ID, mainResponse.getResultResponse().getId2());
-                if(encodedImage != null){
+                if (encodedImage != null) {
+                    uploadImage(mainResponse.getResultResponse().getId2());
+                }
+                UIHelper.openActivity(CreateProviderProfileActivity.this, PersonalInfoActivity.class);
+            }
+        });
+    }
+
+    private void apiUpdateGiver() {
+        CreateGiverRequest createGiverRequest = new CreateGiverRequest();
+        createGiverRequest.setId(PreferenceHelper.getInstance().getString(Constants.USER_ID, ""));
+        createGiverRequest.setRegistrationModel(registrationModel);
+        WebServiceFactory.getInstance().init(this);
+        WebServiceFactory.getInstance().apiSignup(createGiverRequest, new ApiCallback() {
+            @Override
+            public void onSuccess(MainResponse mainResponse) {
+                PreferenceHelper.getInstance().setString(Constants.GIVER_ID, mainResponse.getResultResponse().getId());
+                PreferenceHelper.getInstance().setString(Constants.USER_ID, mainResponse.getResultResponse().getId2());
+                if (encodedImage != null) {
                     uploadImage(mainResponse.getResultResponse().getId2());
                 }
                 UIHelper.openActivity(CreateProviderProfileActivity.this, PersonalInfoActivity.class);
@@ -162,10 +185,11 @@ public class CreateProviderProfileActivity extends AppCompatActivity implements 
             }
         });
     }
-    private void uploadImage(String id){
+
+    private void uploadImage(String id) {
         UploadImageRequest uploadImageRequest = new UploadImageRequest();
         uploadImageRequest.setImageData(encodedImage);
-        uploadImageRequest.setTargetFilename(id+".png");
+        uploadImageRequest.setTargetFilename(id + ".png");
         WebServiceFactory.getInstance().init(this);
         WebServiceFactory.getInstance().apiInsertUserImage(uploadImageRequest, new ApiCallback() {
             @Override

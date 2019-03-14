@@ -14,6 +14,15 @@ public class CreateGiverRequest implements Serializable {
         this.registrationModel = registrationModel;
     }
 
+    public String getId() {
+        return Id;
+    }
+
+    public void setId(String id) {
+        Id = id;
+    }
+
+    private String Id;
     @SerializedName("User")
 
     private RegistrationModel registrationModel;

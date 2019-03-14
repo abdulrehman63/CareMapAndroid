@@ -24,7 +24,7 @@ import com.square63.caremap.ui.fragments.SeniorProfileFragment;
 import com.square63.caremap.utils.PreferenceHelper;
 import com.square63.caremap.utils.UIHelper;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener{
 
     public TextView mTextMessage,titileToolbar,toolbarTitleRight;
 
@@ -127,15 +127,70 @@ public class HomeActivity extends AppCompatActivity {
         mTextMessage = (TextView) findViewById(R.id.message);
         container_body = (FrameLayout) findViewById(R.id.container_body);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        navigation.setOnNavigationItemSelectedListener(this);
         initToolBar();
         type = PreferenceHelper.getInstance().getString(Constants.TYPE,"");
-        if(type.equalsIgnoreCase(Constants.PROVIDER)) {
-            addFragment(SeekerHomeFragment.newInstance(), "home");
+        if(getIntent().getStringExtra(Constants.FORM) != null){
+           //onNavigationItemSelected( navigation.getMenu().getItem(2));
+           navigation.setSelectedItemId(R.id.navigation_notifications);
         }else {
-            addFragment(HomeFragment.newInstance(), "homes");
+            if (type.equalsIgnoreCase(Constants.PROVIDER)) {
+                addFragment(SeekerHomeFragment.newInstance(), "home");
+            } else {
+                addFragment(HomeFragment.newInstance(), "homes");
+            }
         }
        // addFragment(HomeFragment.newInstance(),"home");;
     }
 
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        Fragment fragment;
+        switch (menuItem.getItemId()) {
+            case R.id.navigation_home:
+                if(!isHome) {
+
+                    if (type.equalsIgnoreCase(Constants.PROVIDER)) {
+                        addFragment(SeekerHomeFragment.newInstance(), "home");
+                    } else {
+                        addFragment(HomeFragment.newInstance(), "home");
+                    }
+                    titileToolbar.setText(R.string.title_home);
+                    imgShare.setVisibility(View.GONE);
+                    isHome = true;
+                    profile = false;
+                    message = false;
+                }
+                return true;
+            case R.id.navigation_dashboard:
+                if(!message) {
+                    addFragment(MessagesFragment.newInstance(), "MessagesFragment");
+                    titileToolbar.setText(R.string.title_dashboard);
+                    imgShare.setVisibility(View.GONE);
+                    isHome = false;
+                    profile = false;
+                    message =true;
+                }
+                return true;
+            case R.id.navigation_notifications:
+                if(!profile) {
+                    if (type.equalsIgnoreCase(Constants.PROVIDER)) {
+                        addFragment(ProfileFragment.newInstance(), "ProfileFragment");
+                        titileToolbar.setText("");
+                    } else {
+                        addFragment(SeniorProfileFragment.newInstance(), "ProfileFragment");
+                        titileToolbar.setText("F.C");
+                    }
+
+                    imgShare.setVisibility(View.VISIBLE);
+                    isHome = false;
+                    profile =true;
+                    message =false;
+                }
+
+                // toolbarTitleRight.setText("Settings");
+                return true;
+        }
+        return false;
+    }
 }

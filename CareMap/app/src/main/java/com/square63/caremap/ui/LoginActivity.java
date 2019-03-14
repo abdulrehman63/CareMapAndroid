@@ -12,8 +12,13 @@ import com.square63.caremap.models.LoginModel;
 import com.square63.caremap.utils.PreferenceHelper;
 import com.square63.caremap.utils.UIHelper;
 import com.square63.caremap.utils.Validations;
+import com.square63.caremap.webapi.Apiinterface.ApiCallBack2;
 import com.square63.caremap.webapi.Apiinterface.ApiCallback;
+import com.square63.caremap.webapi.requests.GetGiverProfileRequest;
+import com.square63.caremap.webapi.requests.GetSeekersRequest;
+import com.square63.caremap.webapi.requests.GiverRequest;
 import com.square63.caremap.webapi.responses.MainResponse;
+import com.square63.caremap.webapi.responses.MainResponse2;
 import com.square63.caremap.webapi.webservices.WebServiceFactory;
 
 public class LoginActivity extends AppCompatActivity {
@@ -50,15 +55,50 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 else {
                     if (mainResponse.getResultResponse().getData().getUserRole().equalsIgnoreCase(Constants.caregiver)) {
-                        PreferenceHelper.getInstance().setString(Constants.GIVER_ID, mainResponse.getResultResponse().getData().getId());
-                        PreferenceHelper.getInstance().setString(Constants.ID, "1");
-                        PreferenceHelper.getInstance().setString(Constants.TYPE, Constants.PROVIDER);
-                        UIHelper.openActivity(LoginActivity.this, HomeActivity.class);
+                        PreferenceHelper.getInstance().setString(Constants.USER_ID, mainResponse.getResultResponse().getData().getId());
+                        getCareGiver(mainResponse.getResultResponse().getData().getId());
+
+                    }else {
+                        PreferenceHelper.getInstance().setString(Constants.SENIOR_ID, mainResponse.getResultResponse().getData().getId());
+                        getCareSeeker(mainResponse.getResultResponse().getData().getId());
                     }
                 }
             }
         });
     }
+    private void getCareGiver(String id){
+        WebServiceFactory.getInstance().init(this);
+        GiverRequest giverProfileRequest = new GiverRequest();
+        giverProfileRequest.getFilterCaregiver().setId(id);
+        giverProfileRequest.getFilterCaregiver().setCity("/caregiver_userid/");
+        WebServiceFactory.getInstance().apiGetAllCareGivers(giverProfileRequest, new ApiCallback() {
+            @Override
+            public void onSuccess(MainResponse mainResponse) {
+                if(mainResponse.getResultResponse().getCaregivers().size() > 0)
+                PreferenceHelper.getInstance().setString(Constants.GIVER_ID, mainResponse.getResultResponse().getCaregivers().get(0).getId());
+                PreferenceHelper.getInstance().setString(Constants.ID, "1");
+                PreferenceHelper.getInstance().setString(Constants.TYPE, Constants.PROVIDER);
+                UIHelper.openActivity(LoginActivity.this, HomeActivity.class);
+            }
+        });
+    }
+    private void getCareSeeker(String id){
+        WebServiceFactory.getInstance().init(this);
+        GetSeekersRequest giverProfileRequest = new GetSeekersRequest();
+        giverProfileRequest.getFilterCareseeker().setId(id);
+        giverProfileRequest.getFilterCareseeker().setCity("/careseeker_userid/");
+        WebServiceFactory.getInstance().apiGetSeekerById(giverProfileRequest, new ApiCallBack2() {
+            @Override
+            public void onSuccess(MainResponse2 mainResponse) {
+                if(mainResponse.getResultResponse().getCareSeekerArrayList().size() > 0)
+                PreferenceHelper.getInstance().setString(Constants.SEEKER_ID, mainResponse.getResultResponse().getCareSeekerArrayList().get(0).getId());
+                PreferenceHelper.getInstance().setString(Constants.ID, "1");
+                PreferenceHelper.getInstance().setString(Constants.TYPE, Constants.PROVIDER);
+                UIHelper.openActivity(LoginActivity.this, HomeActivity.class);
+            }
+        });
+    }
+
 
 
 }

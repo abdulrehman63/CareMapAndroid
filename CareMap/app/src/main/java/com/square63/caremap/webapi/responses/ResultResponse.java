@@ -69,6 +69,18 @@ public class ResultResponse implements Serializable{
     @SerializedName("caregiverSkills")
     private ArrayList<SkillsMainModel> caregiverSkills;
 
+    public ArrayList<SkillsMainModel> getSeniorSkills() {
+        return seniorSkills;
+    }
+
+    public void setSeniorSkills(ArrayList<SkillsMainModel> seniorSkills) {
+        this.seniorSkills = seniorSkills;
+    }
+
+    @SerializedName("seniorSkills")
+
+    private ArrayList<SkillsMainModel> seniorSkills;
+
     public ArrayList<SkillsMainModel> getCaregiverSkills() {
         return caregiverSkills;
     }

@@ -54,7 +54,21 @@ public class ApplicationState {
     private ArrayList<SeniorLanguageModel> seniorLanguageModelArrayList=new ArrayList<>();
     private ArrayList<InterestModel> interestModelArrayList=new ArrayList<>();
     private ArrayList<SkillsMainModel> skillsModelArrayList=new ArrayList<>();
+    private ArrayList<SkillsMainModel> seniorSkillsArrayList=new ArrayList<>();
     private ArrayList<Availability> availabilityArrayList=new ArrayList<>();
+
+    public ArrayList<SkillsMainModel> getSeniorSkillsArrayList() {
+        return seniorSkillsArrayList;
+    }
+
+    public void setSeniorSkillsArrayList(ArrayList<SkillsMainModel> seniorSkillsArrayList) {
+        this.seniorSkillsArrayList = seniorSkillsArrayList;
+    }
+
+    public static void setInstance(ApplicationState instance) {
+
+        ApplicationState.instance = instance;
+    }
 
     public ArrayList<Availability> getAvailabilityArrayList() {
         return availabilityArrayList;

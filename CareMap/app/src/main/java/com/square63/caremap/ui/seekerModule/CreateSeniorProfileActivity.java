@@ -1,6 +1,7 @@
 package com.square63.caremap.ui.seekerModule;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -21,10 +22,13 @@ import com.square63.caremap.dialoges.LanguageSelectionDialoge;
 import com.square63.caremap.listeners.RecyclerItemClickListener;
 import com.square63.caremap.models.InterestModel;
 import com.square63.caremap.models.LanguageModel;
+import com.square63.caremap.models.SkillsMainModel;
+import com.square63.caremap.models.SkillsModel;
 import com.square63.caremap.models.giverModels.UserLanguage;
 import com.square63.caremap.models.seekerModels.CreateSeekerRequest;
 import com.square63.caremap.models.seekerModels.CreateSeniorRequest;
 import com.square63.caremap.models.seekerModels.SeniorLanguageModel;
+import com.square63.caremap.ui.HomeActivity;
 import com.square63.caremap.ui.adapters.CareListAdapter;
 import com.square63.caremap.ui.adapters.ColorSchemeAdapter;
 import com.square63.caremap.ui.adapters.InterestAdapter;
@@ -37,6 +41,7 @@ import com.square63.caremap.utils.UIHelper;
 import com.square63.caremap.utils.Validations;
 import com.square63.caremap.webapi.Apiinterface.ApiCallback;
 import com.square63.caremap.webapi.requests.GenericGetRequest;
+import com.square63.caremap.webapi.requests.InsertGiverSkilsRequest;
 import com.square63.caremap.webapi.requests.InsertUserInterestRequest;
 import com.square63.caremap.webapi.requests.InsertUserLangRequest;
 import com.square63.caremap.webapi.responses.GiverResultResponse;
@@ -45,30 +50,36 @@ import com.square63.caremap.webapi.webservices.WebServiceFactory;
 
 import java.util.ArrayList;
 
-public class CreateSeniorProfileActivity extends AppCompatActivity implements View.OnClickListener,InterestAdapter.ISkills,ColorSchemeAdapter.ISkills{
+public class CreateSeniorProfileActivity extends AppCompatActivity implements View.OnClickListener, InterestAdapter.ISkills, ColorSchemeAdapter.ISkills {
     ActivityCreateSeniorProfileBinding binding;
     TextView txtMail, txtFemail, txtBinary;
-    private String reasonForCareArr[] = {"Old Age","Cancer","Alzheimers","Dementia","Stroke","Diabetes","Companionship","Post Surgical Care","Foster Independence","Loneliness","Hygiene/Grooming","Bathing/Toileting","Meal Preparation","Light Houskeeping","Medication Reminders","Dressing"};
-    private String mobilityArr[] = {"Independent","Mobile + Cane","Mobility + Walker","Low Mobility","Wheelchair","Non Mobile"};
-    private String interestArr[] = {"Arts & Crafts","Church Events","Cooking","Computers","Gardening","Movies","Pets","Playing Cards","Reading","Sewing","Shopping","Spiritualism","Sports","Travelling"};
-    private String interestIds[] = {"bedb971f-c5e4-4aa1-9017-d8c1114186e5","ff1e5484-c763-474e-a0a6-f7303025798c","ad1590e6-264e-4cb5-ad48-9e1e7e484424","45254526-b8b6-49d4-a396-bf3a2edae66f","e9efd7a6-6e88-4954-a846-2885c334add6","43c3627e-9505-4cfe-90dd-9a585b63b210","943ed09f-775a-4d0d-a709-261edae15e2e","791784a4-2004-43f2-94ff-e9caaf5e8dc6","b83b1611-9107-43a6-83a8-06f10e416b32","87c09be2-7c26-4cb9-814d-c927f0c465d4","0e840008-311f-4d01-9a99-49a7063f6111","8aa319a1-b941-425a-a9e2-5ea87620ce52","ff1e5484-c763-474e-a0a6-f7303025798c","b76b0867-75ba-4b44-9246-2a6e515f424d"};
+    private String reasonForCareArr[] = {"Old Age", "Cancer", "Alzheimers", "Dementia", "Stroke", "Diabetes", "Companionship", "Post Surgical Care", "Foster Independence", "Loneliness", "Hygiene/Grooming", "Bathing/Toileting", "Meal Preparation", "Light Houskeeping", "Medication Reminders", "Dressing"};
+    private String reasonForCareIdArr[] = {"2BAC0AD5-BADE-4D1E-A1D6-72CB2BB75E2D", "8E2FE73F-D5E3-40AE-8DF1-8B43ECE9205E", "F7D5D1FC-E360-4781-AC82-3A3D0124B785", "44104EB0-8E73-41D6-B61B-15347D6D7E94", "BF8FCCEB-B255-4EB4-AA33-75020B62E4D2", "F14C9654-F21D-4A1D-9A2D-8DC5FF104A68", "79A8DEFC-62C5-4595-BE76-A7F8C883A5BD"
+            , "B18B125E-C802-409E-989B-726D620B8313", "56CC5D74-351E-4450-9B10-5C42E8C6FA1B", "821C7F52-B975-4D1C-B20E-A2DA3A41AAFF", "B1BE9698-8E88-4E97-9AFC-5E3F6479FB0B", "6CFA5486-1E7C-45FF-9E12-1AC93BB52B0C",
+            "C7B6EA5F-007F-434C-B0F6-42CB62EC3C0D", "A2C59296-BEB5-4F8C-8715-940C09776E5A", "1D4C995D-378E-40FA-98D1-97A435EB8322", "6C126F35-1C37-4A8A-BE15-49C585732471"};
 
-    private Integer interestIcons[] = {R.drawable.artscrafts,R.drawable.churchactivities,R.drawable.cooking,R.drawable.computertech,R.drawable.gardening,R.drawable.movies,R.drawable.pets,R.drawable.playingcards,R.drawable.reading,R.drawable.sewing,R.drawable.shopping,R.drawable.spiritualism,R.drawable.sports,R.drawable.travelling};
+    private String mobilityArr[] = {"Independent", "Mobile + Cane", "Mobility + Walker", "Low Mobility", "Wheelchair", "Non Mobile"};
+    private String mobilityIdArr[] = {"5D1214C1-12BA-47E8-BB4F-A78494380C94", "CFE24824-4702-4487-99B6-254777BCE18C", "0F599DB0-061F-450A-9329-CC8607C40BB1", "C566CD2C-51DC-443D-B354-0C5BFC7D7759", "0A43A4D7-CBBC-47D8-9504-2D4E2734E973", "D4E904E1-89D1-4D87-835C-D9E4EF65E528"};
+    String interestArr[] = {"Arts & Crafts", "Church Events", "Cooking", "Computers", "Gardening", "Movies", "Pets", "Playing Cards", "Reading", "Sewing", "Shopping", "Spiritualism", "Sports", "Travelling"};
+    private String interestIds[] = {"bedb971f-c5e4-4aa1-9017-d8c1114186e5", "ff1e5484-c763-474e-a0a6-f7303025798c", "ad1590e6-264e-4cb5-ad48-9e1e7e484424", "45254526-b8b6-49d4-a396-bf3a2edae66f", "e9efd7a6-6e88-4954-a846-2885c334add6", "43c3627e-9505-4cfe-90dd-9a585b63b210", "943ed09f-775a-4d0d-a709-261edae15e2e", "791784a4-2004-43f2-94ff-e9caaf5e8dc6", "b83b1611-9107-43a6-83a8-06f10e416b32", "87c09be2-7c26-4cb9-814d-c927f0c465d4", "0e840008-311f-4d01-9a99-49a7063f6111", "8aa319a1-b941-425a-a9e2-5ea87620ce52", "ff1e5484-c763-474e-a0a6-f7303025798c", "b76b0867-75ba-4b44-9246-2a6e515f424d"};
 
-    private Integer mobilityIconsArr[] ={R.drawable.independent_2x,R.drawable.cane_2x,R.drawable.walker_2x,R.drawable.lowmobility_2x,R.drawable.wheelchair_2x,R.drawable.nonmobile_2x};
-     private CareListAdapter careListAdapter;
-    private RecyclerView recyclerView,recyclerViewMobility,recyclerViewInterest,recyclerViewProfile;
+    private Integer interestIcons[] = {R.drawable.artscrafts, R.drawable.churchactivities, R.drawable.cooking, R.drawable.computertech, R.drawable.gardening, R.drawable.movies, R.drawable.pets, R.drawable.playingcards, R.drawable.reading, R.drawable.sewing, R.drawable.shopping, R.drawable.spiritualism, R.drawable.sports, R.drawable.travelling};
+
+    private Integer mobilityIconsArr[] = {R.drawable.independent_2x, R.drawable.cane_2x, R.drawable.walker_2x, R.drawable.lowmobility_2x, R.drawable.wheelchair_2x, R.drawable.nonmobile_2x};
+    private CareListAdapter careListAdapter;
+    private RecyclerView recyclerView, recyclerViewMobility, recyclerViewInterest, recyclerViewProfile;
     private MobilityAdapter mobilityAdapter;
     private InterestAdapter interestAdapter;
     private ColorSchemeAdapter colorSchemeAdapter;
     private ImageButton imgBack;
-    private TextView titileToolbar,toolbarTitleRight;
+    private TextView titileToolbar, toolbarTitleRight;
     private ArrayList<InterestModel> interestModelArrayList = new ArrayList<>();
     private ArrayList<LanguageModel> modelArrayList = new ArrayList<>();
     private ArrayList<LanguageModel> langArrayList = new ArrayList<>();
     private String gender = "Male";
-    private int selectedColor ;
+    private int selectedColor;
     private boolean isLocation;
+    private ArrayList<LanguageModel> reasonForCareList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,7 +96,7 @@ public class CreateSeniorProfileActivity extends AppCompatActivity implements Vi
         recyclerViewMobility = binding.getRoot().findViewById(R.id.recyclerViewMobility);
         recyclerViewInterest = binding.getRoot().findViewById(R.id.recyclerViewInterest);
         recyclerViewProfile = binding.getRoot().findViewById(R.id.recyclerViewProfile);
-        selectedColor=-2;
+        selectedColor = -2;
 
         txtMail = binding.txtMale;
         txtFemail = binding.txtFemail;
@@ -103,15 +114,16 @@ public class CreateSeniorProfileActivity extends AppCompatActivity implements Vi
         binding.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                isLocation=isChecked;
+                isLocation = isChecked;
             }
         });
 
     }
-    private void initToolBar(){
+
+    private void initToolBar() {
 
         final Validations validations = new Validations(this);
-        imgBack =(ImageButton) findViewById(R.id.imgBackbtn);
+        imgBack = (ImageButton) findViewById(R.id.imgBackbtn);
         imgBack.setVisibility(View.VISIBLE);
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -120,20 +132,20 @@ public class CreateSeniorProfileActivity extends AppCompatActivity implements Vi
             }
         });
 
-        titileToolbar = (TextView)findViewById(R.id.toolbarTittle);
-        toolbarTitleRight = (TextView)findViewById(R.id.toolbarTitleRight);
+        titileToolbar = (TextView) findViewById(R.id.toolbarTittle);
+        toolbarTitleRight = (TextView) findViewById(R.id.toolbarTitleRight);
         titileToolbar.setText("CREATE SENIOR PROFILE");
         toolbarTitleRight.setText("Done");
         toolbarTitleRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(validations.validateSeekerProfile(binding.edtName,binding.edtAge,binding.edtCity,binding.edtProvince,binding.edtAddress1,binding.edtUnitNumber,binding.txtNumber,
-                       binding.city,binding.province,binding.addres1,binding.unitNumber,binding.number,binding.txtName,binding.txtAge,binding.edtStreet,binding.street) == Constants.SUCCESS){
-                    if(getIntent() != null && getIntent().getStringExtra(Constants.TYPE) != null){
-                        if(getIntent().getStringExtra(Constants.TYPE).equalsIgnoreCase("Edit")){
-                            finish();
+                if (validations.validateSeekerProfile(binding.edtName, binding.edtAge, binding.edtCity, binding.edtProvince, binding.edtAddress1, binding.edtUnitNumber, binding.txtNumber,
+                        binding.city, binding.province, binding.addres1, binding.unitNumber, binding.number, binding.txtName, binding.txtAge, binding.edtStreet, binding.street) == Constants.SUCCESS) {
+                    if (getIntent() != null && getIntent().getStringExtra(Constants.TYPE) != null) {
+                        if (getIntent().getStringExtra(Constants.TYPE).equalsIgnoreCase("Edit")) {
+                            insertSenior();
                         }
-                    }else {
+                    } else {
                         insertSenior();
 
                     }
@@ -142,17 +154,18 @@ public class CreateSeniorProfileActivity extends AppCompatActivity implements Vi
                 // UIHelper.openActivity(CreateProviderProfileActivity.this,);
             }
         });
-        if(getIntent() != null && getIntent().getStringExtra(Constants.TYPE) != null){
-            if(getIntent().getStringExtra(Constants.TYPE).equalsIgnoreCase("Edit")){
+        if (getIntent() != null && getIntent().getStringExtra(Constants.TYPE) != null) {
+            if (getIntent().getStringExtra(Constants.TYPE).equalsIgnoreCase("Edit")) {
                 titileToolbar.setText("EDIT SENIOR PROFILE");
             }
         }
     }
-    private void setSeniorData(){
-       CreateSeniorRequest createSeniorRequest =  new CreateSeniorRequest();
-        if(ApplicationState.getInstance().isFromEdit()){
-            GiverResultResponse giverResultResponse =ApplicationState.getInstance().getGiverResultResponse();
-            if(giverResultResponse !=null){
+
+    private void setSeniorData() {
+        CreateSeniorRequest createSeniorRequest = new CreateSeniorRequest();
+        if (ApplicationState.getInstance().isFromEdit()) {
+            GiverResultResponse giverResultResponse = ApplicationState.getInstance().getGiverResultResponse();
+            if (giverResultResponse != null) {
                 createSeniorRequest.setAge(giverResultResponse.getAge());
                 createSeniorRequest.setName(giverResultResponse.getName());
                 createSeniorRequest.setCity(giverResultResponse.getCity());
@@ -162,20 +175,28 @@ public class CreateSeniorProfileActivity extends AppCompatActivity implements Vi
                 createSeniorRequest.setUnitNumber(giverResultResponse.getUnitNumber());
                 createSeniorRequest.setProvince(giverResultResponse.getProvince());
             }
+
             setLanguageData();
-            if(giverResultResponse.getSex() != null ){
-                if(giverResultResponse.getSex().equalsIgnoreCase(Constants.S_MALE)){
-                    handleGender(Constants.MALE);
-                }else if(giverResultResponse.getSex().equalsIgnoreCase(Constants.FEMALE)){
-                    handleGender(Constants.FEMAIL);
-                }else {
-                    handleGender(Constants.BINARY);
+            if (giverResultResponse != null) {
+                if (giverResultResponse.getSex() != null) {
+                    if (giverResultResponse.getSex().equalsIgnoreCase(Constants.S_MALE)) {
+                        handleGender(Constants.MALE);
+                        gender = Constants.S_MALE;
+                    } else if (giverResultResponse.getSex().equalsIgnoreCase(Constants.FEMALE)) {
+                        handleGender(Constants.FEMAIL);
+                        gender = Constants.FEMALE;
+                    } else {
+                        handleGender(Constants.BINARY);
+                        gender = Constants.S_BINARY;
+                    }
                 }
-            }
-            if(giverResultResponse.getShareLocation()){
-                binding.checkBox.setChecked(true);
-            }else {
-                binding.checkBox.setChecked(false);
+                if (giverResultResponse.getShareLocation()) {
+                    binding.checkBox.setChecked(true);
+                    isLocation =true;
+                } else {
+                    binding.checkBox.setChecked(false);
+                }
+
             }
         }
 
@@ -183,13 +204,15 @@ public class CreateSeniorProfileActivity extends AppCompatActivity implements Vi
         binding.setProfileModel(createSeniorRequest);
 
     }
-    private void setLanguageData(){
 
-        if(ApplicationState.getInstance().isFromEdit()){
+
+    private void setLanguageData() {
+
+        if (ApplicationState.getInstance().isFromEdit()) {
             ArrayList<SeniorLanguageModel> userLanguages = ApplicationState.getInstance().getSeniorLanguageModelArrayList();
-            if(userLanguages !=null){
-                String languages ="";
-                for (SeniorLanguageModel languageModel:userLanguages){
+            if (userLanguages != null) {
+                String languages = "";
+                for (SeniorLanguageModel languageModel : userLanguages) {
                     languages = languages + languageModel.getLanguageModel().getName() + ", ";
                 }
                 if (languages != null && languages.length() > 0 && languages.charAt(languages.length() - 1) == ',') {
@@ -200,73 +223,180 @@ public class CreateSeniorProfileActivity extends AppCompatActivity implements Vi
         }
 
     }
-    private void insertSenior(){
+
+    private void insertSenior() {
         PreferenceHelper.getInstance().init(this);
         CreateSeniorRequest createSeniorRequest = new CreateSeniorRequest();
         createSeniorRequest.setCity(binding.getProfileModel().getCity());
         binding.getProfileModel().setColourScheme(selectedColor);
         binding.getProfileModel().setSex(gender);
-        if(isLocation)
-        binding.getProfileModel().setShareLocation("true");
+        if (isLocation)
+            binding.getProfileModel().setShareLocation("true");
         else
             binding.getProfileModel().setShareLocation("false");
 
-        binding.getProfileModel().setCareSeekerID(PreferenceHelper.getInstance().getString(Constants.SEEKER_ID,""));
+        binding.getProfileModel().setCareSeekerID(PreferenceHelper.getInstance().getString(Constants.SEEKER_ID, ""));
+        if (ApplicationState.getInstance().isFromEdit())
+            updateSeniorData();
+        else
+            insertSeniorData();
+    }
+
+    private void insertReasons() {
+        for (LanguageModel languageModel : reasonForCareList) {
+            if (languageModel.isSelected()) {
+                InsertGiverSkilsRequest skilsRequest = new InsertGiverSkilsRequest();
+                skilsRequest.setSkillID(languageModel.getId());
+                apiInsertSeniorSkills(skilsRequest);
+            }
+        }
+    }
+
+    private void insertSeniorData() {
         WebServiceFactory.getInstance().init(this);
         WebServiceFactory.getInstance().apiInsertSenior(binding.getProfileModel(), new ApiCallback() {
             @Override
             public void onSuccess(MainResponse mainResponse) {
-                PreferenceHelper.getInstance().setString(Constants.SENIOR_ID,mainResponse.getResultResponse().getId());
+                PreferenceHelper.getInstance().setString(Constants.SENIOR_ID, mainResponse.getResultResponse().getId());
                 insertData();
-                UIHelper.openActivity(CreateSeniorProfileActivity.this,GetStartedActivity.class);
+                UIHelper.openActivity(CreateSeniorProfileActivity.this, GetStartedActivity.class);
             }
         });
     }
-    private void insertData(){
-        for (InterestModel interestModel : interestModelArrayList){
-            InsertUserInterestRequest insertUserInterestRequest=new InsertUserInterestRequest();
-            if(interestModel.isSelected()){
+
+    private void updateSeniorData() {
+        binding.getProfileModel().setId(PreferenceHelper.getInstance().getString(Constants.SENIOR_ID, ""));
+        WebServiceFactory.getInstance().init(this);
+        WebServiceFactory.getInstance().apiUpdateSenior(binding.getProfileModel(), new ApiCallback() {
+            @Override
+            public void onSuccess(MainResponse mainResponse) {
+                insertData();
+                Intent myIntent = new Intent(CreateSeniorProfileActivity.this, HomeActivity.class);
+                myIntent.putExtra(Constants.FORM,Constants.SENIOR_ID);
+                myIntent.addFlags(  Intent.FLAG_ACTIVITY_CLEAR_TASK| Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(myIntent);
+                //UIHelper.openAndClearActivity(CreateSeniorProfileActivity.this, HomeActivity.class);
+            }
+        });
+    }
+
+    private void insertData() {
+
+        if (ApplicationState.getInstance().isFromEdit()) {
+            updateInterests();
+            updateSkills();
+            updateLanguages(modelArrayList);
+        } else {
+            addInterest();
+            insertReasons();
+            insertLangs(modelArrayList);
+        }
+    }
+
+    private void addInterest() {
+        for (InterestModel interestModel : interestModelArrayList) {
+            InsertUserInterestRequest insertUserInterestRequest = new InsertUserInterestRequest();
+            if (interestModel.isSelected()) {
                 insertUserInterestRequest.setInterestID(interestModel.getInterestID());
                 apiInsertSkills(insertUserInterestRequest);
             }
         }
-        insertLangs(modelArrayList);
     }
 
-    private void initCareList(){
+    private void initCareList() {
         ArrayList<LanguageModel> languageModelArrayList = new ArrayList<>();
-        for (int i= 0; i < reasonForCareArr.length; i++){
+        ArrayList<SkillsMainModel> skillsMainModels = ApplicationState.getInstance().getSeniorSkillsArrayList();
+        boolean isSelected;
+        for (int i = 0; i < reasonForCareArr.length; i++) {
+            isSelected = false;
+            for (int j = 0; j < skillsMainModels.size(); j++) {
+                if (skillsMainModels.get(j).getSkill() != null) {
+                    if (reasonForCareIdArr[i].equalsIgnoreCase(skillsMainModels.get(j).getSkill().getId())) {
+                        isSelected = true;
+                    }
+                }
+
+            }
+
             LanguageModel languageModel = new LanguageModel();
+            if (isSelected)
+                languageModel.setSelected(true);
             languageModel.setName(reasonForCareArr[i]);
+            languageModel.setId(reasonForCareIdArr[i]);
             languageModelArrayList.add(languageModel);
         }
         setRecyclerView(languageModelArrayList);
     }
-    private void initMobilityList(){
+
+    private void initMobilityList() {
+
         ArrayList<InterestModel> languageModelArrayList = new ArrayList<>();
-        for (int i= 0; i < mobilityArr.length; i++){
+        for (int i = 0; i < mobilityArr.length; i++) {
             InterestModel languageModel = new InterestModel();
+            if (ApplicationState.getInstance().getGiverResultResponse() != null) {
+                if (ApplicationState.getInstance().getGiverResultResponse().getMobilityID() != null) {
+                    if (ApplicationState.getInstance().getGiverResultResponse().getMobilityID().equalsIgnoreCase(mobilityIdArr[i])) {
+                        languageModel.setSelected(true);
+                    }
+                }
+            }
             languageModel.setName(mobilityArr[i]);
             languageModel.setIcone(mobilityIconsArr[i]);
+            languageModel.setInterestID(mobilityIdArr[i]);
             languageModelArrayList.add(languageModel);
         }
         setMobilityRecyclerView(languageModelArrayList);
     }
-    private void initColorList(){
-         Integer colorArr[]={getResources().getColor(R.color.colorschem_1),getResources().getColor(R.color.colorschem_2),getResources().getColor(R.color.colorschem_3),getResources().getColor(R.color.colorschem_4),getResources().getColor(R.color.colorschem_5)};
-        if(ApplicationState.getInstance().isFromEdit()){
+
+    private void updateLanguages(ArrayList<LanguageModel> languageModelArrayList) {
+        ArrayList<UserLanguage> userLanguages = ApplicationState.getInstance().getLanguageModelArrayList();
+        if (userLanguages.size() > 0) {
+            for (UserLanguage language : userLanguages) {
+                for (LanguageModel language1 : langArrayList) {
+                    if (language.getLanguageID().equalsIgnoreCase(language1.getId()) && !language1.isSelected()) {
+                        InsertUserLangRequest langRequest = new InsertUserLangRequest();
+                        langRequest.setLanguageID(language.getLanguageID());
+                        apiDeleteLang(langRequest, languageModelArrayList);
+                        break;
+                    }
+                }
+            }
+        } else {
+            insertLangs(languageModelArrayList);
+        }
+    }
+
+    private void apiDeleteLang(InsertUserLangRequest insertUserLangRequest, final ArrayList<LanguageModel> languageModelArrayList) {
+        WebServiceFactory.getInstance().init(this);
+        WebServiceFactory.getInstance().apiDeleteSeniorLanguages(insertUserLangRequest, new ApiCallback() {
+            @Override
+            public void onSuccess(MainResponse mainResponse) {
+                insertLangs(languageModelArrayList);
+            }
+        });
+
+    }
+
+    private void initColorList() {
+        Integer colorArr[] = {getResources().getColor(R.color.colorschem_1), getResources().getColor(R.color.colorschem_2), getResources().getColor(R.color.colorschem_3), getResources().getColor(R.color.colorschem_4), getResources().getColor(R.color.colorschem_5)};
+        if (ApplicationState.getInstance().isFromEdit()) {
             ArrayList<InterestModel> languageModelArrayList = new ArrayList<>();
-            for (int i= 0; i < colorArr.length; i++){
+            for (int i = 0; i < colorArr.length; i++) {
                 InterestModel languageModel = new InterestModel();
-                if(ApplicationState.getInstance().getGiverResultResponse().getColourScheme() == i+1)
-                    languageModel.setSelected(true);
+                if (ApplicationState.getInstance().getGiverResultResponse() != null) {
+                    if (ApplicationState.getInstance().getGiverResultResponse().getColourScheme() == i + 1) {
+                        languageModel.setSelected(true);
+                        selectedColor = i + 1;
+                        break;
+                    }
+                }
                 languageModel.setIcone(colorArr[i]);
                 languageModelArrayList.add(languageModel);
             }
             setColorsRecyclerView(languageModelArrayList);
-        }else {
+        } else {
             ArrayList<InterestModel> languageModelArrayList = new ArrayList<>();
-            for (int i= 0; i < colorArr.length; i++){
+            for (int i = 0; i < colorArr.length; i++) {
                 InterestModel languageModel = new InterestModel();
                 languageModel.setIcone(colorArr[i]);
                 languageModelArrayList.add(languageModel);
@@ -278,82 +408,92 @@ public class CreateSeniorProfileActivity extends AppCompatActivity implements Vi
 
 
     private void setRecyclerView(ArrayList<LanguageModel> data) {
-        careListAdapter=new CareListAdapter(this, data, new CareListAdapter.ISelectedLanguages() {
+        careListAdapter = new CareListAdapter(this, data, new CareListAdapter.ISelectedLanguages() {
             @Override
             public void selectedLanguages(ArrayList<LanguageModel> languageModels) {
-
+                reasonForCareList = languageModels;
             }
         });
         recyclerView.setAdapter(careListAdapter);
-        RecyclerView.LayoutManager mManager =new GridLayoutManager(this, 2);
+        RecyclerView.LayoutManager mManager = new GridLayoutManager(this, 2);
         recyclerView.setLayoutManager(mManager);
 
     }
+
     private void setMobilityRecyclerView(ArrayList<InterestModel> data) {
-        mobilityAdapter=new MobilityAdapter(this, data);
+        mobilityAdapter = new MobilityAdapter(this, data, new MobilityAdapter.ISkills() {
+            @Override
+            public void selectedSkills(String mobilityId) {
+                binding.getProfileModel().setMobilityID(mobilityId);
+            }
+        });
         recyclerViewMobility.setAdapter(mobilityAdapter);
-        RecyclerView.LayoutManager mManager =new GridLayoutManager(this, 3);
+        RecyclerView.LayoutManager mManager = new GridLayoutManager(this, 3);
         recyclerViewMobility.setLayoutManager(mManager);
 
     }
+
     private void setColorsRecyclerView(ArrayList<InterestModel> data) {
-        colorSchemeAdapter=new ColorSchemeAdapter(this, data,this);
+        colorSchemeAdapter = new ColorSchemeAdapter(this, data, this);
         recyclerViewProfile.setAdapter(colorSchemeAdapter);
-        RecyclerView.LayoutManager mManager =new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,false);
+        RecyclerView.LayoutManager mManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         recyclerViewProfile.setLayoutManager(mManager);
 
     }
+
     private void setInterestRecyclerView(ArrayList<InterestModel> data) {
-        interestAdapter=new InterestAdapter(this, data,this);
+        interestAdapter = new InterestAdapter(this, data, this);
         recyclerViewInterest.setAdapter(interestAdapter);
-        RecyclerView.LayoutManager mManager =new GridLayoutManager(this, 3);
+        RecyclerView.LayoutManager mManager = new GridLayoutManager(this, 3);
         recyclerViewInterest.setLayoutManager(mManager);
 
     }
-    private void handleGender( int GENDER_TYPE) {
+
+    private void handleGender(int GENDER_TYPE) {
         txtMail.setTextColor(getResources().getColor(R.color.text_grey));
         txtFemail.setTextColor(getResources().getColor(R.color.text_grey));
         txtBinary.setTextColor(getResources().getColor(R.color.text_grey));
-        txtMail.setCompoundDrawablesRelativeWithIntrinsicBounds(0,R.drawable.femaledark_2x,0,0);
-        txtFemail.setCompoundDrawablesRelativeWithIntrinsicBounds(0,R.drawable.maledark_2x,0,0);
-        txtBinary.setCompoundDrawablesRelativeWithIntrinsicBounds(0,R.drawable.nonbinarydark_2x,0,0);
+        txtMail.setCompoundDrawablesRelativeWithIntrinsicBounds(0, R.drawable.femaledark_2x, 0, 0);
+        txtFemail.setCompoundDrawablesRelativeWithIntrinsicBounds(0, R.drawable.maledark_2x, 0, 0);
+        txtBinary.setCompoundDrawablesRelativeWithIntrinsicBounds(0, R.drawable.nonbinarydark_2x, 0, 0);
         txtMail.setBackgroundResource(R.drawable.rectangleshadow_2x);
         txtFemail.setBackgroundResource(R.drawable.rectangleshadow_2x);
         txtBinary.setBackgroundResource(R.drawable.rectangleshadow_2x);
-        switch (GENDER_TYPE){
+        switch (GENDER_TYPE) {
             case Constants.MALE:
                 gender = Constants.S_MALE;
                 txtMail.setTextColor(getResources().getColor(R.color.white));
-                txtMail.setCompoundDrawablesRelativeWithIntrinsicBounds(0,R.drawable.female_2x,0,0);
+                txtMail.setCompoundDrawablesRelativeWithIntrinsicBounds(0, R.drawable.female_2x, 0, 0);
                 txtMail.setBackgroundResource(R.drawable.rectangleshadowselected_2x);
                 break;
             case Constants.FEMAIL:
                 gender = Constants.FEMALE;
                 txtFemail.setTextColor(getResources().getColor(R.color.white));
-                txtFemail.setCompoundDrawablesRelativeWithIntrinsicBounds(0,R.drawable.male_2x,0,0);
+                txtFemail.setCompoundDrawablesRelativeWithIntrinsicBounds(0, R.drawable.male_2x, 0, 0);
                 txtFemail.setBackgroundResource(R.drawable.rectangleshadowselected_2x);
                 break;
             case Constants.BINARY:
                 gender = Constants.S_BINARY;
                 txtBinary.setTextColor(getResources().getColor(R.color.white));
-                txtBinary.setCompoundDrawablesRelativeWithIntrinsicBounds(0,R.drawable.non_binary_2x,0,0);
+                txtBinary.setCompoundDrawablesRelativeWithIntrinsicBounds(0, R.drawable.non_binary_2x, 0, 0);
                 txtBinary.setBackgroundResource(R.drawable.rectangleshadowselected_2x);
                 break;
-                default:
-                    break;
+            default:
+                break;
         }
 
     }
-    public void onLanguageSelectionClick(View view){
+
+    public void onLanguageSelectionClick(View view) {
 
         LanguageSelectionDialoge languageSelectionDialoge = LanguageSelectionDialoge.newInstance(langArrayList);
         languageSelectionDialoge.setSelectedLanguages(new LanguagesAdapater.ISelectedLanguages() {
             @Override
             public void selectedLanguages(ArrayList<LanguageModel> languageModels) {
-                String languages="";
-               modelArrayList = new ArrayList<>();
-                for (LanguageModel languageModel:languageModels){
-                    if(languageModel.isSelected()) {
+                String languages = "";
+                modelArrayList = new ArrayList<>();
+                for (LanguageModel languageModel : languageModels) {
+                    if (languageModel.isSelected()) {
                         languages = languages + languageModel.getName() + ",";
                         modelArrayList.add(languageModel);
                     }
@@ -368,17 +508,19 @@ public class CreateSeniorProfileActivity extends AppCompatActivity implements Vi
 
         });
 
-        languageSelectionDialoge.show(getSupportFragmentManager(),"languageSelectionDialoge");
+        languageSelectionDialoge.show(getSupportFragmentManager(), "languageSelectionDialoge");
 
     }
-    private void insertLangs(ArrayList<LanguageModel> languageModelArrayList){
-        for (int i =0; i < languageModelArrayList.size(); i++){
+
+    private void insertLangs(ArrayList<LanguageModel> languageModelArrayList) {
+        for (int i = 0; i < languageModelArrayList.size(); i++) {
             InsertUserLangRequest langRequest = new InsertUserLangRequest();
             langRequest.setLanguageID(languageModelArrayList.get(i).getId());
             apiInsertLang(langRequest);
         }
     }
-    private void apiInsertLang(InsertUserLangRequest insertUserLangRequest ){
+
+    private void apiInsertLang(InsertUserLangRequest insertUserLangRequest) {
         WebServiceFactory.getInstance().init(this);
         WebServiceFactory.getInstance().apiInsertSeniorLanguages(insertUserLangRequest, new ApiCallback() {
             @Override
@@ -388,7 +530,8 @@ public class CreateSeniorProfileActivity extends AppCompatActivity implements Vi
         });
 
     }
-    private void apiInsertSkills(InsertUserInterestRequest interestRequest){
+
+    private void apiInsertSkills(InsertUserInterestRequest interestRequest) {
         WebServiceFactory.getInstance().init(getApplicationContext());
         WebServiceFactory.getInstance().apiInsertSeniorInterest(interestRequest, new ApiCallback() {
             @Override
@@ -397,7 +540,8 @@ public class CreateSeniorProfileActivity extends AppCompatActivity implements Vi
             }
         });
     }
-    private void getAllLang(){
+
+    private void getAllLang() {
         WebServiceFactory.getInstance().init(this);
         WebServiceFactory.getInstance().apiGetAllLang(new GenericGetRequest(), new ApiCallback() {
             @Override
@@ -406,9 +550,10 @@ public class CreateSeniorProfileActivity extends AppCompatActivity implements Vi
             }
         });
     }
+
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.txtMale:
                 handleGender(Constants.MALE);
                 break;
@@ -421,24 +566,24 @@ public class CreateSeniorProfileActivity extends AppCompatActivity implements Vi
         }
     }
 
-    private void setInterestData(){
-        if(ApplicationState.getInstance().isFromEdit()) {
-            ArrayList<InterestModel> interestModels =ApplicationState.getInstance().getInterestModelArrayList();
-            boolean isSelected =false;
+    private void setInterestData() {
+        if (ApplicationState.getInstance().isFromEdit()) {
+            ArrayList<InterestModel> interestModels = ApplicationState.getInstance().getInterestModelArrayList();
+            boolean isSelected = false;
             ArrayList<InterestModel> data = new ArrayList<>();
             for (int i = 0; i < interestArr.length; i++) {
 
                 isSelected = false;
-                for (int j= 0; j <  interestModels.size(); j++){
+                for (int j = 0; j < interestModels.size(); j++) {
 
-                    if(interestIds[i].equalsIgnoreCase(interestModels.get(j).getInterestID())){
-                        isSelected =true;
+                    if (interestIds[i].equalsIgnoreCase(interestModels.get(j).getInterestID())) {
+                        isSelected = true;
                     }
 
                 }
 
                 InterestModel dayModel = new InterestModel();
-                if(isSelected){
+                if (isSelected) {
                     dayModel.setSelected(true);
                 }
                 dayModel.setInterestID(interestIds[i]);
@@ -447,9 +592,9 @@ public class CreateSeniorProfileActivity extends AppCompatActivity implements Vi
                 data.add(dayModel);
             }
             setInterestRecyclerView(data);
-        }else {
+        } else {
             ArrayList<InterestModel> data = new ArrayList<>();
-            for (int i= 0; i <  interestArr.length; i++){
+            for (int i = 0; i < interestArr.length; i++) {
                 InterestModel dayModel = new InterestModel();
                 dayModel.setInterestID(interestIds[i]);
                 dayModel.setName(interestArr[i]);
@@ -459,6 +604,7 @@ public class CreateSeniorProfileActivity extends AppCompatActivity implements Vi
             setInterestRecyclerView(data);
         }
     }
+
     @Override
     public void selectedSkills(ArrayList<InterestModel> data) {
         interestModelArrayList = data;
@@ -466,6 +612,87 @@ public class CreateSeniorProfileActivity extends AppCompatActivity implements Vi
 
     @Override
     public void selectedColorScheme(int color) {
-        selectedColor = color+1;
+        selectedColor = color + 1;
     }
+
+    private void updateInterests() {
+        ArrayList<InterestModel> interestModels = ApplicationState.getInstance().getInterestModelArrayList();
+        boolean isUnSelect = false;
+        if (interestModels.size() > 0) {
+            for (InterestModel interestModel : interestModels) {
+                for (InterestModel interestModel1 : interestModelArrayList) {
+                    if (interestModel.getInterestID().equalsIgnoreCase(interestModel1.getInterestID()) && !interestModel1.isSelected()) {
+                        InsertUserInterestRequest insertUserInterestRequest = new InsertUserInterestRequest();
+                        insertUserInterestRequest.setInterestID(interestModel.getInterestID());
+                        apiDeleteSkills(insertUserInterestRequest);
+                        isUnSelect = true;
+                        break;
+                    }
+                }
+            }
+            if (!isUnSelect) {
+                addInterest();
+            }
+        } else {
+            addInterest();
+        }
+    }
+
+    private void apiDeleteSkills(InsertUserInterestRequest interestRequest) {
+        WebServiceFactory.getInstance().init(getApplicationContext());
+        WebServiceFactory.getInstance().apiDeleteInterest(interestRequest, new ApiCallback() {
+            @Override
+            public void onSuccess(MainResponse mainResponse) {
+                addInterest();
+            }
+        });
+    }
+
+
+    private void apiInsertSeniorSkills(InsertGiverSkilsRequest giverSkilsRequest) {
+        WebServiceFactory.getInstance().init(getApplicationContext());
+        WebServiceFactory.getInstance().apiInsertSeniorSkills(giverSkilsRequest, new ApiCallback() {
+            @Override
+            public void onSuccess(MainResponse mainResponse) {
+
+            }
+        });
+    }
+
+    private void apiDeleteSeniorSkills(InsertGiverSkilsRequest giverSkilsRequest) {
+        WebServiceFactory.getInstance().init(getApplicationContext());
+        WebServiceFactory.getInstance().apiDeleteUserSkills(giverSkilsRequest, new ApiCallback() {
+            @Override
+            public void onSuccess(MainResponse mainResponse) {
+                //insertReasons();
+            }
+        });
+    }
+
+    private void updateSkills() {
+        ArrayList<SkillsMainModel> selectedSkills = ApplicationState.getInstance().getSeniorSkillsArrayList();
+        boolean isUnSelect = false;
+        if (selectedSkills.size() > 0) {
+            for (SkillsMainModel skillsMainModel : selectedSkills) {
+                for (LanguageModel skillsModel : reasonForCareList) {
+                    if(skillsMainModel.getSkill() != null) {
+                        if (skillsMainModel.getSkill().getId().equalsIgnoreCase(skillsModel.getId()) && !skillsModel.isSelected()) {
+                            InsertGiverSkilsRequest skilsRequest = new InsertGiverSkilsRequest();
+                            skilsRequest.setSkillID(skillsModel.getId());
+                            apiDeleteSeniorSkills(skilsRequest);
+                            isUnSelect = true;
+                            break;
+                        }
+                    }
+                }
+            }
+            if (!isUnSelect) {
+                insertReasons();
+            }
+        } else {
+            insertReasons();
+        }
+    }
+
+
 }
