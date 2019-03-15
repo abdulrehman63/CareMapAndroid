@@ -2,7 +2,11 @@ package com.square63.caremap.webapi.responses;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.square63.caremap.models.EducationModel;
+import com.square63.caremap.models.GetEducationModel;
+import com.square63.caremap.models.GetLicenseModel;
 import com.square63.caremap.models.InterestModel;
+import com.square63.caremap.models.LicenseModel;
 import com.square63.caremap.models.chatModule.Message;
 import com.square63.caremap.models.chatModule.Thread;
 import com.square63.caremap.models.seekerModels.CareSeeker;
@@ -45,6 +49,14 @@ public class GiverResultResponse {
         return id2;
     }
 
+    public ArrayList<GetEducationModel> getEducationModelArrayList() {
+        return educationModelArrayList;
+    }
+
+    public void setEducationModelArrayList(ArrayList<GetEducationModel> educationModelArrayList) {
+        this.educationModelArrayList = educationModelArrayList;
+    }
+
     public void setId2(String id2) {
         this.id2 = id2;
     }
@@ -53,6 +65,24 @@ public class GiverResultResponse {
 
     @SerializedName("userInterests")
     private ArrayList<InterestModel> interestModelArrayList;
+
+
+
+    @SerializedName("caregiverEducations")
+
+    private ArrayList<GetEducationModel> educationModelArrayList = new ArrayList<>();
+
+    @SerializedName("caregiverLicenses")
+
+    private ArrayList<GetLicenseModel> licenseModelArrayList = new ArrayList<>();
+
+    public ArrayList<GetLicenseModel> getLicenseModelArrayList() {
+        return licenseModelArrayList;
+    }
+
+    public void setLicenseModelArrayList(ArrayList<GetLicenseModel> licenseModelArrayList) {
+        this.licenseModelArrayList = licenseModelArrayList;
+    }
 
     @SerializedName("seniorInterests")
     private ArrayList<InterestModel> seniorInterests;

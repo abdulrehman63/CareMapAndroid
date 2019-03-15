@@ -77,8 +77,8 @@ public class PersonalInfoActivity extends AppCompatActivity {
     }
 
     private void updateLanguages(ArrayList<LanguageModel> languageModelArrayList) {
-        ArrayList<UserLanguage> userLanguages = ApplicationState.getInstance().getLanguageModelArrayList();
-        if(userLanguages.size() > 0) {
+       /* ArrayList<UserLanguage> userLanguages = ApplicationState.getInstance().getLanguageModelArrayList();
+        if (userLanguages.size() > 0) {
             for (UserLanguage language : userLanguages) {
                 for (LanguageModel language1 : langArrayList) {
                     if (language.getLanguageID().equalsIgnoreCase(language1.getId()) && !language1.isSelected()) {
@@ -89,9 +89,15 @@ public class PersonalInfoActivity extends AppCompatActivity {
                     }
                 }
             }
-        }else {
+        } else {
+
             insertLangs(languageModelArrayList);
+        }*/if(langArrayList.size() > 0){
+            InsertUserLangRequest langRequest = new InsertUserLangRequest();
+            langRequest.setLanguageID(langArrayList.get(0).getId());
+            apiDeleteLang(langRequest, languageModelArrayList);
         }
+
     }
 
     private void initSeekBar() {
@@ -135,7 +141,10 @@ public class PersonalInfoActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 insertExperience();
-                UIHelper.openActivity(PersonalInfoActivity.this, AboutActivity.class);
+                /*if (ApplicationState.getInstance().isFromEdit())
+                    UIHelper.openActivity(PersonalInfoActivity.this, DaysSelectionActivity.class);
+                else*/
+                    UIHelper.openActivity(PersonalInfoActivity.this, AboutActivity.class);
             }
         });
     }
@@ -217,7 +226,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
     private void insertExperience() {
         InsertGiverExperienceRequest experienceRequest = new InsertGiverExperienceRequest();
         PreferenceHelper.getInstance().init(this);
-        experienceRequest.setCaregiverID(PreferenceHelper.getInstance().getString(Constants.GIVER_ID, ""));
+        experienceRequest.setCaregiverID(PreferenceHelper.getInstance().getString(Constants.USER_ID, ""));
         experienceRequest.setYears(binding.edtExperience.getText().toString());
         experienceRequest.setDesiredWage(binding.edtHourlyRate.getText().toString());
         experienceRequest.setAvailabilityDistance(binding.txtDistance.getText().toString());

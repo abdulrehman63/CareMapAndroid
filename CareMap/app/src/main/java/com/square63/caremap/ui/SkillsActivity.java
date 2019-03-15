@@ -38,7 +38,10 @@ public class SkillsActivity extends AppCompatActivity implements SkillsAdapter.I
     private ImageButton imgBack;
     private TextView titileToolbar, toolbarTitleRight;
     private RecyclerView recyclerViewSkills;
+    private ArrayList<SkillsModel> skillsMainArrayList = new ArrayList<>();
     private ArrayList<SkillsModel> skillsModelArrayList = new ArrayList<>();
+    private ArrayList<SkillsModel> skillsServiceArrayList = new ArrayList<>();
+    private ArrayList<SkillsModel> skillsDataArrayList = new ArrayList<>();
     private String credentialsArr[] = {"Volunteer", "Companion Keeper", "Personal Support Worker (PSW)", "Registered Nurse Practitioner (RNP)"};
     private String servicesArr[] = {"Bathing and Toileting", "Transportation", "Meal Preparation", "Light HouseKeeping"};
     private String skillsArr[] = {"Old Age", "Alzheimers", "Dementia", "Parkinsons", "Pallative Care"};
@@ -56,12 +59,27 @@ public class SkillsActivity extends AppCompatActivity implements SkillsAdapter.I
 
     }
 
-    private void setRecyclerView(ArrayList<SkillsModel> data, ArrayList<SkillsModel> dataServices, ArrayList<SkillsModel> dataSkills) {
-        daysAdapter = new SkillsAdapter(this, data, this);
+    private void setRecyclerView(ArrayList<SkillsModel> data, ArrayList<SkillsModel> dataServices, final ArrayList<SkillsModel> dataSkills) {
+        daysAdapter = new SkillsAdapter(this, data, new SkillsAdapter.ISkills() {
+            @Override
+            public void selectedSkills(ArrayList<SkillsModel> data) {
+                skillsMainArrayList = data;
+            }
+        });
         recyclerView.setAdapter(daysAdapter);
-        daysAdapter = new SkillsAdapter(this, dataServices, this);
+        daysAdapter = new SkillsAdapter(this, dataServices, new SkillsAdapter.ISkills() {
+            @Override
+            public void selectedSkills(ArrayList<SkillsModel> data) {
+                skillsServiceArrayList =data;
+            }
+        });
         recyclerViewServices.setAdapter(daysAdapter);
-        daysAdapter = new SkillsAdapter(this, dataSkills, this);
+        daysAdapter = new SkillsAdapter(this, dataSkills, new SkillsAdapter.ISkills() {
+            @Override
+            public void selectedSkills(ArrayList<SkillsModel> data) {
+                skillsDataArrayList = data;
+            }
+        });
         recyclerViewSkills.setAdapter(daysAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true));
         recyclerViewServices.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true));
@@ -91,7 +109,7 @@ public class SkillsActivity extends AppCompatActivity implements SkillsAdapter.I
     }
 
     private void updateSkills() {
-        ArrayList<SkillsMainModel> selectedSkills = ApplicationState.getInstance().getSkillsModelArrayList();
+        /*ArrayList<SkillsMainModel> selectedSkills = ApplicationState.getInstance().getSkillsModelArrayList();
         boolean isUnSelect = false;
         if (selectedSkills.size() > 0) {
             for (SkillsMainModel skillsMainModel : selectedSkills) {
@@ -110,10 +128,23 @@ public class SkillsActivity extends AppCompatActivity implements SkillsAdapter.I
             }
         } else {
             insertSkills();
+        }*/
+        skillsModelArrayList.clear();
+        skillsModelArrayList.addAll(skillsMainArrayList);
+        skillsModelArrayList.addAll(skillsServiceArrayList);
+        skillsModelArrayList.addAll(skillsDataArrayList);
+        if(skillsModelArrayList.size() > 0){
+            InsertGiverSkilsRequest skilsRequest = new InsertGiverSkilsRequest();
+            skilsRequest.setSkillID(skillsModelArrayList.get(0).getId());
+            apiDeleteSkills(skilsRequest);
         }
     }
 
     private void insertSkills() {
+        skillsModelArrayList.clear();
+        skillsModelArrayList.addAll(skillsMainArrayList);
+        skillsModelArrayList.addAll(skillsServiceArrayList);
+        skillsModelArrayList.addAll(skillsDataArrayList);
         for (SkillsModel skillsModel : skillsModelArrayList) {
             if(skillsModel.isSelected()) {
                 InsertGiverSkilsRequest skilsRequest = new InsertGiverSkilsRequest();
@@ -152,6 +183,9 @@ public class SkillsActivity extends AppCompatActivity implements SkillsAdapter.I
                     dataSkills.add(skillsModelArrayList.get(i));
                 }
             }
+                skillsMainArrayList =data;
+            skillsServiceArrayList = dataService;
+            skillsDataArrayList = dataSkills;
 
             setRecyclerView(data, dataService, dataSkills);
         } else {
@@ -225,6 +259,6 @@ public class SkillsActivity extends AppCompatActivity implements SkillsAdapter.I
     @Override
     public void selectedSkills(ArrayList<SkillsModel> data) {
 
-        skillsModelArrayList = data;
+
     }
 }

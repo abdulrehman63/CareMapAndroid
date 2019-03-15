@@ -176,40 +176,41 @@ public class SeekerProfileActivity extends AppCompatActivity {
             }
         });
     }
-    private void getUserInterests(){
+    private void getUserInterests() {
         WebServiceFactory.getInstance().init(this);
-        GetGiverInterestById profileRequest = new GetGiverInterestById();
-        profileRequest.getFilterCaregiver().setUserId(PreferenceHelper.getInstance().getString(Constants.USER_ID, ""));
+        GetSeekersRequest profileRequest = new GetSeekersRequest();
+        profileRequest.getFilterSeniorInterest().setSeniorId(seniorId);
 
-        WebServiceFactory.getInstance().apiGetGiverInterestById(profileRequest, new ApiCallBack2() {
+        WebServiceFactory.getInstance().apiGetSeniorInterestById(profileRequest, new ApiCallBack2() {
             @Override
             public void onSuccess(MainResponse2 mainResponse) {
                 ArrayList<InterestModel> data = new ArrayList<>();
-                ApplicationState.getInstance().setInterestModelArrayList(mainResponse.getResultResponse().getInterestModelArrayList());
-                for (int i= 0; i <  mainResponse.getResultResponse().getInterestModelArrayList().size(); i++){
-                    InterestModel dayModel = new InterestModel();
+                ApplicationState.getInstance().setInterestModelArrayList(mainResponse.getResultResponse().getSeniorInterests());
+                for (int i = 0; i < mainResponse.getResultResponse().getSeniorInterests().size(); i++) {
+                    if (mainResponse.getResultResponse().getSeniorInterests().get(i).getInterest() != null) {
+                        InterestModel dayModel = new InterestModel();
 
-                    dayModel.setName(mainResponse.getResultResponse().getInterestModelArrayList().get(i).getInterest().getName());
-                    dayModel.setSelected(true);
-                    for (int j= 0; j < interestIcons.length; j++){
-                        if(interestIds[j].equalsIgnoreCase(mainResponse.getResultResponse().getInterestModelArrayList().get(i).getInterest().getId())){
-                            dayModel.setIcone(interestIcons[j]);
-                            break;
+                        dayModel.setName(mainResponse.getResultResponse().getSeniorInterests().get(i).getInterest().getName());
+                        dayModel.setSelected(true);
+                        for (int j = 0; j < interestIcons.length; j++) {
+                            if (interestIds[j].equalsIgnoreCase(mainResponse.getResultResponse().getSeniorInterests().get(i).getInterest().getId())) {
+                                dayModel.setIcone(interestIcons[j]);
+                                break;
 
+                            }
                         }
+                        data.add(dayModel);
                     }
-                    data.add(dayModel);
                 }
+
                 setInterestRecyclerView(data);
-
-
             }
         });
     }
     private void getUserSkills(){
         WebServiceFactory.getInstance().init(this);
         GetGiverProfileRequest profileRequest = new GetGiverProfileRequest();
-        profileRequest.getFilterSeniorSkills().setSeniorId(PreferenceHelper.getInstance().getString(Constants.SENIOR_ID, ""));
+        profileRequest.getFilterSeniorSkills().setSeniorId(seniorId);
 
         WebServiceFactory.getInstance().apiGetSeniorSkills(profileRequest, new ApiCallback() {
             @Override

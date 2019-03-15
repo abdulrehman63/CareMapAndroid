@@ -24,12 +24,14 @@ public class LanguagesAdapater extends RecyclerView.Adapter<LanguagesAdapater.Vi
     private ArrayList<LanguageModel> data;
     private ISelectedLanguages iSelectedLanguages;
     private ArrayList<LanguageModel> filteredData;
+    private ArrayList<LanguageModel> latestfilteredData = new ArrayList<>();
 
     public LanguagesAdapater(Context context, ArrayList<LanguageModel> data,ISelectedLanguages iSelectedLanguages) {
         this.context = context;
         this.data = data;
         this.filteredData = data;
         this.iSelectedLanguages=iSelectedLanguages;
+        this.latestfilteredData.addAll(filteredData);
     }
 
     @Override
@@ -52,12 +54,14 @@ public class LanguagesAdapater extends RecyclerView.Adapter<LanguagesAdapater.Vi
             holder.relMain.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                   if(filteredData.get(position).isSelected()){
+                   if(latestfilteredData.get(position).isSelected()){
+                       latestfilteredData.get(position).setSelected(false);
                        filteredData.get(position).setSelected(false);
                    }else {
+                       latestfilteredData.get(position).setSelected(true);
                        filteredData.get(position).setSelected(true);
                    }
-                   iSelectedLanguages.selectedLanguages(filteredData);
+                   iSelectedLanguages.selectedLanguages(latestfilteredData);
                     notifyDataSetChanged();
                    // iSkills.selectedSkills(filteredData);
 

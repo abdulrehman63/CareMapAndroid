@@ -9,8 +9,21 @@ import com.square63.caremap.BR;
 import java.io.Serializable;
 
 public class RegistrationModel extends BaseObservable implements Serializable {
+
     @SerializedName("Email")
     private String email;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    @SerializedName("Id")
+
+    private String id;
     @SerializedName("Password")
     private String password;
     @SerializedName("Username")

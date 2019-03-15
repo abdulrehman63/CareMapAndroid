@@ -231,7 +231,7 @@ public class SeniorProfileFragment extends Fragment {
                 if (languages != null && languages.length() > 0 && languages.charAt(languages.length() - 1) == '/') {
                     languages = languages.substring(0, languages.length() - 1);
                 }
-                txtReason.setText(languages);
+               txtReason.setText(languages);
 
             }
 

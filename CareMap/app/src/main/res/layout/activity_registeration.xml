@@ -103,7 +103,7 @@
         android:onClick="onSubmitClick"
         app:layout_constraintTop_toBottomOf="@+id/textView3"
         app:layout_constraintEnd_toEndOf="parent"
-        android:background="@drawable/create_account"
+        android:background="@drawable/signup_state"
         app:layout_constraintStart_toStartOf="parent" />
 
 

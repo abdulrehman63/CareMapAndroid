@@ -75,29 +75,28 @@ public class CreateProviderProfileActivity extends AppCompatActivity implements 
         toolbarTitleRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (ApplicationState.getInstance().isFromEdit()) {
-                    UIHelper.openActivity(CreateProviderProfileActivity.this, PersonalInfoActivity.class);
-                } else {
+
                     if (validations.validateCreateProfile(binding.txtFirstName, binding.edtLastName, binding.edtDob, binding.edtPhone, binding.edtCity, binding.edtProvince, binding.edtAddress1
                             , binding.fName, binding.lName, binding.dob, binding.pNumber, binding.city, binding.province, binding.addres1) == Constants.SUCCESS) {
-                        registrationModel.setCity(binding.getProfileModel().getCity());
-                        registrationModel.setFirstName(binding.getProfileModel().getFirstName());
-                        registrationModel.setLastName(binding.getProfileModel().getLastName());
-                        registrationModel.setGender("Male");
-                        registrationModel.setPostalCode("1234");
-                        registrationModel.setDateOfBirth(binding.getProfileModel().getDob());
-                        registrationModel.setState(binding.getProfileModel().getProvince());
-                        registrationModel.setAddress(binding.getProfileModel().getAddress1());
-                        registrationModel.setAddress2(binding.getProfileModel().getAddress2());
-                        registrationModel.setPhone(binding.getProfileModel().getPhoneNumber());
-                        if (ApplicationState.getInstance().isFromEdit())
+                        if (ApplicationState.getInstance().isFromEdit()) {
                             apiUpdateGiver();
-                        else
+                        }else {
+                            registrationModel.setCity(binding.getProfileModel().getCity());
+                            registrationModel.setFirstName(binding.getProfileModel().getFirstName());
+                            registrationModel.setLastName(binding.getProfileModel().getLastName());
+                            registrationModel.setGender("Male");
+                            registrationModel.setPostalCode("1234");
+                            registrationModel.setDateOfBirth(binding.getProfileModel().getDob());
+                            registrationModel.setState(binding.getProfileModel().getProvince());
+                            registrationModel.setAddress(binding.getProfileModel().getAddress1());
+                            registrationModel.setAddress2(binding.getProfileModel().getAddress2());
+                            registrationModel.setPhone(binding.getProfileModel().getPhoneNumber());
                             apiCreateGiver();
+                        }
                         // UIHelper.openActivity(CreateProviderProfileActivity.this,PersonalInfoActivity.class);
                     } else {
 
-                    }
+
                 }
                 // UIHelper.openActivity(CreateProviderProfileActivity.this,);
             }
@@ -145,18 +144,27 @@ public class CreateProviderProfileActivity extends AppCompatActivity implements 
     }
 
     private void apiUpdateGiver() {
+        RegistrationModel registrationModel= new RegistrationModel();
+        registrationModel.setCity(binding.getProfileModel().getCity());
+        registrationModel.setFirstName(binding.getProfileModel().getFirstName());
+        registrationModel.setLastName(binding.getProfileModel().getLastName());
+        registrationModel.setGender("Male");
+        registrationModel.setPostalCode("1234");
+        registrationModel.setDateOfBirth(binding.getProfileModel().getDob());
+        registrationModel.setState(binding.getProfileModel().getProvince());
+        registrationModel.setAddress(binding.getProfileModel().getAddress1());
+        registrationModel.setAddress2(binding.getProfileModel().getAddress2());
+        registrationModel.setPhone(binding.getProfileModel().getPhoneNumber());
         CreateGiverRequest createGiverRequest = new CreateGiverRequest();
-        createGiverRequest.setId(PreferenceHelper.getInstance().getString(Constants.USER_ID, ""));
+        createGiverRequest.setId(PreferenceHelper.getInstance().getString(Constants.GIVER_ID, ""));
         createGiverRequest.setRegistrationModel(registrationModel);
         WebServiceFactory.getInstance().init(this);
-        WebServiceFactory.getInstance().apiSignup(createGiverRequest, new ApiCallback() {
+        WebServiceFactory.getInstance().apiUpdateGiver(createGiverRequest, new ApiCallback() {
             @Override
             public void onSuccess(MainResponse mainResponse) {
-                PreferenceHelper.getInstance().setString(Constants.GIVER_ID, mainResponse.getResultResponse().getId());
-                PreferenceHelper.getInstance().setString(Constants.USER_ID, mainResponse.getResultResponse().getId2());
-                if (encodedImage != null) {
+               /* if (encodedImage != null) {
                     uploadImage(mainResponse.getResultResponse().getId2());
-                }
+                }*/
                 UIHelper.openActivity(CreateProviderProfileActivity.this, PersonalInfoActivity.class);
             }
         });

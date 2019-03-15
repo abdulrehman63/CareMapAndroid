@@ -44,7 +44,7 @@ public class Validations {
             edtPassword.setError(Html.fromHtml("<font color='red'>" + text + "</font>"));*/
             isValidate = Constants.EMPTY_EMAIL_FIELD;
         }
-        if (!UIHelper.isValidEmail(edtEmail.getText().toString())) {
+        if (!UIHelper.isValidEmail(edtEmail.getText().toString().trim())) {
            /* text = String.format(res.getString(R.string.email_field_error), context.getString(R.string.email));
             edtEmail.setError(Html.fromHtml("<font color='red'>" + text + "</font>"));*/
             imageView.setVisibility(View.VISIBLE);
@@ -72,7 +72,7 @@ public class Validations {
             isValidate =  Constants.EMPTY_EMAIL_FIELD;
         }
 
-        if (!UIHelper.isValidEmail(edtEmail.getText().toString())) {
+        if (!UIHelper.isValidEmail(edtEmail.getText().toString().trim())) {
             imageView.setVisibility(View.VISIBLE);
             edtEmail.setBackgroundResource(R.drawable.red_rectangle);
            /* text = String.format(res.getString(R.string.email_field_error), context.getString(R.string.email));
@@ -113,7 +113,7 @@ public class Validations {
             edtPassword.setBackgroundResource(R.drawable.red_rectangle);
             isValidate =  Constants.EMPTY_EMAIL_FIELD;
         }
-        if (!UIHelper.isValidEmail(edtEmail.getText().toString())) {
+        if (!UIHelper.isValidEmail(edtEmail.getText().toString().trim())) {
            /* text = String.format(res.getString(R.string.email_field_error), context.getString(R.string.email));
             edtEmail.setError(Html.fromHtml("<font color='red'>" + text + "</font>"));*/
             imageView.setVisibility(View.VISIBLE);

@@ -14,13 +14,17 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.square63.caremap.ApplicationState;
 import com.square63.caremap.R;
 import com.square63.caremap.constants.Constants;
 import com.square63.caremap.databinding.FragmentEducationDialogeBinding;
 import com.square63.caremap.models.EducationModel;
+import com.square63.caremap.models.GetEducationModel;
 import com.square63.caremap.utils.PreferenceHelper;
+import com.square63.caremap.webapi.Apiinterface.ApiCallBack2;
 import com.square63.caremap.webapi.Apiinterface.ApiCallback;
 import com.square63.caremap.webapi.responses.MainResponse;
+import com.square63.caremap.webapi.responses.MainResponse2;
 import com.square63.caremap.webapi.webservices.WebServiceFactory;
 import com.square63.caremap.utils.UIHelper;
 
@@ -69,12 +73,21 @@ public class EducationDialoge extends DialogFragment {
         toolbarTitleRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                insertEducation();
+                if(ApplicationState.getInstance().isFromEdit()){
+                    deleteEducation();
+                }else {
+                    insertEducation();
+                }
+
 
 
 
             }
         });
+        if(ApplicationState.getInstance().isFromEdit()){
+            getEducation();
+        }
+
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -99,6 +112,36 @@ public class EducationDialoge extends DialogFragment {
             public void onSuccess(MainResponse mainResponse) {
                 UIHelper.showAlert(Constants.Success,Constants.education_added,getActivity());
                 dismiss();
+            }
+        });
+
+    }
+    private void deleteEducation(){
+
+        binding.getEducationModel().setCaregiverID(PreferenceHelper.getInstance().getString(Constants.GIVER_ID,""));
+        WebServiceFactory.getInstance().apiDeleteEducation(binding.getEducationModel(), new ApiCallback() {
+            @Override
+            public void onSuccess(MainResponse mainResponse) {
+               insertEducation();
+            }
+        });
+
+    }
+    private void getEducation(){
+
+        WebServiceFactory.getInstance().apiGetEducation(new ApiCallBack2() {
+            @Override
+            public void onSuccess(MainResponse2 mainResponse) {
+               if(mainResponse.getResultResponse().getEducationModelArrayList() != null && mainResponse.getResultResponse().getEducationModelArrayList().size() > 0){
+                   GetEducationModel educationModel = mainResponse.getResultResponse().getEducationModelArrayList().get(0);
+                    EducationModel educationModel1 = new EducationModel();
+                   educationModel1.setCollege(educationModel.getCollege());
+                   educationModel1.setDegree(educationModel.getDegree());
+                   educationModel1.setStudy(educationModel.getStudy());
+                   educationModel1.setStartDate(educationModel.getStartDate());
+                   educationModel1.setEndDate(educationModel.getEndDate());
+                   binding.setEducationModel(educationModel1);
+               }
             }
         });
 

@@ -13,6 +13,7 @@ import com.square63.caremap.ApplicationState;
 import com.square63.caremap.R;
 import com.square63.caremap.listeners.RecyclerItemClickListener;
 import com.square63.caremap.models.DayModel;
+import com.square63.caremap.models.InterestModel;
 import com.square63.caremap.models.LanguageModel;
 import com.square63.caremap.models.giverModels.Availability;
 import com.square63.caremap.ui.adapters.DaysAdpater;
@@ -83,6 +84,34 @@ public class DaysSelectionActivity extends AppCompatActivity implements DaysAdpa
             daysAdapter.setData(data);
         }
     }
+    private void updateInterests() {
+      /*  ArrayList<Availability> dayModels = ApplicationState.getInstance().getAvailabilityArrayList();
+        boolean isUnSelect = false;
+        if (dayModels.size() > 0) {
+            for (int i= 0; i < dayModels.size(); i++){
+                for (int j =0 ; j < data.size();j++){
+                    if(data.get(j).getDayTime() == Integer.parseInt(dayModels.get(i).getFromHour()) && data.get(j).getDay() == dayModels.get(i).getDayOfWeek() && !data.get(j).isSelected()){
+                        InsertAvailabilityRequest insertUserInterestRequest = new InsertAvailabilityRequest();
+                        insertUserInterestRequest.setDayOfWeek(data.get(j).getDayTime());
+                        deleteAvailability(insertUserInterestRequest);
+                        isUnSelect = true;
+                        break;
+                    }
+                }
+            }
+
+            if (!isUnSelect) {
+                insertAvailabilities();
+            }
+        } else {
+            insertAvailabilities();
+        }*/
+      if(data.size() > 0){
+          InsertAvailabilityRequest insertUserInterestRequest = new InsertAvailabilityRequest();
+          insertUserInterestRequest.setDayOfWeek(data.get(0).getDayTime());
+          deleteAvailability(insertUserInterestRequest);
+      }
+    }
     private void setRecyclerView(ArrayList<DayModel> data) {
         daysAdapter=new DaysAdpater(this, data,this);
         recyclerView.setAdapter(daysAdapter);
@@ -108,6 +137,15 @@ public class DaysSelectionActivity extends AppCompatActivity implements DaysAdpa
             }
         });
     }
+    private void deleteAvailability(InsertAvailabilityRequest interestRequest){
+        WebServiceFactory.getInstance().init(this);
+        WebServiceFactory.getInstance().apiDeleteAvailability(interestRequest, new ApiCallback() {
+            @Override
+            public void onSuccess(MainResponse mainResponse) {
+                insertAvailabilities();
+            }
+        });
+    }
 
     private void initToolBar(){
 
@@ -127,18 +165,25 @@ public class DaysSelectionActivity extends AppCompatActivity implements DaysAdpa
         toolbarTitleRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                for (DayModel dayModel : data){
-                    if(dayModel.isSelected()) {
-                        InsertAvailabilityRequest insertAvailabilityRequest = new InsertAvailabilityRequest();
-                        insertAvailabilityRequest.setFromHour(dayModel.getDayTime());
-                        insertAvailabilityRequest.setToHour(dayModel.getDayTime());
-                        insertAvailabilityRequest.setDayOfWeek(dayModel.getDay());
-                        insertAvailability(insertAvailabilityRequest);
-                    }
-                }
+               if(ApplicationState.getInstance().isFromEdit()){
+                   updateInterests();
+               }else {
+                   insertAvailabilities();
+               }
                 UIHelper.openActivity(DaysSelectionActivity.this,SkillsActivity.class);
             }
         });
+    }
+    private void insertAvailabilities(){
+        for (DayModel dayModel : data){
+            if(dayModel.isSelected()) {
+                InsertAvailabilityRequest insertAvailabilityRequest = new InsertAvailabilityRequest();
+                insertAvailabilityRequest.setFromHour(dayModel.getDayTime());
+                insertAvailabilityRequest.setToHour(dayModel.getDayTime());
+                insertAvailabilityRequest.setDayOfWeek(dayModel.getDay());
+                insertAvailability(insertAvailabilityRequest);
+            }
+        }
     }
 
     @Override

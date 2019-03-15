@@ -12,13 +12,19 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.square63.caremap.ApplicationState;
 import com.square63.caremap.R;
 import com.square63.caremap.constants.Constants;
 import com.square63.caremap.databinding.FragmentLicenseDialogeBinding;
+import com.square63.caremap.models.EducationModel;
+import com.square63.caremap.models.GetEducationModel;
+import com.square63.caremap.models.GetLicenseModel;
 import com.square63.caremap.models.LicenseModel;
 import com.square63.caremap.utils.PreferenceHelper;
+import com.square63.caremap.webapi.Apiinterface.ApiCallBack2;
 import com.square63.caremap.webapi.Apiinterface.ApiCallback;
 import com.square63.caremap.webapi.responses.MainResponse;
+import com.square63.caremap.webapi.responses.MainResponse2;
 import com.square63.caremap.webapi.webservices.WebServiceFactory;
 
 import com.square63.caremap.utils.UIHelper;
@@ -83,18 +89,23 @@ public class LicenseDialoge extends DialogFragment {
         toolbarTitleRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addLicense();
-
-
+                if(ApplicationState.getInstance().isFromEdit()){
+                    deleteLicense();
+                }else {
+                    addLicense();
+                }
 
             }
         });
+        if(ApplicationState.getInstance().isFromEdit()){
+            getLicense();
+        }
     }
     private void addLicense(){
         UIHelper.showAlert(Constants.Success,Constants.license_added,getContext());
         dismiss();
         WebServiceFactory.getInstance().init(getContext());
-        binding.getLicenseModel().setCaregiverID(PreferenceHelper.getInstance().getString(Constants.GIVER_ID,""));
+        binding.getLicenseModel().setCaregiverID(PreferenceHelper.getInstance().getString(Constants.USER_ID,""));
         WebServiceFactory.getInstance().apiAddLicense(binding.getLicenseModel(), new ApiCallback() {
             @Override
             public void onSuccess(MainResponse mainResponse) {
@@ -103,6 +114,37 @@ public class LicenseDialoge extends DialogFragment {
             }
         });
     }
+    private void deleteLicense(){
+        WebServiceFactory.getInstance().init(getContext());
+        binding.getLicenseModel().setCaregiverID(PreferenceHelper.getInstance().getString(Constants.USER_ID,""));
+        WebServiceFactory.getInstance().apiDeleteLicense(binding.getLicenseModel(), new ApiCallback() {
+            @Override
+            public void onSuccess(MainResponse mainResponse) {
+                addLicense();
 
+            }
+        });
+    }
+    private void getLicense(){
+
+
+        WebServiceFactory.getInstance().apiGetLicense(new ApiCallBack2() {
+            @Override
+            public void onSuccess(MainResponse2 mainResponse) {
+                if(mainResponse.getResultResponse().getLicenseModelArrayList() != null && mainResponse.getResultResponse().getLicenseModelArrayList().size() > 0){
+                    GetLicenseModel educationModel = mainResponse.getResultResponse().getLicenseModelArrayList().get(0);
+                    LicenseModel educationModel1 = new LicenseModel();
+                    educationModel1.setExpDate(educationModel.getExpDate());
+                    educationModel1.setCredentialName(educationModel.getCredentialName());
+                    educationModel1.setIssueDate(educationModel.getIssueDate());
+                    educationModel1.setRequestdocument(educationModel.getRequestdocument());
+                    educationModel1.setLicenseNo(educationModel.getLicenseNo());
+                    educationModel1.setVettingDocuments(educationModel.getVettingDocuments());
+                    binding.setLicenseModel(educationModel1);
+                }
+            }
+        });
+
+    }
 
 }

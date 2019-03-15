@@ -17,6 +17,7 @@ import com.square63.caremap.models.EducationModel;
 import com.square63.caremap.models.LicenseModel;
 import com.square63.caremap.models.LoginModel;
 import com.square63.caremap.models.RegistrationModel;
+import com.square63.caremap.models.ResetPassModel;
 import com.square63.caremap.models.chatModule.CreateMessageRequest;
 import com.square63.caremap.models.seekerModels.CreateSeekerRequest;
 import com.square63.caremap.models.seekerModels.CreateSeniorRequest;
@@ -330,6 +331,72 @@ public class WebServiceFactory {
         });
 
     }
+    public void apiGetEducation( final ApiCallBack2 apiCallback) {
+        checkNetworkState();
+        ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        final ProgressDialog loading;
+        loading = ProgressDialog.show(context_, context_.getResources().getString(R.string.loading), "", true, false);
+        GetGiverProfileRequest giverProfileRequest = new GetGiverProfileRequest();
+        giverProfileRequest.getFilterCaregiverEducation().setCaregiverId(PreferenceHelper.getInstance().getString(Constants.GIVER_ID,""));
+
+        Call<MainResponse2> signUpResponseCall = apiInterface.apiGetGiverEducation(giverProfileRequest);
+        signUpResponseCall.enqueue(new Callback<MainResponse2>() {
+            @Override
+            public void onResponse(Call<MainResponse2> call, retrofit2.Response<MainResponse2> response) {
+                if (response.isSuccessful() && response.body().isStatus()) {
+                    // UIHelper.showLongToastInCenter(context_, response.body().getStoreResponse().getMessage());
+                    apiCallback.onSuccess(response.body());
+
+                }else {
+                    //   UIHelper.showLongToastInCenter(context_, response.body().getStoreResponse().getMessage());
+                }
+
+                loading.dismiss();
+            }
+
+            @Override
+            public void onFailure(Call<MainResponse2> call, Throwable t) {
+                //  UIHelper.showLongToastInCenter(context_, t.getMessage());
+                Log.d("fail", t.getMessage());
+                loading.dismiss();
+
+            }
+        });
+
+    }
+    public void apiGetLicense( final ApiCallBack2 apiCallback) {
+        checkNetworkState();
+        ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        final ProgressDialog loading;
+        loading = ProgressDialog.show(context_, context_.getResources().getString(R.string.loading), "", true, false);
+        GetGiverProfileRequest giverProfileRequest = new GetGiverProfileRequest();
+        giverProfileRequest.getFilterCaregiverLicense().setCaregiverId(PreferenceHelper.getInstance().getString(Constants.USER_ID,""));
+
+        Call<MainResponse2> signUpResponseCall = apiInterface.apiGetGiverLicense(giverProfileRequest);
+        signUpResponseCall.enqueue(new Callback<MainResponse2>() {
+            @Override
+            public void onResponse(Call<MainResponse2> call, retrofit2.Response<MainResponse2> response) {
+                if (response.isSuccessful() && response.body().isStatus()) {
+                    // UIHelper.showLongToastInCenter(context_, response.body().getStoreResponse().getMessage());
+                    apiCallback.onSuccess(response.body());
+
+                }else {
+                    //   UIHelper.showLongToastInCenter(context_, response.body().getStoreResponse().getMessage());
+                }
+
+                loading.dismiss();
+            }
+
+            @Override
+            public void onFailure(Call<MainResponse2> call, Throwable t) {
+                //  UIHelper.showLongToastInCenter(context_, t.getMessage());
+                Log.d("fail", t.getMessage());
+                loading.dismiss();
+
+            }
+        });
+
+    }
     public void apiDeleteEducation(EducationModel signUpModel, final ApiCallback apiCallback) {
         checkNetworkState();
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
@@ -337,7 +404,7 @@ public class WebServiceFactory {
         loading = ProgressDialog.show(context_, context_.getResources().getString(R.string.loading), "", true, false);
 
 
-        Call<MainResponse> signUpResponseCall = apiInterface.apiInsertEducation(signUpModel);
+        Call<MainResponse> signUpResponseCall = apiInterface.apiDeleteEducation(signUpModel);
         signUpResponseCall.enqueue(new Callback<MainResponse>() {
             @Override
             public void onResponse(Call<MainResponse> call, retrofit2.Response<MainResponse> response) {
@@ -723,6 +790,38 @@ public class WebServiceFactory {
 
 
         Call<MainResponse2> signUpResponseCall = apiInterface.apiGetSeniorInterests(signUpModel);
+        signUpResponseCall.enqueue(new Callback<MainResponse2>() {
+            @Override
+            public void onResponse(Call<MainResponse2> call, retrofit2.Response<MainResponse2> response) {
+                if (response.isSuccessful() && response.body().isStatus()) {
+                    // UIHelper.showLongToastInCenter(context_, response.body().getStoreResponse().getMessage());
+                    apiCallback.onSuccess(response.body());
+
+                }else {
+                    //   UIHelper.showLongToastInCenter(context_, response.body().getStoreResponse().getMessage());
+                }
+
+                loading.dismiss();
+            }
+
+            @Override
+            public void onFailure(Call<MainResponse2> call, Throwable t) {
+                //  UIHelper.showLongToastInCenter(context_, t.getMessage());
+                Log.d("fail", t.getMessage());
+                loading.dismiss();
+
+            }
+        });
+
+    }
+    public void apiResetPass(ResetPassModel signUpModel, final ApiCallBack2 apiCallback) {
+        checkNetworkState();
+        ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        final ProgressDialog loading;
+        loading = ProgressDialog.show(context_, context_.getResources().getString(R.string.loading), "", true, false);
+
+
+        Call<MainResponse2> signUpResponseCall = apiInterface.apiResetPassword(signUpModel);
         signUpResponseCall.enqueue(new Callback<MainResponse2>() {
             @Override
             public void onResponse(Call<MainResponse2> call, retrofit2.Response<MainResponse2> response) {
@@ -1302,6 +1401,38 @@ public class WebServiceFactory {
 
 
         Call<MainResponse> signUpResponseCall = apiInterface.apiDeleteUserSkills(signUpModel);
+        signUpResponseCall.enqueue(new Callback<MainResponse>() {
+            @Override
+            public void onResponse(Call<MainResponse> call, retrofit2.Response<MainResponse> response) {
+                if (response.isSuccessful() && response.body().isStatus()) {
+                    // UIHelper.showLongToastInCenter(context_, response.body().getStoreResponse().getMessage());
+                    apiCallback.onSuccess(response.body());
+
+                }else {
+                    //   UIHelper.showLongToastInCenter(context_, response.body().getStoreResponse().getMessage());
+                }
+
+                // loading.dismiss();
+            }
+
+            @Override
+            public void onFailure(Call<MainResponse> call, Throwable t) {
+                //  UIHelper.showLongToastInCenter(context_, t.getMessage());
+                Log.d("fail", t.getMessage());
+                //loading.dismiss();
+
+            }
+        });
+
+    }
+    public void apiDeleteSeniorSkills(InsertGiverSkilsRequest signUpModel, final ApiCallback apiCallback) {
+        //checkNetworkState();
+        ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        //  final ProgressDialog loading;
+        //loading = ProgressDialog.show(context_, context_.getResources().getString(R.string.loading), "", true, false);
+
+
+        Call<MainResponse> signUpResponseCall = apiInterface.apiDeleteSeniorSkills(signUpModel);
         signUpResponseCall.enqueue(new Callback<MainResponse>() {
             @Override
             public void onResponse(Call<MainResponse> call, retrofit2.Response<MainResponse> response) {

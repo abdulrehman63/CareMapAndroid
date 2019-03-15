@@ -44,14 +44,15 @@ public class SettingsActivity extends AppCompatActivity {
 
     }
     public void onTermsClick(View view){
-        UIHelper.openLink(this);
+        UIHelper.openLink(this,"https://www.ucarenet.com/terms");
     }
     public void onShareAppClick(View view){
         UIHelper.shareApp(this,"Coming soon");
 
     }
     public void onHelpClick(View view){
-        UIHelper.openLink(this);
+
+        UIHelper.openLink(this,"https://www.ucarenet.com/contact");
     }
     public void onLogoutClick(View view){
         PreferenceHelper.getInstance().setString(Constants.ID,"");

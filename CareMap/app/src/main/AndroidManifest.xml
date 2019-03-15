@@ -92,7 +92,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.SeekerProfileActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
+        <activity android:name=".ui.EmailSentActivity"></activity>
     </application>
 
 </manifest>

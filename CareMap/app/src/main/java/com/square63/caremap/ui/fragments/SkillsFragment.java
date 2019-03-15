@@ -81,7 +81,6 @@ public class SkillsFragment extends Fragment {
             }
         });
 
-
         apiGetGiverSkills();
 
     }

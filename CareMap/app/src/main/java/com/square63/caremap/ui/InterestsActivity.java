@@ -184,7 +184,7 @@ public class InterestsActivity extends AppCompatActivity implements InterestAdap
         });
     }
     private void updateInterests() {
-        ArrayList<InterestModel> interestModels = ApplicationState.getInstance().getInterestModelArrayList();
+       /* ArrayList<InterestModel> interestModels = ApplicationState.getInstance().getInterestModelArrayList();
         boolean isUnSelect = false;
         if (interestModels.size() > 0) {
             for (InterestModel interestModel : interestModels) {
@@ -203,7 +203,12 @@ public class InterestsActivity extends AppCompatActivity implements InterestAdap
             }
         } else {
             addInterest();
-        }
+        }*/
+       if(interestModelArrayList.size() > 0){
+           InsertUserInterestRequest insertUserInterestRequest = new InsertUserInterestRequest();
+           insertUserInterestRequest.setInterestID(interestModelArrayList.get(0).getInterestID());
+           apiDeleteSkills(insertUserInterestRequest);
+       }
     }
 
     @Override

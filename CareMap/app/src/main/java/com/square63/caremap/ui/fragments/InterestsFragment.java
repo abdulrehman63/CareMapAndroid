@@ -82,6 +82,12 @@ public class InterestsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
 
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         getUserInterests();
     }
 

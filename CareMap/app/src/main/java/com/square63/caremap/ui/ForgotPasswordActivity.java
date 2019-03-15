@@ -9,8 +9,12 @@ import android.widget.ImageView;
 
 import com.square63.caremap.R;
 import com.square63.caremap.constants.Constants;
+import com.square63.caremap.models.ResetPassModel;
 import com.square63.caremap.utils.UIHelper;
 import com.square63.caremap.utils.Validations;
+import com.square63.caremap.webapi.Apiinterface.ApiCallBack2;
+import com.square63.caremap.webapi.responses.MainResponse2;
+import com.square63.caremap.webapi.webservices.WebServiceFactory;
 
 public class ForgotPasswordActivity extends AppCompatActivity {
 
@@ -38,6 +42,17 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         Validations validations = new Validations(this);
         if(validations.validateForgotPassword(edtEmail,imageViewError) == Constants.SUCCESS ){
            // UIHelper.openActivity(LoginActivity.this,WelcomeActivity.class);
+            ResetPassModel resetPassModel = new ResetPassModel();
+            resetPassModel.setEmail(edtEmail.getText().toString());
+            resetPassModel.setUserName(edtEmail.getText().toString());
+            WebServiceFactory.getInstance().init(this);
+            WebServiceFactory.getInstance().apiResetPass(resetPassModel, new ApiCallBack2() {
+                @Override
+                public void onSuccess(MainResponse2 mainResponse) {
+                    UIHelper.openActivity(ForgotPasswordActivity.this,EmailSentActivity.class);
+                        finish();
+                }
+            });
         }
 
     }

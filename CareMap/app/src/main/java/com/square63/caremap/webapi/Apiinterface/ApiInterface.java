@@ -4,6 +4,7 @@ package com.square63.caremap.webapi.Apiinterface;
 import com.square63.caremap.models.EducationModel;
 import com.square63.caremap.models.LicenseModel;
 import com.square63.caremap.models.LoginModel;
+import com.square63.caremap.models.ResetPassModel;
 import com.square63.caremap.models.chatModule.CreateMessageRequest;
 import com.square63.caremap.models.seekerModels.CreateSeekerRequest;
 import com.square63.caremap.models.seekerModels.CreateSeniorRequest;
@@ -94,11 +95,17 @@ public interface ApiInterface {
         String DELETE_AVAILABILITY = "api/services/app/availability/DeleteAvailability";
         String DELETE_GIVER_EDUCATION = "api/services/app/caregiverEducation/DeleteCaregiverEducation";
         String DELETE_GIVER_LICENSE = "api/services/app/caregiverLicense/DeleteCaregiverLicense";
+        String GET_GIVER_EDUCATION = "api/services/app/caregiverEducation/GetCaregiverEducationsByFilter";
+        String GET_GIVER_LICENSE = "api/services/app/caregiverLicense/GetCaregiverLicensesByFilter";
+
         String UPDATE_SENIOR = "api/services/app/senior/UpdateSenior";
         String DELETE_SENIOR_INTEREST = "api/services/app/seniorInterest/DeleteSeniorInterest";
         String DELETE_SENIOR_LANGUAGE = "api/services/app/seniorLanguage/DeleteSeniorLanguage";
         String DELETE_USER_LANGUAGE = "api/services/app/userLanguage/DeleteUserLanguage";
         String DELETE_SENIOR_SKILLS = "api/services/app/seniorSkills/DeleteSeniorSkills";
+        String RESET_PASSWORD = "api/services/app/user/ResetpassUser";
+
+
 
     }
 
@@ -124,6 +131,8 @@ public interface ApiInterface {
 
     @HTTP(method = "DELETE", path = Request.DELETE_GIVER_SKILLS, hasBody = true)
     Call<MainResponse> apiDeleteUserSkills(@Body InsertGiverSkilsRequest userLangRequest);
+    @HTTP(method = "DELETE", path = Request.DELETE_SENIOR_SKILLS, hasBody = true)
+    Call<MainResponse> apiDeleteSeniorSkills(@Body InsertGiverSkilsRequest userLangRequest);
 
     @POST(Request.INSERT_USER_INTEREST)
     Call<MainResponse> apiInsertUserInterest(@Body InsertUserInterestRequest userLangRequest);
@@ -140,13 +149,13 @@ public interface ApiInterface {
     @POST(Request.INSERTS_GIVER_EDUCATION)
     Call<MainResponse> apiInsertEducation(@Body EducationModel request);
 
-    @DELETE(Request.DELETE_GIVER_EDUCATION)
+    @HTTP(method = "DELETE", path = Request.DELETE_GIVER_EDUCATION, hasBody = true)
     Call<MainResponse> apiDeleteEducation(@Body EducationModel request);
 
     @POST(Request.INSERT_GIVER_LICENSE)
     Call<MainResponse> apiInsertLicense(@Body LicenseModel request);
 
-    @POST(Request.DELETE_GIVER_LICENSE)
+    @HTTP(method = "DELETE", path = Request.DELETE_GIVER_LICENSE, hasBody = true)
     Call<MainResponse> apiDeleteLicense(@Body LicenseModel request);
 
     @POST(Request.INSERT_GIVER_EXPERIENCE)
@@ -237,5 +246,12 @@ public interface ApiInterface {
 
     @POST(Request.GET_SENIOR_INTEREST)
     Call<MainResponse2> apiGetSeniorInterests(@Body GetSeekersRequest userLangRequest);
+    @POST(Request.RESET_PASSWORD)
+    Call<MainResponse2> apiResetPassword(@Body ResetPassModel userLangRequest);
+
+    @POST(Request.GET_GIVER_EDUCATION)
+    Call<MainResponse2> apiGetGiverEducation(@Body GetGiverProfileRequest request);
+    @POST(Request.GET_GIVER_LICENSE)
+    Call<MainResponse2> apiGetGiverLicense(@Body GetGiverProfileRequest request);
 
 }

@@ -8,9 +8,35 @@ public class GetGiverProfileRequest {
     @SerializedName("filterUser")
     @Expose
     private FilterCaregiver filterCaregiver = new FilterCaregiver();
+    @SerializedName("filterCaregiverEducation")
+    @Expose
+    private FilterCaregiver filterCaregiverEducation = new FilterCaregiver();
+
+    public FilterCaregiver getFilterCaregiverEducation() {
+        return filterCaregiverEducation;
+    }
+
+    public void setFilterCaregiverEducation(FilterCaregiver filterCaregiverEducation) {
+        this.filterCaregiverEducation = filterCaregiverEducation;
+    }
+
+    public FilterCaregiver getFilterCaregiverLicense() {
+        return filterCaregiverLicense;
+    }
+
+    public void setFilterCaregiverLicense(FilterCaregiver filterCaregiverLicense) {
+        this.filterCaregiverLicense = filterCaregiverLicense;
+    }
+
+    @SerializedName("FilterCaregiverLicense")
+    @Expose
+
+    private FilterCaregiver filterCaregiverLicense = new FilterCaregiver();
+
     @SerializedName("filterSeniorSkill")
     @Expose
     private FilterCaregiver filterSeniorSkills = new FilterCaregiver();
+
 
     public FilterCaregiver getFilterSeniorSkills() {
         return filterSeniorSkills;

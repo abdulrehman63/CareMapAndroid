@@ -209,10 +209,18 @@ public class CreateSeniorProfileActivity extends AppCompatActivity implements Vi
     private void setLanguageData() {
 
         if (ApplicationState.getInstance().isFromEdit()) {
+
             ArrayList<SeniorLanguageModel> userLanguages = ApplicationState.getInstance().getSeniorLanguageModelArrayList();
+
             if (userLanguages != null) {
                 String languages = "";
+                modelArrayList = new ArrayList<>();
                 for (SeniorLanguageModel languageModel : userLanguages) {
+                    LanguageModel languageModel1 = new LanguageModel();
+                    languageModel1.setId(languageModel.getLanguageModel().getId());
+                    languageModel1.setName(languageModel.getLanguageModel().getName());
+                    languageModel1.setSelected(true);
+                    modelArrayList.add(languageModel1);
                     languages = languages + languageModel.getLanguageModel().getName() + ", ";
                 }
                 if (languages != null && languages.length() > 0 && languages.charAt(languages.length() - 1) == ',') {
@@ -337,6 +345,7 @@ public class CreateSeniorProfileActivity extends AppCompatActivity implements Vi
                 if (ApplicationState.getInstance().getGiverResultResponse().getMobilityID() != null) {
                     if (ApplicationState.getInstance().getGiverResultResponse().getMobilityID().equalsIgnoreCase(mobilityIdArr[i])) {
                         languageModel.setSelected(true);
+                        binding.getProfileModel().setMobilityID(mobilityIdArr[i]);
                     }
                 }
             }
@@ -349,7 +358,7 @@ public class CreateSeniorProfileActivity extends AppCompatActivity implements Vi
     }
 
     private void updateLanguages(ArrayList<LanguageModel> languageModelArrayList) {
-        ArrayList<UserLanguage> userLanguages = ApplicationState.getInstance().getLanguageModelArrayList();
+        /*ArrayList<UserLanguage> userLanguages = ApplicationState.getInstance().getLanguageModelArrayList();
         if (userLanguages.size() > 0) {
             for (UserLanguage language : userLanguages) {
                 for (LanguageModel language1 : langArrayList) {
@@ -363,6 +372,11 @@ public class CreateSeniorProfileActivity extends AppCompatActivity implements Vi
             }
         } else {
             insertLangs(languageModelArrayList);
+        }*/
+        if(modelArrayList.size() > 0){
+            InsertUserLangRequest langRequest = new InsertUserLangRequest();
+            langRequest.setLanguageID(modelArrayList.get(0).getId());
+            apiDeleteLang(langRequest, languageModelArrayList);
         }
     }
 
@@ -387,7 +401,7 @@ public class CreateSeniorProfileActivity extends AppCompatActivity implements Vi
                     if (ApplicationState.getInstance().getGiverResultResponse().getColourScheme() == i + 1) {
                         languageModel.setSelected(true);
                         selectedColor = i + 1;
-                        break;
+                       // break;
                     }
                 }
                 languageModel.setIcone(colorArr[i]);
@@ -513,9 +527,10 @@ public class CreateSeniorProfileActivity extends AppCompatActivity implements Vi
     }
 
     private void insertLangs(ArrayList<LanguageModel> languageModelArrayList) {
-        for (int i = 0; i < languageModelArrayList.size(); i++) {
+        for (int i = 0; i < modelArrayList.size(); i++) {
+
             InsertUserLangRequest langRequest = new InsertUserLangRequest();
-            langRequest.setLanguageID(languageModelArrayList.get(i).getId());
+            langRequest.setLanguageID(modelArrayList.get(i).getId());
             apiInsertLang(langRequest);
         }
     }
@@ -616,7 +631,7 @@ public class CreateSeniorProfileActivity extends AppCompatActivity implements Vi
     }
 
     private void updateInterests() {
-        ArrayList<InterestModel> interestModels = ApplicationState.getInstance().getInterestModelArrayList();
+        /*ArrayList<InterestModel> interestModels = ApplicationState.getInstance().getInterestModelArrayList();
         boolean isUnSelect = false;
         if (interestModels.size() > 0) {
             for (InterestModel interestModel : interestModels) {
@@ -635,12 +650,17 @@ public class CreateSeniorProfileActivity extends AppCompatActivity implements Vi
             }
         } else {
             addInterest();
+        }*/
+        if(interestModelArrayList.size() > 0){
+            InsertUserInterestRequest insertUserInterestRequest = new InsertUserInterestRequest();
+            insertUserInterestRequest.setInterestID(interestModelArrayList.get(0).getInterestID());
+            apiDeleteSkills(insertUserInterestRequest);
         }
     }
 
     private void apiDeleteSkills(InsertUserInterestRequest interestRequest) {
         WebServiceFactory.getInstance().init(getApplicationContext());
-        WebServiceFactory.getInstance().apiDeleteInterest(interestRequest, new ApiCallback() {
+        WebServiceFactory.getInstance().apiDleteSeniorInterest(interestRequest, new ApiCallback() {
             @Override
             public void onSuccess(MainResponse mainResponse) {
                 addInterest();
@@ -661,16 +681,16 @@ public class CreateSeniorProfileActivity extends AppCompatActivity implements Vi
 
     private void apiDeleteSeniorSkills(InsertGiverSkilsRequest giverSkilsRequest) {
         WebServiceFactory.getInstance().init(getApplicationContext());
-        WebServiceFactory.getInstance().apiDeleteUserSkills(giverSkilsRequest, new ApiCallback() {
+        WebServiceFactory.getInstance().apiDeleteSeniorSkills(giverSkilsRequest, new ApiCallback() {
             @Override
             public void onSuccess(MainResponse mainResponse) {
-                //insertReasons();
+                insertReasons();
             }
         });
     }
 
     private void updateSkills() {
-        ArrayList<SkillsMainModel> selectedSkills = ApplicationState.getInstance().getSeniorSkillsArrayList();
+       /* ArrayList<SkillsMainModel> selectedSkills = ApplicationState.getInstance().getSeniorSkillsArrayList();
         boolean isUnSelect = false;
         if (selectedSkills.size() > 0) {
             for (SkillsMainModel skillsMainModel : selectedSkills) {
@@ -691,7 +711,12 @@ public class CreateSeniorProfileActivity extends AppCompatActivity implements Vi
             }
         } else {
             insertReasons();
-        }
+        }*/
+       if(reasonForCareList.size() > 0){
+           InsertGiverSkilsRequest skilsRequest = new InsertGiverSkilsRequest();
+           skilsRequest.setSkillID(reasonForCareList.get(0).getId());
+           apiDeleteSeniorSkills(skilsRequest);
+       }
     }
 
 

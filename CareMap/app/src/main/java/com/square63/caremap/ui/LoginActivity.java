@@ -59,7 +59,7 @@ public class LoginActivity extends AppCompatActivity {
                         getCareGiver(mainResponse.getResultResponse().getData().getId());
 
                     }else {
-                        PreferenceHelper.getInstance().setString(Constants.SENIOR_ID, mainResponse.getResultResponse().getData().getId());
+
                         getCareSeeker(mainResponse.getResultResponse().getData().getId());
                     }
                 }
@@ -91,9 +91,10 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onSuccess(MainResponse2 mainResponse) {
                 if(mainResponse.getResultResponse().getCareSeekerArrayList().size() > 0)
-                PreferenceHelper.getInstance().setString(Constants.SEEKER_ID, mainResponse.getResultResponse().getCareSeekerArrayList().get(0).getId());
+                PreferenceHelper.getInstance().setString(Constants.SENIOR_ID, mainResponse.getResultResponse().getCareSeekerArrayList().get(0).getId());
+                PreferenceHelper.getInstance().setString(Constants.SEEKER_ID, mainResponse.getResultResponse().getCareSeekerArrayList().get(0).getUserID());
                 PreferenceHelper.getInstance().setString(Constants.ID, "1");
-                PreferenceHelper.getInstance().setString(Constants.TYPE, Constants.PROVIDER);
+                PreferenceHelper.getInstance().setString(Constants.TYPE, Constants.SEEKER);
                 UIHelper.openActivity(LoginActivity.this, HomeActivity.class);
             }
         });
