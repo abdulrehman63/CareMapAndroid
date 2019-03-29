@@ -26,7 +26,7 @@ public class InsertGiverExperienceRequest {
         DesiredWage = desiredWage;
     }
 
-    private String DesiredWage;
+
 
     public String getCaregiverID() {
         return CaregiverID;
@@ -85,6 +85,6 @@ public class InsertGiverExperienceRequest {
     public void setDescription(String description) {
         Description = description;
     }
-
+    private String DesiredWage;
     private String Description;
 }

@@ -46,14 +46,16 @@
 
     <TextView
         android:id="@+id/textView17"
-        android:layout_width="wrap_content"
+        android:layout_width="@dimen/x300"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/x8"
         android:layout_marginTop="3dp"
-        android:paddingEnd="@dimen/x16"
+        android:visibility="visible"
+        android:layout_marginEnd="@dimen/x16"
         android:text="Welcome to Care Map, you currently have no messages. Please visit the marketplace."
         android:textColor="@color/text_grey"
         android:textSize="@dimen/s14"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imageView5"
         app:layout_constraintTop_toBottomOf="@+id/textView16" />

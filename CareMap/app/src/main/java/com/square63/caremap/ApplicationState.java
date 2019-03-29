@@ -30,7 +30,7 @@ public class ApplicationState {
     public  void init(Context context){
         this.context = context;
     }
-    private Caregiver caregiver;
+    private Caregiver caregiver = new Caregiver();
 
     public Context getContext() {
         return context;
@@ -141,7 +141,7 @@ public class ApplicationState {
     }
 
     public Caregiver getCaregiver() {
-        return caregiver;
+        return caregiver ;
     }
 
     public void setCaregiver(Caregiver caregiver) {

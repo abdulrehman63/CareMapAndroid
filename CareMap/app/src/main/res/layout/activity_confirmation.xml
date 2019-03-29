@@ -73,7 +73,7 @@
         android:layout_marginBottom="@dimen/x32"
         android:text=""
         android:background="@drawable/clicktobevetted_2x"
-
+        android:onClick="onVettedClick"
         app:layout_constraintBottom_toTopOf="@+id/textView24"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

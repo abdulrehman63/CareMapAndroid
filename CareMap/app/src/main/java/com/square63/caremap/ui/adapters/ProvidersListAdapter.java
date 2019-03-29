@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.bignerdranch.expandablerecyclerview.ExpandableRecyclerAdapter;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.square63.caremap.R;
 import com.square63.caremap.constants.Constants;
 import com.square63.caremap.models.ProviderChildModel;
@@ -16,6 +18,9 @@ import com.square63.caremap.ui.ChatActivity;
 import com.square63.caremap.ui.ProviderProfileActivity;
 import com.square63.caremap.ui.views.ChildsViewHolder;
 import com.square63.caremap.ui.views.GroupsViewHolder;
+import com.square63.caremap.utils.PreferenceHelper;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
 
 import java.util.List;
 
@@ -48,6 +53,10 @@ public class ProvidersListAdapter extends ExpandableRecyclerAdapter<ProviderGrou
     @Override
     public void onBindParentViewHolder(@NonNull GroupsViewHolder recipeViewHolder, int parentPosition, @NonNull ProviderGroupModel recipe) {
         recipeViewHolder.bind(recipe);
+        Glide.with(context)
+                .load(Constants.BASE_IMAGE_URL+ recipe.getId() + ".png")
+                .placeholder(R.drawable.profile_default)
+                .into(recipeViewHolder.imgProfile);
 
     }
 

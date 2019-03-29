@@ -47,6 +47,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginEnd="5dp"
+            android:inputType="number"
             android:hint=""
             android:text="@={personalInfo.hourlyRate}" />
 
@@ -63,6 +64,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginEnd="5dp"
+            android:inputType="number"
             android:hint=""
             android:text="@={personalInfo.experience}" />
 

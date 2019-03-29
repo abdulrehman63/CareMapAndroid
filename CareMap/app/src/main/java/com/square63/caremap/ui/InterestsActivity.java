@@ -1,6 +1,8 @@
 package com.square63.caremap.ui;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -143,10 +145,22 @@ public class InterestsActivity extends AppCompatActivity implements InterestAdap
             public void onClick(View v) {
                 if (ApplicationState.getInstance().isFromEdit()) {
                     updateInterests();
-                    Intent myIntent = new Intent(InterestsActivity.this, HomeActivity.class);
-                    myIntent.putExtra(Constants.FORM,Constants.SENIOR_ID);
-                    myIntent.addFlags(  Intent.FLAG_ACTIVITY_CLEAR_TASK| Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(myIntent);
+                    final ProgressDialog loading;
+                    loading = ProgressDialog.show(InterestsActivity.this, "Updating Profile", "", true, false);
+
+                    final Handler handler  = new Handler();
+                    final Runnable runnable = new Runnable() {
+                        @Override
+                        public void run() {
+                            loading.dismiss();
+                            Intent myIntent = new Intent(InterestsActivity.this, HomeActivity.class);
+                            myIntent.putExtra(Constants.FORM,Constants.SENIOR_ID);
+                            myIntent.addFlags(  Intent.FLAG_ACTIVITY_CLEAR_TASK| Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(myIntent);
+                        }
+                    };
+                    handler.postDelayed(runnable, 5000);
+
                     //UIHelper.openAndClearActivity(InterestsActivity.this, HomeActivity.class);
                 } else {
                     addInterest();

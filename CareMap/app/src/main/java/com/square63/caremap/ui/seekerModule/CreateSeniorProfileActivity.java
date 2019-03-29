@@ -1,27 +1,40 @@
 package com.square63.caremap.ui.seekerModule;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
+import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Base64;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestFutureTarget;
 import com.square63.caremap.ApplicationState;
 import com.square63.caremap.R;
 import com.square63.caremap.constants.Constants;
 import com.square63.caremap.databinding.ActivityCreateSeekerProfileBinding;
 import com.square63.caremap.databinding.ActivityCreateSeniorProfileBinding;
 import com.square63.caremap.dialoges.LanguageSelectionDialoge;
+import com.square63.caremap.listeners.IPermissionsCallback;
+import com.square63.caremap.listeners.IPickerCallBack;
 import com.square63.caremap.listeners.RecyclerItemClickListener;
 import com.square63.caremap.models.InterestModel;
 import com.square63.caremap.models.LanguageModel;
+import com.square63.caremap.models.RegistrationModel;
 import com.square63.caremap.models.SkillsMainModel;
 import com.square63.caremap.models.SkillsModel;
 import com.square63.caremap.models.giverModels.UserLanguage;
@@ -34,8 +47,12 @@ import com.square63.caremap.ui.adapters.ColorSchemeAdapter;
 import com.square63.caremap.ui.adapters.InterestAdapter;
 import com.square63.caremap.ui.adapters.LanguagesAdapater;
 import com.square63.caremap.ui.adapters.MobilityAdapter;
+import com.square63.caremap.ui.providerModule.CreateProviderProfileActivity;
 import com.square63.caremap.ui.providerModule.PersonalInfoActivity;
 import com.square63.caremap.ui.views.GetStartedActivity;
+import com.square63.caremap.utils.CircleImageView;
+import com.square63.caremap.utils.ImagePickerHelper;
+import com.square63.caremap.utils.PermissionsHelper;
 import com.square63.caremap.utils.PreferenceHelper;
 import com.square63.caremap.utils.UIHelper;
 import com.square63.caremap.utils.Validations;
@@ -44,15 +61,24 @@ import com.square63.caremap.webapi.requests.GenericGetRequest;
 import com.square63.caremap.webapi.requests.InsertGiverSkilsRequest;
 import com.square63.caremap.webapi.requests.InsertUserInterestRequest;
 import com.square63.caremap.webapi.requests.InsertUserLangRequest;
+import com.square63.caremap.webapi.requests.UploadImageRequest;
 import com.square63.caremap.webapi.responses.GiverResultResponse;
 import com.square63.caremap.webapi.responses.MainResponse;
 import com.square63.caremap.webapi.webservices.WebServiceFactory;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class CreateSeniorProfileActivity extends AppCompatActivity implements View.OnClickListener, InterestAdapter.ISkills, ColorSchemeAdapter.ISkills {
+public class CreateSeniorProfileActivity extends AppCompatActivity implements View.OnClickListener, InterestAdapter.ISkills, ColorSchemeAdapter.ISkills , IPermissionsCallback {
     ActivityCreateSeniorProfileBinding binding;
     TextView txtMail, txtFemail, txtBinary;
+    private PermissionsHelper permissionsHelper;
+    private ImagePickerHelper imagePickerHelper;
+    private String encodedImage;
+    private RegistrationModel registrationModel;
+
     private String reasonForCareArr[] = {"Old Age", "Cancer", "Alzheimers", "Dementia", "Stroke", "Diabetes", "Companionship", "Post Surgical Care", "Foster Independence", "Loneliness", "Hygiene/Grooming", "Bathing/Toileting", "Meal Preparation", "Light Houskeeping", "Medication Reminders", "Dressing"};
     private String reasonForCareIdArr[] = {"2BAC0AD5-BADE-4D1E-A1D6-72CB2BB75E2D", "8E2FE73F-D5E3-40AE-8DF1-8B43ECE9205E", "F7D5D1FC-E360-4781-AC82-3A3D0124B785", "44104EB0-8E73-41D6-B61B-15347D6D7E94", "BF8FCCEB-B255-4EB4-AA33-75020B62E4D2", "F14C9654-F21D-4A1D-9A2D-8DC5FF104A68", "79A8DEFC-62C5-4595-BE76-A7F8C883A5BD"
             , "B18B125E-C802-409E-989B-726D620B8313", "56CC5D74-351E-4450-9B10-5C42E8C6FA1B", "821C7F52-B975-4D1C-B20E-A2DA3A41AAFF", "B1BE9698-8E88-4E97-9AFC-5E3F6479FB0B", "6CFA5486-1E7C-45FF-9E12-1AC93BB52B0C",
@@ -78,6 +104,7 @@ public class CreateSeniorProfileActivity extends AppCompatActivity implements Vi
     private ArrayList<LanguageModel> langArrayList = new ArrayList<>();
     private String gender = "Male";
     private int selectedColor;
+    private CircleImageView imgProfile;
     private boolean isLocation;
     private ArrayList<LanguageModel> reasonForCareList = new ArrayList<>();
 
@@ -85,10 +112,70 @@ public class CreateSeniorProfileActivity extends AppCompatActivity implements Vi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_create_senior_profile);
+        imgProfile = binding.getRoot().findViewById(R.id.imgProfile);
+        if(ApplicationState.getInstance().isFromEdit()) {
+           /* Glide.with(this)
+                    .load(Constants.BASE_IMAGE_URL_SENIOR + PreferenceHelper.getInstance().getString(Constants.SENIOR_ID, "") + ".png")
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+                    .skipMemoryCache(true)
+                    .fitCenter()
+                    .placeholder(R.drawable.profile_default)
+                    .error(R.drawable.profile_default)
+                    .into(imgProfile);
+        }*/
+            Picasso.get()
+                    .load(Constants.BASE_IMAGE_URL_SENIOR + PreferenceHelper.getInstance().getString(Constants.SENIOR_ID, "") + ".png")
+                    .resize(50, 50)
+                    .centerCrop()
+                    .placeholder(R.drawable.profile_default)
+                    .memoryPolicy(MemoryPolicy.NO_CACHE )
+                    .networkPolicy(NetworkPolicy.NO_CACHE)
+                    .into(imgProfile);
+        }
+
         init();
 
     }
+    public void onPickImageClick(View view) {
+        selectImage();
+    }
+    private void selectImage() {
+        permissionsHelper = new PermissionsHelper(this);
+        permissionsHelper.checkCameraMultiplePermissions(this);
+    }
 
+    @Override
+    public void onPermissionsGranted() {
+        imagePickerHelper = new ImagePickerHelper(this);
+        imagePickerHelper.selectImage(new IPickerCallBack() {
+            @Override
+            public void onImageSelected(Bitmap bitmap) {
+
+
+            }
+
+            @Override
+            public void onImageSelected(Bitmap bitmap, byte[] bytes) {
+
+                imgProfile.setImageBitmap(bitmap);
+                encodedImage = Base64.encodeToString(bytes, Base64.DEFAULT);
+            }
+        });
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        imagePickerHelper.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (permissionsHelper != null) {
+            permissionsHelper.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+        }
+
+    }
     private void init() {
 
         initToolBar();
@@ -119,6 +206,7 @@ public class CreateSeniorProfileActivity extends AppCompatActivity implements Vi
         });
 
     }
+
 
     private void initToolBar() {
 
@@ -226,6 +314,9 @@ public class CreateSeniorProfileActivity extends AppCompatActivity implements Vi
                 if (languages != null && languages.length() > 0 && languages.charAt(languages.length() - 1) == ',') {
                     languages = languages.substring(0, languages.length() - 1);
                 }
+                if(languages != null && languages.length() == 0){
+                    languages = "Language(s)";
+                }
                 binding.txtLanguage.setText(languages);
             }
         }
@@ -244,8 +335,26 @@ public class CreateSeniorProfileActivity extends AppCompatActivity implements Vi
             binding.getProfileModel().setShareLocation("false");
 
         binding.getProfileModel().setCareSeekerID(PreferenceHelper.getInstance().getString(Constants.SEEKER_ID, ""));
-        if (ApplicationState.getInstance().isFromEdit())
+        if (ApplicationState.getInstance().isFromEdit()) {
+
+// Hide after some seconds
+            final ProgressDialog loading;
+            loading = ProgressDialog.show(this, "Updating Profile", "", true, false);
+
+            final Handler handler  = new Handler();
+            final Runnable runnable = new Runnable() {
+                @Override
+                public void run() {
+                    loading.dismiss();
+                    Intent myIntent = new Intent(CreateSeniorProfileActivity.this, HomeActivity.class);
+                    myIntent.putExtra(Constants.FORM,Constants.SENIOR_ID);
+                    myIntent.addFlags(  Intent.FLAG_ACTIVITY_CLEAR_TASK| Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(myIntent);
+                }
+            };
+            handler.postDelayed(runnable, 5000);
             updateSeniorData();
+        }
         else
             insertSeniorData();
     }
@@ -267,7 +376,22 @@ public class CreateSeniorProfileActivity extends AppCompatActivity implements Vi
             public void onSuccess(MainResponse mainResponse) {
                 PreferenceHelper.getInstance().setString(Constants.SENIOR_ID, mainResponse.getResultResponse().getId());
                 insertData();
+                if(encodedImage != null){
+                    uploadImage(mainResponse.getResultResponse().getId());
+                }
                 UIHelper.openActivity(CreateSeniorProfileActivity.this, GetStartedActivity.class);
+            }
+        });
+    }
+    private void uploadImage(String id) {
+        UploadImageRequest uploadImageRequest = new UploadImageRequest();
+        uploadImageRequest.setImageData(encodedImage);
+        uploadImageRequest.setTargetFilename(id + ".png");
+        WebServiceFactory.getInstance().init(this);
+        WebServiceFactory.getInstance().apiInsertSeniorImage(uploadImageRequest, new ApiCallback() {
+            @Override
+            public void onSuccess(MainResponse mainResponse) {
+                UIHelper.openActivity(CreateSeniorProfileActivity.this, PersonalInfoActivity.class);
             }
         });
     }
@@ -279,10 +403,10 @@ public class CreateSeniorProfileActivity extends AppCompatActivity implements Vi
             @Override
             public void onSuccess(MainResponse mainResponse) {
                 insertData();
-                Intent myIntent = new Intent(CreateSeniorProfileActivity.this, HomeActivity.class);
-                myIntent.putExtra(Constants.FORM,Constants.SENIOR_ID);
-                myIntent.addFlags(  Intent.FLAG_ACTIVITY_CLEAR_TASK| Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(myIntent);
+                if(encodedImage != null){
+                    uploadImage(PreferenceHelper.getInstance().getString(Constants.SENIOR_ID,""));
+                }
+
                 //UIHelper.openAndClearActivity(CreateSeniorProfileActivity.this, HomeActivity.class);
             }
         });
@@ -516,6 +640,11 @@ public class CreateSeniorProfileActivity extends AppCompatActivity implements Vi
                 if (languages != null && languages.length() > 0 && languages.charAt(languages.length() - 1) == ',') {
                     languages = languages.substring(0, languages.length() - 1);
                 }
+                if(languages != null && languages.length() == 0){
+                    languages = "Language(s)";
+                }
+                langArrayList = languageModels;
+
                 binding.txtLanguage.setText(languages);
 
             }
@@ -562,6 +691,19 @@ public class CreateSeniorProfileActivity extends AppCompatActivity implements Vi
             @Override
             public void onSuccess(MainResponse mainResponse) {
                 langArrayList = mainResponse.getResultResponse().getLanguageModelArrayList();
+                ArrayList<SeniorLanguageModel> userLanguages = ApplicationState.getInstance().getSeniorLanguageModelArrayList();
+                if (userLanguages != null) {
+                    String languages = "";
+                    for (int i = 0; i < langArrayList.size(); i++) {
+                        for (SeniorLanguageModel languageModel : userLanguages) {
+                            if (langArrayList.get(i).getId().equalsIgnoreCase(languageModel.getLanguageModel().getId())) {
+                                langArrayList.get(i).setSelected(true);
+                                break;
+                            }
+                        }
+                    }
+
+                }
             }
         });
     }

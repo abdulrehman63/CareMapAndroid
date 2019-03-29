@@ -54,12 +54,22 @@ public class LanguagesAdapater extends RecyclerView.Adapter<LanguagesAdapater.Vi
             holder.relMain.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                   if(latestfilteredData.get(position).isSelected()){
-                       latestfilteredData.get(position).setSelected(false);
+                   if(filteredData.get(position).isSelected()){
+                       //latestfilteredData.get(position).setSelected(false);
                        filteredData.get(position).setSelected(false);
+                       for (int i =0; i < latestfilteredData.size(); i++){
+                           if(latestfilteredData.get(i).getId().equalsIgnoreCase(filteredData.get(position).getId())){
+                               latestfilteredData.get(i).setSelected(false);
+                           }
+                       }
                    }else {
-                       latestfilteredData.get(position).setSelected(true);
+                       //latestfilteredData.get(position).setSelected(true);
                        filteredData.get(position).setSelected(true);
+                       for (int i =0; i < latestfilteredData.size(); i++){
+                           if(latestfilteredData.get(i).getId().equalsIgnoreCase(filteredData.get(position).getId())){
+                               latestfilteredData.get(i).setSelected(true);
+                           }
+                       }
                    }
                    iSelectedLanguages.selectedLanguages(latestfilteredData);
                     notifyDataSetChanged();

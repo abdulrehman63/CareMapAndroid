@@ -13,6 +13,8 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.square63.caremap.ApplicationState;
 import com.square63.caremap.R;
 import com.square63.caremap.constants.Constants;
@@ -72,6 +74,12 @@ public class SeekerProfileActivity extends AppCompatActivity {
             seekerId = getIntent().getStringExtra(Constants.SEEKER_ID);
             seniorId = getIntent().getStringExtra(Constants.SENIOR_ID);
         }
+        Glide.with(this)
+                .load(Constants.BASE_IMAGE_URL_SENIOR + seniorId + ".png")
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .skipMemoryCache(true)
+                .placeholder(R.drawable.profile_default)
+                .into(circleImageView);
         initToolBar();
         getUserInterests();
         getSenior();

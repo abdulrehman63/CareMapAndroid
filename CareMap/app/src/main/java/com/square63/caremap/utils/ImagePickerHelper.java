@@ -123,17 +123,17 @@ public class ImagePickerHelper {
 
 
             }
+            Bundle extras = data.getExtras();
+            if(extras != null ) {
+                Bitmap photo = extras.getParcelable("data");
 
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                photo.compress(Bitmap.CompressFormat.PNG, 75, stream);
+                iPickerCallBack.onImageSelected(myBitmap,stream.toByteArray());
+                // The stream to write to a file or directly using the photo
+            }
         }
-        Bundle extras = data.getExtras();
-        if(extras != null ) {
-            Bitmap photo = extras.getParcelable("data");
 
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            photo.compress(Bitmap.CompressFormat.PNG, 75, stream);
-            iPickerCallBack.onImageSelected(myBitmap,stream.toByteArray());
-            // The stream to write to a file or directly using the photo
-        }
        // profile_image.setImageBitmap(myBitmap);
 
     }
@@ -218,20 +218,11 @@ public class ImagePickerHelper {
                     if (options[item].equals(context.getResources().getString(R.string.camera_take_photo))) {
                         dialog.dismiss();
                         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-
                         context.startActivityForResult(intent, PICK_IMAGE_CAMERA);
                     } else if (options[item].equals(context.getResources().getString(R.string.camera_gallery))) {
                         dialog.dismiss();
-                        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                        intent.setDataAndType(picUri, "image/*");
-                        intent.putExtra("crop", "true");
-                        intent.putExtra("aspectX", 1);
-                        intent.putExtra("aspectY", 1);
-                        intent.putExtra("outputX", 96);
-                        intent.putExtra("outputY", 96);
-                        intent.putExtra("noFaceDetection", true);
-                        intent.putExtra("return-data", true);
-                        context.startActivityForResult(intent, PICK_IMAGE_GALLERY);
+                        Intent pickPhoto = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                        context.startActivityForResult(pickPhoto, PICK_IMAGE_GALLERY);
                     } else if (options[item].equals(context.getResources().getString(R.string.camera_cancel))) {
                         dialog.dismiss();
                     }
@@ -245,8 +236,66 @@ public class ImagePickerHelper {
         }
     }
 
-
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        inputStreamImg = null;
+        if (requestCode == PICK_IMAGE_CAMERA) {
+            try {
+                // picUri = data.getData();
+                bitmap = (Bitmap) data.getExtras().get("data");
+                ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 10, bytes);
+               // picUri = getImageUri(context, bitmap);
+                Log.e("Activity", "Pick from Camera::>>> ");
+
+               /* String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
+                destination = new File(Environment.getExternalStorageDirectory() + "/" +
+                        context.getString(R.string.app_name), "IMG_" + timeStamp + ".jpg");
+                FileOutputStream fo;
+                try {
+                    destination.createNewFile();
+                    fo = new FileOutputStream(destination);
+                    fo.write(bytes.toByteArray());
+                    fo.close();
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                imgPath = destination.getAbsolutePath();*/
+                // profile_image.setImageBitmap(bitmap);
+               // File file = new File(getFilePathFromCursor(picUri) == null ? "" : getFilePathFromCursor(picUri));
+                byte[] byteArray = bytes.toByteArray();
+                iPickerCallBack.onImageSelected(bitmap,byteArray);
+
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else if (requestCode == PICK_IMAGE_GALLERY) {
+
+            try {
+                Uri imgUri = data.getData();
+                bitmap = MediaStore.Images.Media.getBitmap(context.getContentResolver(), imgUri);
+                ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 10, bytes);
+                Log.e("Activity", "Pick from Gallery::>>> ");
+               // picUri = getImageUri(context, bitmap);
+                //imgPath = getRealPathFromURI(picUri);
+                //destination = new File(imgPath.toString());
+                // profile_image.setImageBitmap(bitmap);
+                byte[] byteArray = bytes.toByteArray();
+                iPickerCallBack.onImageSelected(bitmap,byteArray);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+  /*  public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         inputStreamImg = null;
         if (requestCode == PICK_IMAGE_CAMERA) {
@@ -281,8 +330,8 @@ public class ImagePickerHelper {
                 byte[] byteArray = bytes.toByteArray();
                 iPickerCallBack.onImageSelected(bitmap,byteArray);
 
-                /** Crop selected image. */
-              /*  Intent cropIntent = new Intent("com.android.camera.action.CROP");
+                *//** Crop selected image. *//*
+              *//*  Intent cropIntent = new Intent("com.android.camera.action.CROP");
                 //indicate image type and Uri
 
                 cropIntent.setDataAndType(picUri, "image/*");
@@ -297,7 +346,7 @@ public class ImagePickerHelper {
                 //retrieve data on return
                 cropIntent.putExtra("return-data", true);
                 cropIntent.putExtra(MediaStore.EXTRA_OUTPUT, selectedImageCropped);
-                context.startActivityForResult(cropIntent, PROCESS_IMAGE);*/
+                context.startActivityForResult(cropIntent, PROCESS_IMAGE);*//*
 
                // profile_image.setImageBitmap(bitmap);
 
@@ -321,20 +370,20 @@ public class ImagePickerHelper {
                     e.printStackTrace();
                 }
             }
-           /* Bundle extras = data.getExtras();
+           *//* Bundle extras = data.getExtras();
             if(extras != null ) {
                 Bitmap photo = extras.getParcelable("data");
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 photo.compress(Bitmap.CompressFormat.JPEG, 75, stream);
                 iPickerCallBack.onImageSelected(bitmap);
                 //The The stream to write to a file or directly using the photo
-            }*/
+            }*//*
         }
         else if (requestCode == PICK_IMAGE_GALLERY) {
 
             try {
 
-                /*Uri selectedImage = data.getData();
+                *//*Uri selectedImage = data.getData();
                 String[] filePathColumn = { MediaStore.Images.Media.DATA };
 
                 Cursor cursor = context.getContentResolver().query(selectedImage,
@@ -347,7 +396,7 @@ public class ImagePickerHelper {
                 Uri imgUri = data.getData();
                 bitmap = MediaStore.Images.Media.getBitmap(context.getContentResolver(), imgUri);
                 ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 10, bytes);*/
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 10, bytes);*//*
                 Log.e("Activity", "Pick from Gallery::>>> ");
                 //picUri = getImageUri(context, bitmap);
                 //imgPath = getRealPathFromURI(picUri);
@@ -359,7 +408,7 @@ public class ImagePickerHelper {
                 e.printStackTrace();
             }
         }
-    }
+    }*/
 
 
 }

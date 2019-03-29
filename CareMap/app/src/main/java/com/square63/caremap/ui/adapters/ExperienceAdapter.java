@@ -37,7 +37,9 @@ public class ExperienceAdapter extends RecyclerView.Adapter<ExperienceAdapter.Vi
     @Override
     public void onBindViewHolder(ExperienceAdapter.Viewholder holder, final int position) {
         if (filteredData.size() > 0) {
-
+            holder.txtName.setText(filteredData.get(position).getName());
+            if (filteredData.get(position).getId() != null)
+            holder.txtDesc.setText(filteredData.get(position).getId());
         }
     }
 
@@ -48,9 +50,11 @@ public class ExperienceAdapter extends RecyclerView.Adapter<ExperienceAdapter.Vi
 
     class Viewholder extends RecyclerView.ViewHolder {
 
-
+        public TextView txtName,txtDesc;
         public Viewholder(View itemView) {
             super(itemView);
+            txtName = itemView.findViewById(R.id.textView16);
+            txtDesc = itemView.findViewById(R.id.textView17);
 
 
         }

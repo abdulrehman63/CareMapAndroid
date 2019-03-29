@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.bignerdranch.expandablerecyclerview.ExpandableRecyclerAdapter;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.square63.caremap.R;
 import com.square63.caremap.constants.Constants;
 import com.square63.caremap.models.ProviderChildModel;
@@ -17,6 +19,7 @@ import com.square63.caremap.ui.SeekerProfileActivity;
 import com.square63.caremap.ui.seekerModule.SeniorProfileActivity;
 import com.square63.caremap.ui.views.ChildsViewHolder;
 import com.square63.caremap.ui.views.GroupsViewHolder;
+import com.square63.caremap.utils.PreferenceHelper;
 import com.thoughtbot.expandablerecyclerview.ExpandableRecyclerViewAdapter;
 import com.thoughtbot.expandablerecyclerview.models.ExpandableGroup;
 
@@ -52,6 +55,10 @@ public class MarketPlaceAdapter extends ExpandableRecyclerAdapter<ProviderGroupM
     @Override
     public void onBindParentViewHolder(@NonNull GroupsViewHolder recipeViewHolder, int parentPosition, @NonNull ProviderGroupModel recipe) {
         recipeViewHolder.bind(recipe);
+        Glide.with(context)
+                .load(Constants.BASE_IMAGE_URL_SENIOR + recipe.getId() + ".png")
+                .placeholder(R.drawable.profile_default)
+                .into(recipeViewHolder.imgProfile);
     }
 
     @Override

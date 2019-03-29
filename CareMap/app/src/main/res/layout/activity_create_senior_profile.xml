@@ -254,12 +254,11 @@
                     android:drawableEnd="@drawable/ic_back_grey"
                     android:gravity="center|start"
                     android:maxLines="1"
-                    
                     android:onClick="onLanguageSelectionClick"
                     android:padding="8dp"
                     android:text="Language(s)"
                     android:textColor="#6d6d70"
-                    android:textSize="@dimen/s14" />
+                    android:textSize="@dimen/s15" />
 
                 <View
                     style="@style/line_style"

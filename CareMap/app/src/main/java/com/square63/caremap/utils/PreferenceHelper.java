@@ -27,7 +27,7 @@ public class PreferenceHelper {
 		return instance_;
 	}
 
-	public void init(Context context){
+	public void  init(Context context){
 		context_ = context;
 	}
 	

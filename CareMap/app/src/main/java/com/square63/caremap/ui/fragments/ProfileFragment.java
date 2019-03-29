@@ -13,19 +13,26 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.square63.caremap.ApplicationState;
 import com.square63.caremap.R;
 import com.square63.caremap.constants.Constants;
 import com.square63.caremap.models.LanguageModel;
+import com.square63.caremap.models.SkillsMainModel;
 import com.square63.caremap.models.giverModels.UserLanguage;
 import com.square63.caremap.ui.adapters.TabAvailabilityAdapter;
+import com.square63.caremap.utils.CircleImageView;
 import com.square63.caremap.utils.PreferenceHelper;
 import com.square63.caremap.webapi.Apiinterface.ApiCallback;
 import com.square63.caremap.webapi.requests.GetGiverLanguageRequest;
 import com.square63.caremap.webapi.requests.GetGiverProfileRequest;
+import com.square63.caremap.webapi.requests.GetGiverSkilsById;
 import com.square63.caremap.webapi.requests.GiverRequest;
 import com.square63.caremap.webapi.responses.MainResponse;
 import com.square63.caremap.webapi.webservices.WebServiceFactory;
+
+import java.util.ArrayList;
 
 
 public class ProfileFragment extends Fragment {
@@ -37,7 +44,9 @@ public class ProfileFragment extends Fragment {
     private ViewPager viewPagerSkills;
     private TabAvailabilityAdapter adapterSkills;
     private TextView txtName;
-    private TextView txtLanguage,txtExperience,txtPrice,txtDistance;
+    private TextView txtLanguage, txtExperience, txtPrice, txtDistance;
+    private TextView txtCredential;
+    private CircleImageView circleImageView;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -71,12 +80,22 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        //Glide.with(this).load(Constants.BASE_IMAGE_URL + PreferenceHelper.getInstance().getString(Constants.USER_ID, "") + ".png").into(circleImageView);
+        Glide.with(this)
+                .load(Constants.BASE_IMAGE_URL + PreferenceHelper.getInstance().getString(Constants.USER_ID, "") + ".png")
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .skipMemoryCache(true)
+                .placeholder(R.drawable.profile_default)
+                .into(circleImageView);
         getGiver();
         getUserLanguages();
+        apiGetGiverSkills();
     }
 
     private void initTabs(View view) {
         txtName = (TextView) view.findViewById(R.id.textView14);
+        txtCredential = (TextView) view.findViewById(R.id.textView15);
         txtExperience = (TextView) view.findViewById(R.id.txtExperience);
         txtPrice = (TextView) view.findViewById(R.id.txtPrice);
         txtDistance = (TextView) view.findViewById(R.id.txtDistance);
@@ -84,6 +103,7 @@ public class ProfileFragment extends Fragment {
         viewPager = (ViewPager) view.findViewById(R.id.viewPager);
         tabLayout = (TabLayout) view.findViewById(R.id.tabLayout);
         viewPagerSkills = (ViewPager) view.findViewById(R.id.viewPagerSkills);
+        circleImageView = view.findViewById(R.id.circleImageView);
         tabLayoutSkills = (TabLayout) view.findViewById(R.id.tabLayoutSkills);
         adapter = new TabAvailabilityAdapter(getActivity().getSupportFragmentManager());
         adapter.addFragment(new AvailabilityFragment(), "Availability");
@@ -104,7 +124,7 @@ public class ProfileFragment extends Fragment {
         WebServiceFactory.getInstance().apiGetAllCareGivers(profileRequest, new ApiCallback() {
             @Override
             public void onSuccess(MainResponse mainResponse) {
-                if(mainResponse.getResultResponse() !=null && mainResponse.getResultResponse().getCaregivers().size() >0) {
+                if (mainResponse.getResultResponse() != null && mainResponse.getResultResponse().getCaregivers().size() > 0) {
                     ApplicationState.getInstance().setCaregiver(mainResponse.getResultResponse().getCaregivers().get(0));
                     txtName.setText(mainResponse.getResultResponse().getCaregivers().get(0).getUser().getFirstName() + " " + mainResponse.getResultResponse().getCaregivers().get(0).getUser().getLastName());
                 }
@@ -122,7 +142,7 @@ public class ProfileFragment extends Fragment {
         WebServiceFactory.getInstance().apiGetGiverLanguageById(profileRequest, new ApiCallback() {
             @Override
             public void onSuccess(MainResponse mainResponse) {
-                if(mainResponse.getResultResponse().getUserLanguages() !=null) {
+                if (mainResponse.getResultResponse().getUserLanguages() != null) {
                     ApplicationState.getInstance().setLanguageModelArrayList(mainResponse.getResultResponse().getUserLanguages());
                     String languages = "";
                     for (UserLanguage languageModel : mainResponse.getResultResponse().getUserLanguages()) {
@@ -134,6 +154,33 @@ public class ProfileFragment extends Fragment {
                     }
                     txtLanguage.setText(languages);
                 }
+            }
+        });
+    }
+
+    private void apiGetGiverSkills() {
+        GetGiverSkilsById giverSkilsById = new GetGiverSkilsById();
+        giverSkilsById.getFilterCaregiver().setCaregiverId(PreferenceHelper.getInstance().getString(Constants.GIVER_ID, ""));
+        WebServiceFactory.getInstance().init(getContext());
+        WebServiceFactory.getInstance().apiGetGiverSkillsById(giverSkilsById, new ApiCallback() {
+            @Override
+            public void onSuccess(MainResponse mainResponse) {
+                if (mainResponse.getResultResponse().getCaregiverSkills() != null) {
+                    boolean isExist = false;
+                    ArrayList<String> tagsList = new ArrayList<>();
+                    ApplicationState.getInstance().setSkillsModelArrayList(mainResponse.getResultResponse().getCaregiverSkills());
+                    for (SkillsMainModel skillsModel : mainResponse.getResultResponse().getCaregiverSkills()) {
+                        if (skillsModel.getSkill().getCategory() == 0) {
+                            txtCredential.setText(skillsModel.getSkill().getName());
+                            isExist = true;
+                        }
+                    }
+                    if (!isExist) {
+                        txtCredential.setText("caregiver");
+                    }
+
+                }
+
             }
         });
     }

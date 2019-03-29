@@ -14,12 +14,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.square63.caremap.ApplicationState;
 import com.square63.caremap.R;
+import com.square63.caremap.constants.Constants;
 import com.square63.caremap.listeners.RecyclerItemClickListener;
 import com.square63.caremap.models.InterestModel;
 import com.square63.caremap.models.SkillsModel;
 import com.square63.caremap.ui.adapters.ExperienceAdapter;
 import com.square63.caremap.ui.adapters.InterestAdapter;
+import com.square63.caremap.utils.PreferenceHelper;
+import com.square63.caremap.webapi.Apiinterface.ApiCallback;
+import com.square63.caremap.webapi.requests.GiverRequest;
+import com.square63.caremap.webapi.responses.MainResponse;
+import com.square63.caremap.webapi.webservices.WebServiceFactory;
 
 import java.util.ArrayList;
 
@@ -27,9 +34,14 @@ import java.util.ArrayList;
 public class ExperienceFragment extends Fragment {
 
 
+    private  String giverId;
     private ExperienceAdapter experienceAdapter;
     private RecyclerView recyclerView;
 
+    public ExperienceFragment(String giverId) {
+        // Required empty public constructor
+        this.giverId = giverId;
+    }
     public ExperienceFragment() {
         // Required empty public constructor
     }
@@ -63,17 +75,45 @@ public class ExperienceFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
-        ArrayList<SkillsModel> skillsModelArrayList = new ArrayList<>();
-       /* for(int i = 0;i < 1 ; i++){
-            SkillsModel skillsModel = new SkillsModel();
-            skillsModelArrayList.add(skillsModel);
-        }
-        setRecyclerView(skillsModelArrayList);*/
+        getGiver();
+
+
     }
+
+    private void getGiver() {
+        GiverRequest profileRequest = new GiverRequest();
+        if (giverId != null)
+            profileRequest.getFilterCaregiver().setId(giverId);
+        else
+            profileRequest.getFilterCaregiver().setId(PreferenceHelper.getInstance().getString(Constants.GIVER_ID, ""));
+        WebServiceFactory.getInstance().init(getActivity());
+        WebServiceFactory.getInstance().apiGetCareGivers(profileRequest, new ApiCallback() {
+            @Override
+            public void onSuccess(MainResponse mainResponse) {
+                if (mainResponse.getResultResponse() != null && mainResponse.getResultResponse().getCaregivers().size() > 0) {
+                    ApplicationState.getInstance().setCaregiver(mainResponse.getResultResponse().getCaregivers().get(0));
+                    ArrayList<SkillsModel> skillsModelArrayList = new ArrayList<>();
+                    for (int i = 0; i < 1; i++) {
+                        SkillsModel skillsModel = new SkillsModel();
+                        if (mainResponse.getResultResponse().getCaregivers().get(0).getProfileTitle() != null)
+                            skillsModel.setName(mainResponse.getResultResponse().getCaregivers().get(0).getProfileTitle());
+                        if (mainResponse.getResultResponse().getCaregivers().get(0).getDescription() != null)
+                            skillsModel.setId(mainResponse.getResultResponse().getCaregivers().get(0).getDescription());
+                        skillsModelArrayList.add(skillsModel);
+                    }
+                    setRecyclerView(skillsModelArrayList);
+                }
+               /* txtExperience.setText(mainResponse.getResultResponse().getCaregivers().get(0).getYearsOfExperience());
+                txtDistance.setText(mainResponse.getResultResponse().getCaregivers().get(0).getAvailabilityDistance());
+                txtPrice.setText(mainResponse.getResultResponse().getCaregivers().get(0).getDesiredWage());*/
+            }
+        });
+    }
+
     private void setRecyclerView(ArrayList<SkillsModel> data) {
-        experienceAdapter=new ExperienceAdapter(getContext(), data);
+        experienceAdapter = new ExperienceAdapter(getContext(), data);
         recyclerView.setAdapter(experienceAdapter);
-        RecyclerView.LayoutManager mManager =new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL,false);
+        RecyclerView.LayoutManager mManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(mManager);
 
     }

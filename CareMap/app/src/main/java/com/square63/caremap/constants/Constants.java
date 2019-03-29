@@ -24,6 +24,9 @@ public class Constants {
     public static final String SEEKER_ID = "seekerid";
 
     public static final String Success= "Success";
+
+    public static final String dob= "dob";
+    public static final String province= "province";
     public static final String userRole = "userRole";
     public static final String caregiver = "caregiver";
     public static final String education_added= "Education was added to your profile. You may continue to add more if applicable";
@@ -32,6 +35,8 @@ public class Constants {
     public static final String FEMALE= "female";
     public static final String SENIOR_ID= "seniorId";
     public static final String S_BINARY = "binary";
+    public static final String BASE_IMAGE_URL = "http://ucarenet-staging.azurewebsites.net/App/Main/images/users/";
+    public static final String BASE_IMAGE_URL_SENIOR = "http://ucarenet-staging.azurewebsites.net/App/Main/images/seniors/";
 
     public static final String USER_ID = "userId";
 }

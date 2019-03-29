@@ -27,4 +27,8 @@ public class ConfirmationActivity extends AppCompatActivity {
         startActivity(intent);
 
     }
+
+    public void onVettedClick(View view) {
+        UIHelper.openLink(this,"https://www.sterlingtalentsolutions.ca/landing-pages/u/uCarenet/");
+    }
 }

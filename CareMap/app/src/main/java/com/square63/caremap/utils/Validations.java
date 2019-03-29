@@ -86,6 +86,30 @@ public class Validations {
         }
         return isValidate;
     }
+    public int validateTagline(EditText edtEmail){
+
+        Resources res = context.getResources();
+        String text;
+        int isValidate = Constants.SUCCESS;
+        /*if (edtEmail.getText().toString().trim().length() == 0) {
+
+            text = String.format(res.getString(R.string.empty_field_error), "Tag Line");
+            edtEmail.setError(Html.fromHtml("<font color='red'>" + text + "</font>"));
+            isValidate =  Constants.EMPTY_EMAIL_FIELD;
+        }*/
+        if (edtEmail.getText().toString().trim().length() < 30) {
+
+            text = res.getString(R.string.minimum_field_error);
+            edtEmail.setError(Html.fromHtml("<font color='red'>" + text + "</font>"));
+            isValidate =  Constants.EMPTY_EMAIL_FIELD;
+        }
+        /*if (edtEmail.getText().toString().trim().length() > 30) {
+            UIHelper.showAlert(Constants.FORM,Constants.MSG,context);
+        }*/
+
+
+        return isValidate;
+    }
 
 
     public int validateSignup(EditText edtName, EditText edtEmail, EditText edtPassword,ImageView imageView) {

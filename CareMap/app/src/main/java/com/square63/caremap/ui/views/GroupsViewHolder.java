@@ -8,6 +8,7 @@ import android.widget.TextView;
 import com.bignerdranch.expandablerecyclerview.ParentViewHolder;
 import com.square63.caremap.R;
 import com.square63.caremap.models.ProviderGroupModel;
+import com.square63.caremap.utils.CircleImageView;
 import com.thoughtbot.expandablerecyclerview.models.ExpandableGroup;
 
 import com.thoughtbot.expandablerecyclerview.viewholders.GroupViewHolder;
@@ -18,6 +19,7 @@ public class GroupsViewHolder extends ParentViewHolder {
 
     public View adapter_divider_top, adapter_divider_bottom;
     public TextView txtName, txtDesc,txtAge;
+    public CircleImageView imgProfile;
 
 
     public GroupsViewHolder(View itemView) {
@@ -28,6 +30,7 @@ public class GroupsViewHolder extends ParentViewHolder {
         txtName = (TextView) itemView.findViewById(R.id.textView16);
         txtDesc = (TextView) itemView.findViewById(R.id.textView17);
         txtAge = (TextView) itemView.findViewById(R.id.textAge);
+        imgProfile = (CircleImageView) itemView.findViewById(R.id.imageView5);
    /* genreName = (TextView) itemView.findViewById(R.id.list_item_genre_name);
     arrow = (ImageView) itemView.findViewById(R.id.list_item_genre_arrow);
     icon = (ImageView) itemView.findViewById(R.id.list_item_genre_icon);*/

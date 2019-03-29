@@ -14,6 +14,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.square63.caremap.ApplicationState;
 import com.square63.caremap.R;
 import com.square63.caremap.constants.Constants;
@@ -172,7 +174,7 @@ public class SeniorProfileFragment extends Fragment {
                 String languages = "";
                 for (SeniorLanguageModel languageModel:mainResponse.getResultResponse().getSeniorLanguages()){
 
-                    languages = languages+languageModel.getLanguageModel().getName()+", ";
+                    languages = languages+languageModel.getLanguageModel().getName()+",";
                 }
                 if (languages != null && languages.length() > 0 && languages.charAt(languages.length() - 1) == ',') {
                     languages = languages.substring(0, languages.length() - 1);
@@ -226,7 +228,7 @@ public class SeniorProfileFragment extends Fragment {
                 String languages ="";
                 for (SkillsMainModel languageModel:mainResponse.getResultResponse().getSeniorSkills()){
                     if(languageModel.getSkill() != null)
-                    languages = languages+languageModel.getSkill().getName()+"/ ";
+                    languages = languages+languageModel.getSkill().getName()+"/";
                 }
                 if (languages != null && languages.length() > 0 && languages.charAt(languages.length() - 1) == '/') {
                     languages = languages.substring(0, languages.length() - 1);
@@ -241,6 +243,12 @@ public class SeniorProfileFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        Glide.with(this)
+                .load(Constants.BASE_IMAGE_URL_SENIOR + PreferenceHelper.getInstance().getString(Constants.SENIOR_ID, "") + ".png")
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .skipMemoryCache(true)
+                .placeholder(R.drawable.profile_default)
+                .into(circleImageView);
         getUserInterests();
         getSenior();
         //getSeeker();

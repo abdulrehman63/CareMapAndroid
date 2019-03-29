@@ -28,6 +28,7 @@ import com.square63.caremap.utils.PreferenceHelper;
 import com.square63.caremap.utils.UIHelper;
 import com.square63.caremap.utils.Validations;
 import com.square63.caremap.webapi.Apiinterface.ApiCallback;
+import com.square63.caremap.webapi.CreateGiverRequest;
 import com.square63.caremap.webapi.requests.GenericGetRequest;
 import com.square63.caremap.webapi.requests.InsertGiverExperienceRequest;
 import com.square63.caremap.webapi.requests.InsertUserLangRequest;
@@ -42,6 +43,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
     private TextView titileToolbar, toolbarTitleRight;
     ActivityPersonalInfoBinding binding;
     private ArrayList<LanguageModel> langArrayList = new ArrayList<>();
+    private int progress = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,8 +72,30 @@ public class PersonalInfoActivity extends AppCompatActivity {
                 if (languages != null && languages.length() > 0 && languages.charAt(languages.length() - 1) == ',') {
                     languages = languages.substring(0, languages.length() - 1);
                 }
+                if(languages != null && languages.length() == 0){
+                    languages = "Language(s)";
+                }
                 binding.txtLanguage.setText(languages);
             }
+            ProfileModel profileModel = new ProfileModel();
+            Caregiver caregiver = ApplicationState.getInstance().getCaregiver();
+            if(caregiver.getDesiredWage() !=  null){
+               profileModel.setHourlyRate(caregiver.getDesiredWage());
+            }
+            if(caregiver.getYearsOfExperience() !=  null){
+                profileModel.setExperience(caregiver.getYearsOfExperience());
+            }
+            if(caregiver.getAvailabilityDistance() != null){
+                binding.txtDistance.setText(caregiver.getAvailabilityDistance() + "km");
+                try{
+                    this.progress = Integer.parseInt(caregiver.getAvailabilityDistance());
+                    binding.seekBar.setProgress(progress);
+                }catch (Exception e){
+
+                }
+            }
+            binding.setPersonalInfo(profileModel);
+
         }
 
     }
@@ -104,8 +128,10 @@ public class PersonalInfoActivity extends AppCompatActivity {
         binding.seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                if (progress > 0)
+                if (progress > 0) {
                     binding.txtDistance.setText("" + progress + " km");
+                    PersonalInfoActivity.this.progress = progress;
+                }
             }
 
             @Override
@@ -150,21 +176,6 @@ public class PersonalInfoActivity extends AppCompatActivity {
     }
 
     public void onLanguageSelectionClick(View view) {
-        if (ApplicationState.getInstance().isFromEdit()) {
-            ArrayList<UserLanguage> userLanguages = ApplicationState.getInstance().getLanguageModelArrayList();
-            if (userLanguages != null) {
-                String languages = "";
-                for (int i = 0; i < langArrayList.size(); i++) {
-                    for (UserLanguage languageModel : userLanguages) {
-                        if (langArrayList.get(i).getId().equalsIgnoreCase(languageModel.getLanguageID())) {
-                            langArrayList.get(i).setSelected(true);
-                            break;
-                        }
-                    }
-                }
-
-            }
-        }
 
         LanguageSelectionDialoge languageSelectionDialoge = LanguageSelectionDialoge.newInstance(langArrayList);
         languageSelectionDialoge.setSelectedLanguages(new LanguagesAdapater.ISelectedLanguages() {
@@ -174,14 +185,18 @@ public class PersonalInfoActivity extends AppCompatActivity {
                 ArrayList<LanguageModel> languageModelArrayList = new ArrayList<>();
                 for (LanguageModel languageModel : languageModels) {
                     if (languageModel.isSelected()) {
-                        languages = languages + languageModel.getName() + ", ";
+                        languages = languages + languageModel.getName() + ",";
                         languageModelArrayList.add(languageModel);
                     }
                 }
                 if (languages != null && languages.length() > 0 && languages.charAt(languages.length() - 1) == ',') {
                     languages = languages.substring(0, languages.length() - 1);
                 }
+                if(languages != null && languages.length() == 0){
+                    languages = "Language(s)";
+                }
                 binding.txtLanguage.setText(languages);
+                langArrayList = languageModels;
                 if (ApplicationState.getInstance().isFromEdit()) {
                     updateLanguages(languageModelArrayList);
                 } else
@@ -224,9 +239,24 @@ public class PersonalInfoActivity extends AppCompatActivity {
     }
 
     private void insertExperience() {
-        InsertGiverExperienceRequest experienceRequest = new InsertGiverExperienceRequest();
+       Caregiver caregiver =  ApplicationState.getInstance().getCaregiver();
+       caregiver.setAvailabilityDistance(""+progress);
+        caregiver.setDesiredWage(binding.edtHourlyRate.getText().toString());
+        caregiver.setYearsOfExperience(binding.edtExperience.getText().toString());
+       /* CreateGiverRequest createGiverRequest=new CreateGiverRequest();
         PreferenceHelper.getInstance().init(this);
-        experienceRequest.setCaregiverID(PreferenceHelper.getInstance().getString(Constants.USER_ID, ""));
+
+        WebServiceFactory.getInstance().apiUpdateGiver(createGiverRequest, new ApiCallback() {
+            @Override
+            public void onSuccess(MainResponse mainResponse) {
+
+            }
+        });*/
+    }
+
+   /* InsertGiverExperienceRequest experienceRequest = new InsertGiverExperienceRequest();
+        PreferenceHelper.getInstance().init(this);
+        experienceRequest.setCaregiverID(PreferenceHelper.getInstance().getString(Constants.GIVER_ID, ""));
         experienceRequest.setYears(binding.edtExperience.getText().toString());
         experienceRequest.setDesiredWage(binding.edtHourlyRate.getText().toString());
         experienceRequest.setAvailabilityDistance(binding.txtDistance.getText().toString());
@@ -236,8 +266,9 @@ public class PersonalInfoActivity extends AppCompatActivity {
             public void onSuccess(MainResponse mainResponse) {
 
             }
-        });
-    }
+        });*/
+
+
 
     private void getAllLang() {
         WebServiceFactory.getInstance().init(this);
@@ -245,6 +276,19 @@ public class PersonalInfoActivity extends AppCompatActivity {
             @Override
             public void onSuccess(MainResponse mainResponse) {
                 langArrayList = mainResponse.getResultResponse().getLanguageModelArrayList();
+                ArrayList<UserLanguage> userLanguages = ApplicationState.getInstance().getLanguageModelArrayList();
+                if (userLanguages != null) {
+                    String languages = "";
+                    for (int i = 0; i < langArrayList.size(); i++) {
+                        for (UserLanguage languageModel : userLanguages) {
+                            if (langArrayList.get(i).getId().equalsIgnoreCase(languageModel.getLanguageID())) {
+                                langArrayList.get(i).setSelected(true);
+                                break;
+                            }
+                        }
+                    }
+
+                }
             }
         });
     }

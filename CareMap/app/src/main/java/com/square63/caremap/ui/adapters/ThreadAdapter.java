@@ -9,11 +9,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.square63.caremap.R;
 import com.square63.caremap.constants.Constants;
 import com.square63.caremap.models.SkillsModel;
 import com.square63.caremap.models.chatModule.Thread;
 import com.square63.caremap.ui.ChatActivity;
+import com.square63.caremap.utils.CircleImageView;
+import com.square63.caremap.utils.PreferenceHelper;
 
 import java.util.ArrayList;
 
@@ -40,6 +44,24 @@ public class ThreadAdapter extends RecyclerView.Adapter<ThreadAdapter.Viewholder
         if (filteredData.size() > 0) {
             holder.txtTitle.setText(filteredData.get(position).getMessages().get(filteredData.get(position).getMessages().size()-1).getToUser().getFirstName() +" "+filteredData.get(position).getMessages().get(filteredData.get(position).getMessages().size()-1).getToUser().getFirstName());
             holder.txtMessage.setText(filteredData.get(position).getMessages().get(filteredData.get(position).getMessages().size()-1).getMessageText());
+            if(filteredData.get(position).getMessages().get(filteredData.get(position).getMessages().size()-1).getToUser().getUserRole() != null){
+                if(filteredData.get(position).getMessages().get(filteredData.get(position).getMessages().size()-1).getToUser().getUserRole().getName().equalsIgnoreCase(Constants.caregiver)){
+                    Glide.with(context)
+                            .load(Constants.BASE_IMAGE_URL + filteredData.get(position).getSecondUser() + ".png")
+                            .diskCacheStrategy (DiskCacheStrategy.NONE)
+                            .skipMemoryCache(true)
+                            .placeholder(R.drawable.profile_default)
+                            .into(holder.imgProfile);
+                }else {
+                    Glide.with(context)
+                            .load(Constants.BASE_IMAGE_URL_SENIOR + filteredData.get(position).getSecondUser() + ".png")
+                            .diskCacheStrategy(DiskCacheStrategy.NONE)
+                            .skipMemoryCache(true)
+                            .placeholder(R.drawable.profile_default)
+                            .into(holder.imgProfile);
+                }
+            }
+
             holder.layoutMain.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -59,9 +81,11 @@ public class ThreadAdapter extends RecyclerView.Adapter<ThreadAdapter.Viewholder
     class Viewholder extends RecyclerView.ViewHolder {
         public  TextView txtTitle,txtMessage;
         public ConstraintLayout layoutMain;
+        public CircleImageView imgProfile;
 
         public Viewholder(View itemView) {
             super(itemView);
+            imgProfile= (CircleImageView) itemView.findViewById(R.id.imageView5);
             txtTitle = (TextView) itemView.findViewById(R.id.textView16);
             layoutMain = (ConstraintLayout) itemView.findViewById(R.id.layoutMain);
             txtMessage = (TextView) itemView.findViewById(R.id.textView17);

@@ -5,7 +5,10 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.fragments.SkillsFragment">
-
+<android.support.v4.widget.NestedScrollView
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/x250"
+    android:layout_marginBottom="@dimen/x10">
     <me.gujun.android.taggroup.TagGroup
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -19,5 +22,5 @@
         app:atg_textColor = "@color/white"
         app:atg_borderColor="@color/tranparent"
         />
-
+</android.support.v4.widget.NestedScrollView>
 </RelativeLayout>

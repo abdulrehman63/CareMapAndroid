@@ -100,6 +100,7 @@ public class HomeFragment extends Fragment {
                     providerChildModelArrayList.add(providerChildModel);
                     ProviderGroupModel providerGroupModel = new ProviderGroupModel("temp",providerChildModelArrayList);
                     providerGroupModel.setName(caregiverArrayList.get(i).getUser().getFirstName());
+                    providerGroupModel.setId(caregiverArrayList.get(i).getUserID());
 
                     providerGroupModel.setDesc(caregiverArrayList.get(i).getUser().getUserRole().getDescription());
 

@@ -12,6 +12,8 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.square63.caremap.ApplicationState;
 import com.square63.caremap.R;
 import com.square63.caremap.constants.Constants;
@@ -31,6 +33,9 @@ import com.square63.caremap.webapi.CreateGiverRequest;
 import com.square63.caremap.webapi.requests.UploadImageRequest;
 import com.square63.caremap.webapi.responses.MainResponse;
 import com.square63.caremap.webapi.webservices.WebServiceFactory;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
+import com.squareup.picasso.Picasso;
 
 public class CreateProviderProfileActivity extends AppCompatActivity implements IPermissionsCallback {
     ActivityCreateProviderProfileBinding binding;
@@ -48,7 +53,24 @@ public class CreateProviderProfileActivity extends AppCompatActivity implements 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_create_provider_profile);
         registrationModel = (RegistrationModel) getIntent().getSerializableExtra(Constants.DATA);
         PreferenceHelper.getInstance().init(this);
+        if(ApplicationState.getInstance().isFromEdit()) {
+            Picasso.get()
+                    .load(Constants.BASE_IMAGE_URL + PreferenceHelper.getInstance().getString(Constants.USER_ID, "") + ".png")
+                    .resize(50, 50)
+                    .centerCrop()
+                    .placeholder(R.drawable.profile_default)
+                    .memoryPolicy(MemoryPolicy.NO_CACHE)
+                    .networkPolicy(NetworkPolicy.NO_CACHE)
+                    .into(binding.imgProfile);
+        }
+
         initToolBar();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
     }
 
     private void initToolBar() {
@@ -75,28 +97,29 @@ public class CreateProviderProfileActivity extends AppCompatActivity implements 
         toolbarTitleRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                if (ApplicationState.getInstance().isFromEdit()) {
+                    apiUpdateGiver();
+                }else {
                     if (validations.validateCreateProfile(binding.txtFirstName, binding.edtLastName, binding.edtDob, binding.edtPhone, binding.edtCity, binding.edtProvince, binding.edtAddress1
                             , binding.fName, binding.lName, binding.dob, binding.pNumber, binding.city, binding.province, binding.addres1) == Constants.SUCCESS) {
-                        if (ApplicationState.getInstance().isFromEdit()) {
-                            apiUpdateGiver();
-                        }else {
-                            registrationModel.setCity(binding.getProfileModel().getCity());
-                            registrationModel.setFirstName(binding.getProfileModel().getFirstName());
-                            registrationModel.setLastName(binding.getProfileModel().getLastName());
-                            registrationModel.setGender("Male");
-                            registrationModel.setPostalCode("1234");
-                            registrationModel.setDateOfBirth(binding.getProfileModel().getDob());
-                            registrationModel.setState(binding.getProfileModel().getProvince());
-                            registrationModel.setAddress(binding.getProfileModel().getAddress1());
-                            registrationModel.setAddress2(binding.getProfileModel().getAddress2());
-                            registrationModel.setPhone(binding.getProfileModel().getPhoneNumber());
-                            apiCreateGiver();
-                        }
+
+                        registrationModel.setCity(binding.getProfileModel().getCity());
+                        registrationModel.setFirstName(binding.getProfileModel().getFirstName());
+                        registrationModel.setLastName(binding.getProfileModel().getLastName());
+                        registrationModel.setGender("Male");
+                        registrationModel.setPostalCode("1234");
+                        registrationModel.setDateOfBirth(binding.getProfileModel().getDob());
+                        registrationModel.setState(binding.getProfileModel().getProvince());
+                        registrationModel.setAddress(binding.getProfileModel().getAddress1());
+                        registrationModel.setAddress2(binding.getProfileModel().getAddress2());
+                        registrationModel.setPhone(binding.getProfileModel().getPhoneNumber());
+                        apiCreateGiver();
+
                         // UIHelper.openActivity(CreateProviderProfileActivity.this,PersonalInfoActivity.class);
                     } else {
 
 
+                    }
                 }
                 // UIHelper.openActivity(CreateProviderProfileActivity.this,);
             }
@@ -104,10 +127,11 @@ public class CreateProviderProfileActivity extends AppCompatActivity implements 
     }
 
     private void setData() {
+        PreferenceHelper.getInstance().init(this);
         final ProfileModel profileModel = new ProfileModel();
         if (ApplicationState.getInstance().isFromEdit()) {
             Caregiver caregiver = ApplicationState.getInstance().getCaregiver();
-            if (caregiver != null) {
+            if (caregiver != null && caregiver.getUser().getFirstName() != null) {
                 profileModel.setFirstName(caregiver.getUser().getFirstName());
                 profileModel.setLastName(caregiver.getUser().getLastName());
                 profileModel.setDob(caregiver.getUser().getDateOfBirth());
@@ -115,6 +139,9 @@ public class CreateProviderProfileActivity extends AppCompatActivity implements 
                 profileModel.setProvince(caregiver.getUser().getState());
                 profileModel.setPhoneNumber(caregiver.getUser().getPhone());
                 profileModel.setAddress1(caregiver.getUser().getAddress());
+                profileModel.setAddress2(caregiver.getUser().getAddress2());
+                profileModel.setDob(PreferenceHelper.getInstance().getString(Constants.dob,""));
+                profileModel.setProvince(PreferenceHelper.getInstance().getString(Constants.province,""));
                 profileModel.setAddress2(caregiver.getUser().getAddress2());
 
             }
@@ -127,9 +154,13 @@ public class CreateProviderProfileActivity extends AppCompatActivity implements 
     }
 
     private void apiCreateGiver() {
+        PreferenceHelper.getInstance().init(this);
         CreateGiverRequest createGiverRequest = new CreateGiverRequest();
         createGiverRequest.setRegistrationModel(registrationModel);
+        PreferenceHelper.getInstance().setString(Constants.dob,registrationModel.getDateOfBirth());
+        PreferenceHelper.getInstance().setString(Constants.province,registrationModel.getState());
         WebServiceFactory.getInstance().init(this);
+        PreferenceHelper.getInstance().init(this);
         WebServiceFactory.getInstance().apiSignup(createGiverRequest, new ApiCallback() {
             @Override
             public void onSuccess(MainResponse mainResponse) {
@@ -144,7 +175,8 @@ public class CreateProviderProfileActivity extends AppCompatActivity implements 
     }
 
     private void apiUpdateGiver() {
-        RegistrationModel registrationModel= new RegistrationModel();
+        PreferenceHelper.getInstance().init(this);
+        final RegistrationModel registrationModel= new RegistrationModel();
         registrationModel.setCity(binding.getProfileModel().getCity());
         registrationModel.setFirstName(binding.getProfileModel().getFirstName());
         registrationModel.setLastName(binding.getProfileModel().getLastName());
@@ -156,15 +188,25 @@ public class CreateProviderProfileActivity extends AppCompatActivity implements 
         registrationModel.setAddress2(binding.getProfileModel().getAddress2());
         registrationModel.setPhone(binding.getProfileModel().getPhoneNumber());
         CreateGiverRequest createGiverRequest = new CreateGiverRequest();
+        Caregiver caregiver = ApplicationState.getInstance().getCaregiver();
         createGiverRequest.setId(PreferenceHelper.getInstance().getString(Constants.GIVER_ID, ""));
+        createGiverRequest.setDescription(caregiver.getDescription());
+        createGiverRequest.setProfileTitle(caregiver.getProfileTitle());
+        createGiverRequest.setYearsOfExperience(caregiver.getYearsOfExperience());
+        createGiverRequest.setDesiredWage(caregiver.getDesiredWage());
+        createGiverRequest.setAvailabilityDistance(caregiver.getAvailabilityDistance());
         createGiverRequest.setRegistrationModel(registrationModel);
         WebServiceFactory.getInstance().init(this);
         WebServiceFactory.getInstance().apiUpdateGiver(createGiverRequest, new ApiCallback() {
             @Override
             public void onSuccess(MainResponse mainResponse) {
-               /* if (encodedImage != null) {
-                    uploadImage(mainResponse.getResultResponse().getId2());
-                }*/
+                PreferenceHelper.getInstance().setString(Constants.dob,"");
+                PreferenceHelper.getInstance().setString(Constants.province,"");
+                PreferenceHelper.getInstance().setString(Constants.dob,registrationModel.getDateOfBirth());
+                PreferenceHelper.getInstance().setString(Constants.province,registrationModel.getState());
+                if (encodedImage != null) {
+                    uploadImage(PreferenceHelper.getInstance().getString(Constants.USER_ID,""));
+                }
                 UIHelper.openActivity(CreateProviderProfileActivity.this, PersonalInfoActivity.class);
             }
         });
@@ -189,7 +231,7 @@ public class CreateProviderProfileActivity extends AppCompatActivity implements 
             @Override
             public void onImageSelected(Bitmap bitmap, byte[] bytes) {
                 binding.imgProfile.setImageBitmap(bitmap);
-                encodedImage = Base64.encodeToString(bytes, Base64.URL_SAFE | Base64.NO_WRAP);
+                encodedImage = Base64.encodeToString(bytes, Base64.DEFAULT );
             }
         });
     }

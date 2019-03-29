@@ -85,6 +85,7 @@ public interface ApiInterface {
         String INSERT_SENIOR_SKILLS = "api/services/app/seniorSkills/InsertSeniorSkills";
         String GET_SENIOR_LANGUAGE_BY_ID = "api/services/app/seniorLanguage/getSeniorLanguagesByFilter";
         String SAVE_USER_IMAGE = "home/saveProfileImage";
+        String SAVE_SENIOR_IMAGE = "/home/saveSeniorImage";
         String GET_SEEKER_BY_FILTER = "api/services/app/careseeker/GetCareseekersByFilter";
         String GET_AVAILABILITY_BY_FILTER = " api/services/app/availability/GetAvailabilitiesByFilter";
         String GET_SENIOR_INTEREST = "api/services/app/seniorInterest/GetSeniorInterestsByFilter";
@@ -104,6 +105,7 @@ public interface ApiInterface {
         String DELETE_USER_LANGUAGE = "api/services/app/userLanguage/DeleteUserLanguage";
         String DELETE_SENIOR_SKILLS = "api/services/app/seniorSkills/DeleteSeniorSkills";
         String RESET_PASSWORD = "api/services/app/user/ResetpassUser";
+
 
 
 
@@ -242,6 +244,10 @@ public interface ApiInterface {
     @POST(Request.SAVE_USER_IMAGE)
         //@Headers("Content-Type: application/x-www-form-urlencoded")
     Call<MainResponse> apiSaveUserImage(@Body UploadImageRequest uploadImageRequest
+    );
+    @POST(Request.SAVE_SENIOR_IMAGE)
+        //@Headers("Content-Type: application/x-www-form-urlencoded")
+    Call<MainResponse> apiSaveSeniorImage(@Body UploadImageRequest uploadImageRequest
     );
 
     @POST(Request.GET_SENIOR_INTEREST)

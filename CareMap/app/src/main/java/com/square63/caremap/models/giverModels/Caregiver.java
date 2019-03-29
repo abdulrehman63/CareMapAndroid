@@ -9,25 +9,25 @@ public class Caregiver {
 
     @SerializedName("availabilityType")
     @Expose
-    private Object availabilityType;
+    private String availabilityType;
     @SerializedName("availabilityLocation")
     @Expose
-    private Object availabilityLocation;
+    private String availabilityLocation;
     @SerializedName("availabilityDistance")
     @Expose
     private String availabilityDistance;
     @SerializedName("driversLicense")
     @Expose
-    private Object driversLicense;
+    private String driversLicense;
     @SerializedName("availableTransportation")
     @Expose
-    private Object availableTransportation;
+    private String availableTransportation;
     @SerializedName("vettingStatus")
     @Expose
-    private Object vettingStatus;
+    private String vettingStatus;
     @SerializedName("vettingAuthorization")
     @Expose
-    private Object vettingAuthorization;
+    private String vettingAuthorization;
     @SerializedName("desiredWage")
     @Expose
     private String desiredWage;
@@ -36,13 +36,13 @@ public class Caregiver {
     private String yearsOfExperience;
     @SerializedName("description")
     @Expose
-    private Object description;
+    private String description;
     @SerializedName("expFromDate")
     @Expose
-    private Object expFromDate;
+    private String expFromDate;
     @SerializedName("expToDate")
     @Expose
-    private Object expToDate;
+    private String expToDate;
     @SerializedName("ratePunct")
     @Expose
     private Integer ratePunct;
@@ -58,41 +58,33 @@ public class Caregiver {
     @SerializedName("rateItems")
     @Expose
     private Integer rateItems;
-    @SerializedName("otherSkill")
-    @Expose
-    private Object otherSkill;
-    @SerializedName("otherInterest")
-    @Expose
-    private Object otherInterest;
     @SerializedName("userID")
     @Expose
     private String userID;
     @SerializedName("user")
     @Expose
     private User user;
-    @SerializedName("skills")
-    @Expose
-    private List<Object> skills = null;
+
     @SerializedName("profileTitle")
     @Expose
-    private Object profileTitle;
+    private String profileTitle;
     @SerializedName("id")
     @Expose
     private String id;
 
-    public Object getAvailabilityType() {
+    public String getAvailabilityType() {
         return availabilityType;
     }
 
-    public void setAvailabilityType(Object availabilityType) {
+    public void setAvailabilityType(String availabilityType) {
         this.availabilityType = availabilityType;
     }
 
-    public Object getAvailabilityLocation() {
+    public String getAvailabilityLocation() {
         return availabilityLocation;
     }
 
-    public void setAvailabilityLocation(Object availabilityLocation) {
+    public void setAvailabilityLocation(String availabilityLocation) {
         this.availabilityLocation = availabilityLocation;
     }
 
@@ -120,61 +112,61 @@ public class Caregiver {
         this.yearsOfExperience = yearsOfExperience;
     }
 
-    public Object getDriversLicense() {
+    public String getDriversLicense() {
         return driversLicense;
     }
 
-    public void setDriversLicense(Object driversLicense) {
+    public void setDriversLicense(String driversLicense) {
         this.driversLicense = driversLicense;
     }
 
-    public Object getAvailableTransportation() {
+    public String getAvailableTransportation() {
         return availableTransportation;
     }
 
-    public void setAvailableTransportation(Object availableTransportation) {
+    public void setAvailableTransportation(String availableTransportation) {
         this.availableTransportation = availableTransportation;
     }
 
-    public Object getVettingStatus() {
+    public String getVettingStatus() {
         return vettingStatus;
     }
 
-    public void setVettingStatus(Object vettingStatus) {
+    public void setVettingStatus(String vettingStatus) {
         this.vettingStatus = vettingStatus;
     }
 
-    public Object getVettingAuthorization() {
+    public String getVettingAuthorization() {
         return vettingAuthorization;
     }
 
-    public void setVettingAuthorization(Object vettingAuthorization) {
+    public void setVettingAuthorization(String vettingAuthorization) {
         this.vettingAuthorization = vettingAuthorization;
     }
 
 
 
-    public Object getDescription() {
+    public String getDescription() {
         return description;
     }
 
-    public void setDescription(Object description) {
+    public void setDescription(String description) {
         this.description = description;
     }
 
-    public Object getExpFromDate() {
+    public String getExpFromDate() {
         return expFromDate;
     }
 
-    public void setExpFromDate(Object expFromDate) {
+    public void setExpFromDate(String expFromDate) {
         this.expFromDate = expFromDate;
     }
 
-    public Object getExpToDate() {
+    public String getExpToDate() {
         return expToDate;
     }
 
-    public void setExpToDate(Object expToDate) {
+    public void setExpToDate(String expToDate) {
         this.expToDate = expToDate;
     }
 
@@ -218,24 +210,10 @@ public class Caregiver {
         this.rateItems = rateItems;
     }
 
-    public Object getOtherSkill() {
-        return otherSkill;
-    }
-
-    public void setOtherSkill(Object otherSkill) {
-        this.otherSkill = otherSkill;
-    }
-
-    public Object getOtherInterest() {
-        return otherInterest;
-    }
-
-    public void setOtherInterest(Object otherInterest) {
-        this.otherInterest = otherInterest;
-    }
 
     public String getUserID() {
         return userID;
+
     }
 
     public void setUserID(String userID) {
@@ -250,19 +228,12 @@ public class Caregiver {
         this.user = user;
     }
 
-    public List<Object> getSkills() {
-        return skills;
-    }
 
-    public void setSkills(List<Object> skills) {
-        this.skills = skills;
-    }
-
-    public Object getProfileTitle() {
+    public String getProfileTitle() {
         return profileTitle;
     }
 
-    public void setProfileTitle(Object profileTitle) {
+    public void setProfileTitle(String profileTitle) {
         this.profileTitle = profileTitle;
     }
 

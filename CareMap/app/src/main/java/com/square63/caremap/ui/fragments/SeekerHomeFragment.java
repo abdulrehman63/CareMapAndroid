@@ -1,5 +1,6 @@
 package com.square63.caremap.ui.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -40,7 +41,7 @@ public class SeekerHomeFragment extends Fragment {
     private RecyclerView recyclerView;
     int position  = -1;
     private ArrayList<ProviderChildModel> providerChildModelArrayList;
-
+    private Context context;
     public SeekerHomeFragment() {
         // Required empty public constructor
     }
@@ -57,6 +58,7 @@ public class SeekerHomeFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        context = getActivity();
         if (getArguments() != null) {
 
         }
@@ -76,7 +78,7 @@ public class SeekerHomeFragment extends Fragment {
         init(view);
     }
     private void getAllSeekers(){
-        WebServiceFactory.getInstance().init(getContext());
+        WebServiceFactory.getInstance().init(context);
         WebServiceFactory.getInstance().apiGetAllSeekers(new GetSeekersRequest(), new ApiCallBack2() {
             @Override
             public void onSuccess(MainResponse2 mainResponse) {
@@ -93,6 +95,7 @@ public class SeekerHomeFragment extends Fragment {
                     ProviderGroupModel providerGroupModel = new ProviderGroupModel("temp",providerChildModelArrayList);
                     providerGroupModel.setName(caregiverArrayList.get(i).getCareSeeker().getUser().getFirstName());
                     providerGroupModel.setAge(caregiverArrayList.get(i).getAge());
+                    providerGroupModel.setId(caregiverArrayList.get(i).getId());
                     providerGroupModel.setDesc(caregiverArrayList.get(i).getCareSeeker().getUser().getUserRole().getName());
 
                     providerGroupModelArrayList.add(providerGroupModel);
@@ -110,7 +113,7 @@ public class SeekerHomeFragment extends Fragment {
 
     }
     private void setRecyclerView(final  ArrayList<ProviderGroupModel> providerGroupModelArrayList){
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        LinearLayoutManager layoutManager = new LinearLayoutManager(context);
 
         // RecyclerView has some built in animations to it, using the DefaultItemAnimator.
         // Specifically when you call notifyItemChanged() it does a fade animation for the changing
@@ -120,10 +123,10 @@ public class SeekerHomeFragment extends Fragment {
             ((DefaultItemAnimator) animator).setSupportsChangeAnimations(false);
         }
 
-        adapter = new MarketPlaceAdapter(getContext(),providerGroupModelArrayList);
+        adapter = new MarketPlaceAdapter(context,providerGroupModelArrayList);
         recyclerView.setLayoutManager(layoutManager);
-       /* DividerItemDecoration itemDecorator = new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
-        itemDecorator.setDrawable(ContextCompat.getDrawable(getContext(), R.drawable.divider));
+       /* DividerItemDecoration itemDecorator = new DividerItemDecoration(context, DividerItemDecoration.VERTICAL);
+        itemDecorator.setDrawable(ContextCompat.getDrawable(context, R.drawable.divider));
         recyclerView.addItemDecoration(itemDecorator);*/
         recyclerView.setAdapter(adapter);
 

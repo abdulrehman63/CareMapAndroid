@@ -654,6 +654,38 @@ public class WebServiceFactory {
         });
 
     }
+    public void apiGetCareGivers(GiverRequest signUpModel, final ApiCallback apiCallback) {
+        checkNetworkState();
+        ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+       // final ProgressDialog loading;
+        //loading = ProgressDialog.show(context_, context_.getResources().getString(R.string.loading), "", true, false);
+
+
+        Call<MainResponse> signUpResponseCall = apiInterface.apiGetAllGiver(signUpModel);
+        signUpResponseCall.enqueue(new Callback<MainResponse>() {
+            @Override
+            public void onResponse(Call<MainResponse> call, retrofit2.Response<MainResponse> response) {
+                if (response.isSuccessful() && response.body().isStatus()) {
+                    // UIHelper.showLongToastInCenter(context_, response.body().getStoreResponse().getMessage());
+                    apiCallback.onSuccess(response.body());
+
+                }else {
+                    //   UIHelper.showLongToastInCenter(context_, response.body().getStoreResponse().getMessage());
+                }
+
+                //loading.dismiss();
+            }
+
+            @Override
+            public void onFailure(Call<MainResponse> call, Throwable t) {
+                //  UIHelper.showLongToastInCenter(context_, t.getMessage());
+                Log.d("fail", t.getMessage());
+               // loading.dismiss();
+
+            }
+        });
+
+    }
     public void apiGetGiverById(GetGiverProfileRequest signUpModel, final ApiCallback apiCallback) {
         checkNetworkState();
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
@@ -1075,8 +1107,8 @@ public class WebServiceFactory {
     public void apiInsertUserImage(UploadImageRequest signUpModel, final ApiCallback apiCallback) {
         checkNetworkState();
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-        final ProgressDialog loading;
-        loading = ProgressDialog.show(context_, context_.getResources().getString(R.string.loading), "", true, false);
+       // final ProgressDialog loading;
+        //loading = ProgressDialog.show(context_, context_.getResources().getString(R.string.loading), "", true, false);
 
 
         Call<MainResponse> signUpResponseCall = apiInterface.apiSaveUserImage(signUpModel);
@@ -1091,14 +1123,46 @@ public class WebServiceFactory {
                     //   UIHelper.showLongToastInCenter(context_, response.body().getStoreResponse().getMessage());
                 }
 
-                loading.dismiss();
+              //  loading.dismiss();
             }
 
             @Override
             public void onFailure(Call<MainResponse> call, Throwable t) {
                 //  UIHelper.showLongToastInCenter(context_, t.getMessage());
                 Log.d("fail", t.getMessage());
-                loading.dismiss();
+               // loading.dismiss();
+
+            }
+        });
+
+    }
+    public void apiInsertSeniorImage(UploadImageRequest signUpModel, final ApiCallback apiCallback) {
+        checkNetworkState();
+        ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+       // final ProgressDialog loading;
+        //loading = ProgressDialog.show(context_, context_.getResources().getString(R.string.loading), "", true, false);
+
+
+        Call<MainResponse> signUpResponseCall = apiInterface.apiSaveSeniorImage(signUpModel);
+        signUpResponseCall.enqueue(new Callback<MainResponse>() {
+            @Override
+            public void onResponse(Call<MainResponse> call, retrofit2.Response<MainResponse> response) {
+                if (response.isSuccessful()) {
+                    // UIHelper.showLongToastInCenter(context_, response.body().getStoreResponse().getMessage());
+                    apiCallback.onSuccess(response.body());
+
+                }else {
+                    //   UIHelper.showLongToastInCenter(context_, response.body().getStoreResponse().getMessage());
+                }
+
+              //  loading.dismiss();
+            }
+
+            @Override
+            public void onFailure(Call<MainResponse> call, Throwable t) {
+                //  UIHelper.showLongToastInCenter(context_, t.getMessage());
+                Log.d("fail", t.getMessage());
+               // loading.dismiss();
 
             }
         });

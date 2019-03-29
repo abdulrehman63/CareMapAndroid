@@ -110,6 +110,7 @@ public class CreateSeekerProfileActivity extends AppCompatActivity implements IP
         registrationModel.setPostalCode("1234");
         createSeekerRequest.setUser(registrationModel);
         WebServiceFactory.getInstance().init(this);
+        PreferenceHelper.getInstance().init(this);
         WebServiceFactory.getInstance().apiInsertSeeker(createSeekerRequest, new ApiCallback() {
             @Override
             public void onSuccess(MainResponse mainResponse) {
@@ -125,13 +126,13 @@ public class CreateSeekerProfileActivity extends AppCompatActivity implements IP
         imagePickerHelper.selectImage(new IPickerCallBack() {
             @Override
             public void onImageSelected(Bitmap bitmap) {
-                binding.imgProfile.setImageBitmap(bitmap);
+
 
             }
 
             @Override
             public void onImageSelected(Bitmap bitmap, byte[] bytes) {
-
+                binding.imgProfile.setImageBitmap(bitmap);
             }
         });
     }
