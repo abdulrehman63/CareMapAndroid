@@ -20,6 +20,8 @@ import com.square63.caremap.R;
 import com.square63.caremap.constants.Constants;
 import com.square63.caremap.models.LanguageModel;
 import com.square63.caremap.models.SkillsMainModel;
+import com.square63.caremap.models.SkillsModel;
+import com.square63.caremap.models.giverModels.Caregiver;
 import com.square63.caremap.models.giverModels.UserLanguage;
 import com.square63.caremap.ui.adapters.TabAvailabilityAdapter;
 import com.square63.caremap.utils.CircleImageView;
@@ -44,7 +46,7 @@ public class ProfileFragment extends Fragment {
     private ViewPager viewPagerSkills;
     private TabAvailabilityAdapter adapterSkills;
     private TextView txtName;
-    private TextView txtLanguage, txtExperience, txtPrice, txtDistance;
+    private TextView txtLanguage, txtExperience, txtPrice, txtDistance,txtTitle,txtDesc;
     private TextView txtCredential;
     private CircleImageView circleImageView;
 
@@ -99,6 +101,8 @@ public class ProfileFragment extends Fragment {
         txtExperience = (TextView) view.findViewById(R.id.txtExperience);
         txtPrice = (TextView) view.findViewById(R.id.txtPrice);
         txtDistance = (TextView) view.findViewById(R.id.txtDistance);
+        txtTitle = (TextView) view.findViewById(R.id.txtTitle);
+        txtDesc = (TextView) view.findViewById(R.id.txtDesc);
         txtLanguage = (TextView) view.findViewById(R.id.txtLanguage);
         viewPager = (ViewPager) view.findViewById(R.id.viewPager);
         tabLayout = (TabLayout) view.findViewById(R.id.tabLayout);
@@ -128,9 +132,20 @@ public class ProfileFragment extends Fragment {
                     ApplicationState.getInstance().setCaregiver(mainResponse.getResultResponse().getCaregivers().get(0));
                     txtName.setText(mainResponse.getResultResponse().getCaregivers().get(0).getUser().getFirstName() + " " + mainResponse.getResultResponse().getCaregivers().get(0).getUser().getLastName());
                 }
-               /* txtExperience.setText(mainResponse.getResultResponse().getCaregivers().get(0).getYearsOfExperience());
-                txtDistance.setText(mainResponse.getResultResponse().getCaregivers().get(0).getAvailabilityDistance());
-                txtPrice.setText(mainResponse.getResultResponse().getCaregivers().get(0).getDesiredWage());*/
+                Caregiver caregiver = mainResponse.getResultResponse().getCaregivers().get(0);
+                if (caregiver.getYearsOfExperience() != null)
+                    txtExperience.setText(mainResponse.getResultResponse().getCaregivers().get(0).getYearsOfExperience());
+                if (caregiver.getAvailabilityDistance() != null)
+                    txtDistance.setText(mainResponse.getResultResponse().getCaregivers().get(0).getAvailabilityDistance());
+                if (caregiver.getDesiredWage() != null)
+                    txtPrice.setText("$"+mainResponse.getResultResponse().getCaregivers().get(0).getDesiredWage() );
+
+                if (caregiver.getProfileTitle() != null)
+                    txtTitle.setText(caregiver.getProfileTitle());
+                if (caregiver.getDescription() != null)
+                   txtDesc.setText(caregiver.getDescription());
+
+
             }
         });
     }
@@ -147,7 +162,7 @@ public class ProfileFragment extends Fragment {
                     String languages = "";
                     for (UserLanguage languageModel : mainResponse.getResultResponse().getUserLanguages()) {
 
-                        languages = languages + languageModel.getLanguage().getName() + ", ";
+                        languages = languages + languageModel.getLanguage().getName() + ",";
                     }
                     if (languages != null && languages.length() > 0 && languages.charAt(languages.length() - 1) == ',') {
                         languages = languages.substring(0, languages.length() - 1);

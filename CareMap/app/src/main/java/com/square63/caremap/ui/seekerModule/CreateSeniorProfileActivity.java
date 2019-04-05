@@ -522,9 +522,9 @@ public class CreateSeniorProfileActivity extends AppCompatActivity implements Vi
             for (int i = 0; i < colorArr.length; i++) {
                 InterestModel languageModel = new InterestModel();
                 if (ApplicationState.getInstance().getGiverResultResponse() != null) {
-                    if (ApplicationState.getInstance().getGiverResultResponse().getColourScheme() == i + 1) {
+                    if (ApplicationState.getInstance().getGiverResultResponse().getColourScheme() == i) {
                         languageModel.setSelected(true);
-                        selectedColor = i + 1;
+                        selectedColor = i;
                        // break;
                     }
                 }

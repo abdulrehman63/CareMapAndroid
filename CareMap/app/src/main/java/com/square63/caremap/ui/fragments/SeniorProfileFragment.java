@@ -113,8 +113,8 @@ public class SeniorProfileFragment extends Fragment {
                         }
                     }
                 if(mainResponse.getResultResponse().getColourScheme() != null ) {
-                        if(mainResponse.getResultResponse().getColourScheme() >0 && mainResponse.getResultResponse().getColourScheme() < 6 )
-                        circleImageView.setBorderColor(colorArr[mainResponse.getResultResponse().getColourScheme()-1]);
+                        if(mainResponse.getResultResponse().getColourScheme() >0 && mainResponse.getResultResponse().getColourScheme() < 5 )
+                        circleImageView.setBorderColor(colorArr[mainResponse.getResultResponse().getColourScheme()]);
                 }
                 if(mainResponse.getResultResponse().getMobilityID() != null) {
                     for (int i = 0; i < mobilityIdArr.length; i++) {

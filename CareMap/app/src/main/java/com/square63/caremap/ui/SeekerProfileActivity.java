@@ -111,6 +111,8 @@ public class SeekerProfileActivity extends AppCompatActivity {
     }
 
     private void getSenior() {
+        final Integer colorArr[]={getResources().getColor(R.color.colorschem_1),getResources().getColor(R.color.colorschem_2),getResources().getColor(R.color.colorschem_3),getResources().getColor(R.color.colorschem_4),getResources().getColor(R.color.colorschem_5)};
+
         GetSeekersRequest profileRequest = new GetSeekersRequest();
         profileRequest.getFilterSenior().setSeniorId(seniorId);
         WebServiceFactory.getInstance().init(this);
@@ -129,7 +131,7 @@ public class SeekerProfileActivity extends AppCompatActivity {
                     }
                 }
                 if(mainResponse.getResultResponse().getColourScheme() != null ) {
-                    circleImageView.setBorderColor(mainResponse.getResultResponse().getColourScheme());
+                    circleImageView.setBorderColor(colorArr[mainResponse.getResultResponse().getColourScheme()]);
                 }
                 if(mainResponse.getResultResponse().getMobilityID() != null) {
                     for (int i = 0; i < mobilityIdArr.length; i++) {

@@ -90,13 +90,13 @@ public class SeekerHomeFragment extends Fragment {
                     ProviderChildModel providerChildModel = new ProviderChildModel();
                     providerChildModel.setId(caregiverArrayList.get(i).getId());
                     providerChildModel.setSeekerId(caregiverArrayList.get(i).getCareSeeker().getUserID());
-                    providerChildModel.setName(caregiverArrayList.get(i).getCareSeeker().getUser().getFirstName() + " "+caregiverArrayList.get(i).getCareSeeker().getUser().getLastName());
+                    providerChildModel.setName(caregiverArrayList.get(i).getName());
                     providerChildModelArrayList.add(providerChildModel);
                     ProviderGroupModel providerGroupModel = new ProviderGroupModel("temp",providerChildModelArrayList);
-                    providerGroupModel.setName(caregiverArrayList.get(i).getCareSeeker().getUser().getFirstName());
+                    providerGroupModel.setName(caregiverArrayList.get(i).getName());
                     providerGroupModel.setAge(caregiverArrayList.get(i).getAge());
                     providerGroupModel.setId(caregiverArrayList.get(i).getId());
-                    providerGroupModel.setDesc(caregiverArrayList.get(i).getCareSeeker().getUser().getUserRole().getName());
+                    providerGroupModel.setDesc("Senior");
 
                     providerGroupModelArrayList.add(providerGroupModel);
                 }

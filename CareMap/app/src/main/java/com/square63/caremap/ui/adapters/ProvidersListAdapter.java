@@ -2,6 +2,7 @@ package com.square63.caremap.ui.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -57,6 +58,11 @@ public class ProvidersListAdapter extends ExpandableRecyclerAdapter<ProviderGrou
                 .load(Constants.BASE_IMAGE_URL+ recipe.getId() + ".png")
                 .placeholder(R.drawable.profile_default)
                 .into(recipeViewHolder.imgProfile);
+        recipeViewHolder.txtDesc.setTextColor(context.getResources().getColor(R.color.grey));
+        Typeface boldTypeface = Typeface.defaultFromStyle(Typeface.BOLD);
+
+        recipeViewHolder.txtDesc.setTypeface(boldTypeface);
+
 
     }
 

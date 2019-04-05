@@ -1,9 +1,12 @@
 
 package com.square63.caremap.models.giverModels;
 
+import java.util.ArrayList;
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.square63.caremap.models.GiverSkills;
+import com.square63.caremap.models.SkillsModel;
 
 public class Caregiver {
 
@@ -68,9 +71,22 @@ public class Caregiver {
     @SerializedName("profileTitle")
     @Expose
     private String profileTitle;
+
+    public ArrayList<GiverSkills> getSkillsModelArrayList() {
+        return skillsModelArrayList;
+    }
+
+    public void setSkillsModelArrayList(ArrayList<GiverSkills> skillsModelArrayList) {
+        this.skillsModelArrayList = skillsModelArrayList;
+    }
+
     @SerializedName("id")
     @Expose
+
     private String id;
+
+    @SerializedName("skills")
+    private ArrayList<GiverSkills> skillsModelArrayList;
 
     public String getAvailabilityType() {
         return availabilityType;

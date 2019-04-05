@@ -101,9 +101,11 @@ public class HomeFragment extends Fragment {
                     ProviderGroupModel providerGroupModel = new ProviderGroupModel("temp",providerChildModelArrayList);
                     providerGroupModel.setName(caregiverArrayList.get(i).getUser().getFirstName());
                     providerGroupModel.setId(caregiverArrayList.get(i).getUserID());
-
-                    providerGroupModel.setDesc(caregiverArrayList.get(i).getUser().getUserRole().getDescription());
-
+                    if(caregiverArrayList.get(i).getSkillsModelArrayList() != null && caregiverArrayList.get(i).getSkillsModelArrayList().size() > 0){
+                        providerGroupModel.setDesc(caregiverArrayList.get(i).getSkillsModelArrayList().get(caregiverArrayList.get(i).getSkillsModelArrayList().size() - 1).getSkill().getName());
+                    }else {
+                        providerGroupModel.setDesc("CareGiver");
+                    }
                     providerGroupModelArrayList.add(providerGroupModel);
                 }
                 setRecyclerView(providerGroupModelArrayList);

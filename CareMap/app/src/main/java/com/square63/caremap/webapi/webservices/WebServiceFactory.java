@@ -1265,6 +1265,38 @@ public class WebServiceFactory {
         });
 
     }
+    public void apiSeniorByFilter(GetSeekersRequest signUpModel, final ApiCallBack2 apiCallback) {
+        checkNetworkState();
+        ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        final ProgressDialog loading;
+        loading = ProgressDialog.show(context_, context_.getResources().getString(R.string.loading), "", true, false);
+
+
+        Call<MainResponse2> signUpResponseCall = apiInterface.apiGetSeniorByFilter(signUpModel);
+        signUpResponseCall.enqueue(new Callback<MainResponse2>() {
+            @Override
+            public void onResponse(Call<MainResponse2> call, retrofit2.Response<MainResponse2> response) {
+                if (response.isSuccessful() && response.body().isStatus()) {
+                    // UIHelper.showLongToastInCenter(context_, response.body().getStoreResponse().getMessage());
+                    apiCallback.onSuccess(response.body());
+
+                }else {
+                    //   UIHelper.showLongToastInCenter(context_, response.body().getStoreResponse().getMessage());
+                }
+
+                loading.dismiss();
+            }
+
+            @Override
+            public void onFailure(Call<MainResponse2> call, Throwable t) {
+                //  UIHelper.showLongToastInCenter(context_, t.getMessage());
+                Log.d("fail", t.getMessage());
+                loading.dismiss();
+
+            }
+        });
+
+    }
     public void apiInsertLanguages(InsertUserLangRequest signUpModel, final ApiCallback apiCallback) {
         //checkNetworkState();
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);

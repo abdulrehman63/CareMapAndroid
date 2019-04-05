@@ -87,6 +87,7 @@ public interface ApiInterface {
         String SAVE_USER_IMAGE = "home/saveProfileImage";
         String SAVE_SENIOR_IMAGE = "/home/saveSeniorImage";
         String GET_SEEKER_BY_FILTER = "api/services/app/careseeker/GetCareseekersByFilter";
+        String GET_SENIOR_BY_FILTER = "api/services/app/senior/GetSeniorsByFilter";
         String GET_AVAILABILITY_BY_FILTER = " api/services/app/availability/GetAvailabilitiesByFilter";
         String GET_SENIOR_INTEREST = "api/services/app/seniorInterest/GetSeniorInterestsByFilter";
 
@@ -215,6 +216,9 @@ public interface ApiInterface {
 
     @POST(Request.GET_SEEKER_BY_FILTER)
     Call<MainResponse2> apiGetSeekerById(@Body GetSeekersRequest request);
+
+    @POST(Request.GET_SENIOR_BY_FILTER)
+    Call<MainResponse2> apiGetSeniorByFilter(@Body GetSeekersRequest request);
 
     @POST(Request.GET_SENIOR_BY_ID)
     Call<MainResponse2> apiGetSeniorById(@Body GetSeekersRequest request);

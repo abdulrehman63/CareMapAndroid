@@ -35,8 +35,12 @@ public class Constants {
     public static final String FEMALE= "female";
     public static final String SENIOR_ID= "seniorId";
     public static final String S_BINARY = "binary";
-    public static final String BASE_IMAGE_URL = "http://ucarenet-staging.azurewebsites.net/App/Main/images/users/";
-    public static final String BASE_IMAGE_URL_SENIOR = "http://ucarenet-staging.azurewebsites.net/App/Main/images/seniors/";
+
+  //  public static final String BASE_IMAGE_URL = "http://ucarenet-staging.azurewebsites.net/App/Main/images/users/";
+   // public static final String BASE_IMAGE_URL_SENIOR = "http://ucarenet-staging.azurewebsites.net/App/Main/images/seniors/";
+
+    public static final String BASE_IMAGE_URL = "https://www.ucarenet.com/App/Main/images/users/";
+    public static final String BASE_IMAGE_URL_SENIOR = "https://www.ucarenet.com/App/Main/images/seniors/";
 
     public static final String USER_ID = "userId";
 }

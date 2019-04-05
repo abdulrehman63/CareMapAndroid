@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
+import com.square63.caremap.ApplicationState;
 import com.square63.caremap.R;
 import com.square63.caremap.constants.Constants;
 import com.square63.caremap.databinding.ActivityLoginBinding;
@@ -59,7 +60,7 @@ public class LoginActivity extends AppCompatActivity {
                         getCareGiver(mainResponse.getResultResponse().getData().getId());
 
                     }else {
-
+                      //  PreferenceHelper.getInstance().setString(Constants.SENIOR_ID, mainResponse.getResultResponse().getData().getId());
                         getCareSeeker(mainResponse.getResultResponse().getData().getId());
                     }
                 }
@@ -91,15 +92,27 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onSuccess(MainResponse2 mainResponse) {
                 if(mainResponse.getResultResponse().getCareSeekerArrayList().size() > 0)
-                PreferenceHelper.getInstance().setString(Constants.SENIOR_ID, mainResponse.getResultResponse().getCareSeekerArrayList().get(0).getId());
-                PreferenceHelper.getInstance().setString(Constants.SEEKER_ID, mainResponse.getResultResponse().getCareSeekerArrayList().get(0).getUserID());
+
+                PreferenceHelper.getInstance().setString(Constants.SEEKER_ID, mainResponse.getResultResponse().getCareSeekerArrayList().get(0).getId());
+                getSenior(mainResponse.getResultResponse().getCareSeekerArrayList().get(0).getId());
+
+            }
+        });
+    }
+    private void getSenior(String seekerId) {
+        GetSeekersRequest profileRequest = new GetSeekersRequest();
+        profileRequest.getFilterSenior().setCareseekerId(seekerId);
+        WebServiceFactory.getInstance().init(this);
+        WebServiceFactory.getInstance().apiSeniorByFilter(profileRequest, new ApiCallBack2() {
+            @Override
+            public void onSuccess(MainResponse2 mainResponse) {
+                PreferenceHelper.getInstance().setString(Constants.SENIOR_ID, mainResponse.getResultResponse().getSeniors().get(0).getId());
                 PreferenceHelper.getInstance().setString(Constants.ID, "1");
                 PreferenceHelper.getInstance().setString(Constants.TYPE, Constants.SEEKER);
                 UIHelper.openActivity(LoginActivity.this, HomeActivity.class);
             }
         });
     }
-
 
 
 }

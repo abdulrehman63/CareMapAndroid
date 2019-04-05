@@ -20,6 +20,8 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.square63.caremap.ApplicationState;
 import com.square63.caremap.R;
 import com.square63.caremap.constants.Constants;
+import com.square63.caremap.models.SkillsMainModel;
+import com.square63.caremap.models.giverModels.Caregiver;
 import com.square63.caremap.models.giverModels.UserLanguage;
 import com.square63.caremap.ui.adapters.TabAvailabilityAdapter;
 import com.square63.caremap.ui.fragments.AvailabilityFragment;
@@ -32,9 +34,12 @@ import com.square63.caremap.utils.PreferenceHelper;
 import com.square63.caremap.utils.UIHelper;
 import com.square63.caremap.webapi.Apiinterface.ApiCallback;
 import com.square63.caremap.webapi.requests.GetGiverLanguageRequest;
+import com.square63.caremap.webapi.requests.GetGiverSkilsById;
 import com.square63.caremap.webapi.requests.GiverRequest;
 import com.square63.caremap.webapi.responses.MainResponse;
 import com.square63.caremap.webapi.webservices.WebServiceFactory;
+
+import java.util.ArrayList;
 
 public class ProviderProfileActivity extends AppCompatActivity {
     private ViewPager viewPager;
@@ -45,10 +50,11 @@ public class ProviderProfileActivity extends AppCompatActivity {
     private TextView txtName;
     private TextView txtLanguage;
     private ImageButton imgBack;
-    private TextView titileToolbar,toolbarTitleRight,txtExperience,txtPrice,txtDistance;
+    private TextView titileToolbar,toolbarTitleRight,txtExperience,txtPrice,txtDistance,txtTitle,txtDesc;
     private String userId,giverId;
     private NestedScrollView scrollView;
     private CircleImageView circleImageView;
+    private TextView txtCredential;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +75,7 @@ public class ProviderProfileActivity extends AppCompatActivity {
         initToolBar();
         getGiver();
         getUserLanguages();
+        apiGetGiverSkills();
     }
     private void initToolBar(){
 
@@ -93,6 +100,9 @@ public class ProviderProfileActivity extends AppCompatActivity {
         txtPrice = (TextView) findViewById(R.id.txtPrice);
         txtDistance = (TextView) findViewById(R.id.txtDistance);
         txtLanguage = (TextView) findViewById(R.id.txtLanguage);
+        txtCredential = (TextView) findViewById(R.id.textView15);
+        txtTitle = (TextView) findViewById(R.id.txtTitle);
+        txtDesc = (TextView) findViewById(R.id.txtDesc);
         viewPager = (ViewPager) findViewById(R.id.viewPager);
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
         viewPagerSkills = (ViewPager) findViewById(R.id.viewPagerSkills);
@@ -120,9 +130,18 @@ public class ProviderProfileActivity extends AppCompatActivity {
 
                // titileToolbar.setText(mainResponse.getResultResponse().getCaregivers().get(0).getUser().getFirstName() + " " + mainResponse.getResultResponse().getCaregivers().get(0).getUser().getLastName());
                 txtName.setText(mainResponse.getResultResponse().getCaregivers().get(0).getUser().getFirstName() + " " + mainResponse.getResultResponse().getCaregivers().get(0).getUser().getLastName());
-                txtExperience.setText(mainResponse.getResultResponse().getCaregivers().get(0).getYearsOfExperience());
-                txtDistance.setText(mainResponse.getResultResponse().getCaregivers().get(0).getAvailabilityDistance());
-                txtPrice.setText(mainResponse.getResultResponse().getCaregivers().get(0).getDesiredWage());
+                Caregiver caregiver = mainResponse.getResultResponse().getCaregivers().get(0);
+                if (caregiver.getYearsOfExperience() != null)
+                    txtExperience.setText(mainResponse.getResultResponse().getCaregivers().get(0).getYearsOfExperience());
+                if (caregiver.getAvailabilityDistance() != null)
+                    txtDistance.setText(mainResponse.getResultResponse().getCaregivers().get(0).getAvailabilityDistance());
+                if (caregiver.getDesiredWage() != null)
+                    txtPrice.setText("$"+ mainResponse.getResultResponse().getCaregivers().get(0).getDesiredWage() );
+
+                if (caregiver.getProfileTitle() != null)
+                    txtTitle.setText(caregiver.getProfileTitle());
+                if (caregiver.getDescription() != null)
+                    txtDesc.setText(caregiver.getDescription());
             }
         });
     }
@@ -138,7 +157,7 @@ public class ProviderProfileActivity extends AppCompatActivity {
                 String languages = "";
                 for (UserLanguage languageModel:mainResponse.getResultResponse().getUserLanguages()){
 
-                    languages = languages+languageModel.getLanguage().getName()+", ";
+                    languages = languages+languageModel.getLanguage().getName()+",";
                 }
                 if (languages != null && languages.length() > 0 && languages.charAt(languages.length() - 1) == ',') {
                     languages = languages.substring(0, languages.length() - 1);
@@ -148,6 +167,33 @@ public class ProviderProfileActivity extends AppCompatActivity {
             }
         });
     }
+    private void apiGetGiverSkills() {
+        GetGiverSkilsById giverSkilsById = new GetGiverSkilsById();
+        giverSkilsById.getFilterCaregiver().setCaregiverId(giverId);
+        WebServiceFactory.getInstance().init(this);
+        WebServiceFactory.getInstance().apiGetGiverSkillsById(giverSkilsById, new ApiCallback() {
+            @Override
+            public void onSuccess(MainResponse mainResponse) {
+                if (mainResponse.getResultResponse().getCaregiverSkills() != null) {
+                    boolean isExist = false;
+                    ArrayList<String> tagsList = new ArrayList<>();
+                    ApplicationState.getInstance().setSkillsModelArrayList(mainResponse.getResultResponse().getCaregiverSkills());
+                    for (SkillsMainModel skillsModel : mainResponse.getResultResponse().getCaregiverSkills()) {
+                        if (skillsModel.getSkill().getCategory() == 0) {
+                            txtCredential.setText(skillsModel.getSkill().getName());
+                            isExist = true;
+                        }
+                    }
+                    if (!isExist) {
+                        txtCredential.setText("caregiver");
+                    }
+
+                }
+
+            }
+        });
+    }
+
 
 
 }
