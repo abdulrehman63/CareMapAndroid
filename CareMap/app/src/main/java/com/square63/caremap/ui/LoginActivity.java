@@ -1,6 +1,7 @@
 package com.square63.caremap.ui;
 
 import android.databinding.DataBindingUtil;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -9,7 +10,9 @@ import com.square63.caremap.ApplicationState;
 import com.square63.caremap.R;
 import com.square63.caremap.constants.Constants;
 import com.square63.caremap.databinding.ActivityLoginBinding;
+import com.square63.caremap.listeners.IPermissionsCallback;
 import com.square63.caremap.models.LoginModel;
+import com.square63.caremap.utils.PermissionsHelper;
 import com.square63.caremap.utils.PreferenceHelper;
 import com.square63.caremap.utils.UIHelper;
 import com.square63.caremap.utils.Validations;
@@ -24,11 +27,15 @@ import com.square63.caremap.webapi.webservices.WebServiceFactory;
 
 public class LoginActivity extends AppCompatActivity {
     ActivityLoginBinding binding;
+    private PermissionsHelper permissionsHelper;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this,R.layout.activity_login);
         binding.setLoginModel(new LoginModel());
+       /* permissionsHelper = new PermissionsHelper(this);
+        permissionsHelper.checkLocationMultiplePermissions(this);*/
 
     }
     public void onLoginClicked(View view){
@@ -113,6 +120,17 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
+   /* @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(permissionsHelper != null){
+            permissionsHelper.onRequestPermissionsResult(requestCode,permissions,grantResults,this);
+        }
 
+    }
+    @Override
+    public void onPermissionsGranted() {
+
+    }*/
 
 }

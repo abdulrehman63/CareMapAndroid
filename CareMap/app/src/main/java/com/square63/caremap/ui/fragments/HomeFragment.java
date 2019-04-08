@@ -1,6 +1,9 @@
 package com.square63.caremap.ui.fragments;
 
 import android.content.Context;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -28,15 +31,19 @@ import com.square63.caremap.models.SkillsModel;
 import com.square63.caremap.models.giverModels.Caregiver;
 import com.square63.caremap.ui.adapters.MarketPlaceAdapter;
 import com.square63.caremap.ui.adapters.ProvidersListAdapter;
+import com.square63.caremap.utils.GPSTracker;
 import com.square63.caremap.utils.VerticalSpaceItemDecoration;
 import com.square63.caremap.webapi.Apiinterface.ApiCallback;
+import com.square63.caremap.webapi.requests.FilterCaregiver;
 import com.square63.caremap.webapi.requests.GiverRequest;
 import com.square63.caremap.webapi.responses.MainResponse;
 import com.square63.caremap.webapi.webservices.WebServiceFactory;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 
 public class HomeFragment extends Fragment {
@@ -85,7 +92,13 @@ public class HomeFragment extends Fragment {
     }
     private void getAllGivers(){
         WebServiceFactory.getInstance().init(getContext());
-        WebServiceFactory.getInstance().apiGetAllCareGivers(new GiverRequest(), new ApiCallback() {
+        GPSTracker gpsTracker = new GPSTracker(getContext());
+       String city =  gpsTracker.getCityFromLatLng(getContext(),gpsTracker.getLocation());
+        GiverRequest giverRequest = new GiverRequest();
+        FilterCaregiver filterCaregiver = new FilterCaregiver();
+        filterCaregiver.setCity("Toronto");
+        giverRequest.setFilterCaregiver(filterCaregiver);
+        WebServiceFactory.getInstance().apiGetAllCareGivers(giverRequest, new ApiCallback() {
             @Override
             public void onSuccess(MainResponse mainResponse) {
                 final ArrayList<ProviderGroupModel> providerGroupModelArrayList = new ArrayList<>();

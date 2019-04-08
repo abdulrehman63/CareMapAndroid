@@ -624,6 +624,7 @@ public class WebServiceFactory {
     }
     public void apiGetAllCareGivers(GiverRequest signUpModel, final ApiCallback apiCallback) {
         checkNetworkState();
+
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
        final ProgressDialog loading;
         loading = ProgressDialog.show(context_, context_.getResources().getString(R.string.loading), "", true, false);

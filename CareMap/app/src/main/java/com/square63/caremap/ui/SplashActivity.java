@@ -9,6 +9,7 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.widget.Toast;
@@ -19,7 +20,9 @@ import com.crashlytics.android.core.CrashlyticsCore;
 import com.square63.caremap.BuildConfig;
 import com.square63.caremap.R;
 import com.square63.caremap.constants.Constants;
+import com.square63.caremap.listeners.IPermissionsCallback;
 import com.square63.caremap.ui.seekerModule.CreateSeniorProfileActivity;
+import com.square63.caremap.utils.PermissionsHelper;
 import com.square63.caremap.utils.PreferenceHelper;
 
 import java.util.ArrayList;
@@ -29,8 +32,9 @@ import java.util.Map;
 
 import io.fabric.sdk.android.Fabric;
 
-public class SplashActivity extends FragmentActivity {
+public class SplashActivity extends FragmentActivity  {
     private static int SPLASH_TIME_OUT = 1000;
+    private PermissionsHelper permissionsHelper;
 
 
     @Override
@@ -40,6 +44,7 @@ public class SplashActivity extends FragmentActivity {
         Crashlytics crashlyticsKit = new Crashlytics.Builder()
                 .core(new CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build())
                 .build();
+
 
 // Initialize Fabric with the debug-disabled crashlytics.
         Fabric.with(this, crashlyticsKit);
@@ -63,4 +68,7 @@ public class SplashActivity extends FragmentActivity {
                 }
             }, SPLASH_TIME_OUT);
         }
+
+
+
 }

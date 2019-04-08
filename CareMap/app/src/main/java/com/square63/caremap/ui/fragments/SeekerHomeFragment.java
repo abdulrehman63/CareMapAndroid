@@ -17,14 +17,19 @@ import android.view.ViewGroup;
 
 import com.bignerdranch.expandablerecyclerview.ExpandableRecyclerAdapter;
 import com.square63.caremap.R;
+import com.square63.caremap.listeners.IPermissionsCallback;
 import com.square63.caremap.models.ProviderChildModel;
 import com.square63.caremap.models.ProviderGroupModel;
 import com.square63.caremap.models.giverModels.Caregiver;
 import com.square63.caremap.models.seekerModels.Senior;
 import com.square63.caremap.ui.adapters.MarketPlaceAdapter;
 import com.square63.caremap.ui.adapters.ProvidersListAdapter;
+import com.square63.caremap.utils.GPSTracker;
+import com.square63.caremap.utils.PermissionsHelper;
 import com.square63.caremap.webapi.Apiinterface.ApiCallBack2;
 import com.square63.caremap.webapi.Apiinterface.ApiCallback;
+import com.square63.caremap.webapi.requests.FilterCaregiver;
+import com.square63.caremap.webapi.requests.FilterSenior;
 import com.square63.caremap.webapi.requests.GetSeekersRequest;
 import com.square63.caremap.webapi.requests.GiverRequest;
 import com.square63.caremap.webapi.responses.MainResponse;
@@ -42,6 +47,8 @@ public class SeekerHomeFragment extends Fragment {
     int position  = -1;
     private ArrayList<ProviderChildModel> providerChildModelArrayList;
     private Context context;
+    private PermissionsHelper permissionsHelper;
+
     public SeekerHomeFragment() {
         // Required empty public constructor
     }
@@ -75,11 +82,18 @@ public class SeekerHomeFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         init(view);
     }
     private void getAllSeekers(){
         WebServiceFactory.getInstance().init(context);
-        WebServiceFactory.getInstance().apiGetAllSeekers(new GetSeekersRequest(), new ApiCallBack2() {
+        GPSTracker gpsTracker = new GPSTracker(getContext());
+        String city =  gpsTracker.getCityFromLatLng(getContext(),gpsTracker.getLocation());
+        GetSeekersRequest seekersRequest = new GetSeekersRequest();
+        FilterSenior filterSenior = new FilterSenior();
+        filterSenior.setCity("Toronto");
+        seekersRequest.setFilterSenior(filterSenior);
+        WebServiceFactory.getInstance().apiGetAllSeekers(seekersRequest, new ApiCallBack2() {
             @Override
             public void onSuccess(MainResponse2 mainResponse) {
                 final ArrayList<ProviderGroupModel> providerGroupModelArrayList = new ArrayList<>();
@@ -110,8 +124,8 @@ public class SeekerHomeFragment extends Fragment {
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         getAllSeekers();
 
-
     }
+
     private void setRecyclerView(final  ArrayList<ProviderGroupModel> providerGroupModelArrayList){
         LinearLayoutManager layoutManager = new LinearLayoutManager(context);
 

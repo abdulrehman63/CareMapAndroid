@@ -1,5 +1,6 @@
 package com.square63.caremap.utils;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -23,6 +24,7 @@ public class PermissionsHelper {
     private ArrayList permissionsToRequest;
     private Activity context;
     private static final int REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS = 5;
+    private static final int REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS_LOCATION = 6;
     public PermissionsHelper(){
 
     }
@@ -131,9 +133,68 @@ public class PermissionsHelper {
                 }
             }
             break;
+            case REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS_LOCATION:{
+                Map<String, Integer> perms = new HashMap<String, Integer>();
+                // Initial
+                perms.put(Manifest.permission.ACCESS_COARSE_LOCATION, PackageManager.PERMISSION_GRANTED);
+                perms.put(Manifest.permission.ACCESS_FINE_LOCATION, PackageManager.PERMISSION_GRANTED);
+
+
+                // Fill with results
+                for (int i = 0; i < permissions.length; i++)
+                    perms.put(permissions[i], grantResults[i]);
+                if (perms.get(Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                        && perms.get(Manifest.permission.ACCESS_FINE_LOCATION)==PackageManager.PERMISSION_GRANTED
+                        ) {
+                    // All Permissions Granted
+                    iPermissionsCallback.onPermissionsGranted();
+                    return;
+                } else {
+                    // Permission Denied
+                    if (Build.VERSION.SDK_INT >= 23) {
+                        iPermissionsCallback.onPermissionsGranted();
+                        //finish();
+                    }
+                }
+
+            }
+            break;
 
         }
     }
+    public void checkLocationMultiplePermissions(IPermissionsCallback iPermissionsCallback) {
+        if (Build.VERSION.SDK_INT >= 23) {
+            List<String> permissionsNeeded = new ArrayList<String>();
+            List<String> permissionsList = new ArrayList<String>();
+            if(!addPermission(permissionsList, android.Manifest.permission.ACCESS_FINE_LOCATION))
+            {
+                permissionsNeeded.add(android.Manifest.permission.ACCESS_FINE_LOCATION);
+            }
+
+            if (!addPermission(permissionsList, Manifest.permission.ACCESS_COARSE_LOCATION))
+            {
+                permissionsNeeded.add( Manifest.permission.ACCESS_COARSE_LOCATION);
+            }
+
+
+
+
+
+            if (permissionsList.size() > 0)
+            {
+                context.requestPermissions(permissionsList.toArray(new String[permissionsList.size()]),
+                        REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS_LOCATION);
+            }
+            else{
+                iPermissionsCallback.onPermissionsGranted();
+            }
+        }
+
+    }
+
+
+
+
     private boolean addPermission(List<String> permissionsList, String permission) {
         if (Build.VERSION.SDK_INT >= 23)
 
