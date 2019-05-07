@@ -232,7 +232,7 @@
                     android:paddingEnd="5dp"
                     android:textSize="@dimen/s14"
                     android:paddingStart="5dp"
-                    android:text="English, Mandarin"
+                    android:text=""
                     android:textColor="@color/text_grey"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"

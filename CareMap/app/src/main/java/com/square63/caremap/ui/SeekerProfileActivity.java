@@ -176,7 +176,7 @@ public class SeekerProfileActivity extends AppCompatActivity {
                 String languages = "";
                 for (SeniorLanguageModel languageModel:mainResponse.getResultResponse().getSeniorLanguages()){
 
-                    languages = languages+languageModel.getLanguageModel().getName()+", ";
+                    languages = languages+languageModel.getLanguageModel().getName()+",";
                 }
                 if (languages != null && languages.length() > 0 && languages.charAt(languages.length() - 1) == ',') {
                     languages = languages.substring(0, languages.length() - 1);

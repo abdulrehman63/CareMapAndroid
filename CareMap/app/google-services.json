@@ -8,32 +8,25 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:984557448145:android:b72b8f38e406d3e0",
+        "mobilesdk_app_id": "1:984557448145:android:a21f19991c7644f8",
         "android_client_info": {
-          "package_name": "com.square63.caremap"
+          "package_name": "com.ucarenet.caremap"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "984557448145-78nlqmi9blmfrt63mba1c6q3nnm0336t.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
           "current_key": "AIzaSyC0ZRnm0a8JoWTYq1TMrSgfcRO8frQUBYk"
         }
       ],
       "services": {
-        "analytics_service": {
-          "status": 1
-        },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
-        },
-        "ads_service": {
-          "status": 2
+          "other_platform_oauth_client": [
+            {
+              "client_id": "984557448145-78nlqmi9blmfrt63mba1c6q3nnm0336t.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }
