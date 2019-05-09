@@ -260,7 +260,32 @@
                         android:hint=""
                         android:text="@={profileModel.province}" />
                 </LinearLayout>
+                <LinearLayout
 
+                    style="@style/profile_margin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/txtPostalCode"
+                        style="@style/generic_text_blue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:text="Postal Code" />
+
+                    <EditText
+                        android:id="@+id/edtPostalCode"
+                        style="@style/edit_text_style_profile"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        android:hint=""
+                        android:text="@={profileModel.postalCode}" />
+                </LinearLayout>
                 <LinearLayout
 
                     style="@style/profile_margin"

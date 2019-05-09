@@ -108,7 +108,7 @@ public class CreateProviderProfileActivity extends AppCompatActivity implements 
                         registrationModel.setFirstName(binding.getProfileModel().getFirstName());
                         registrationModel.setLastName(binding.getProfileModel().getLastName());
                         registrationModel.setGender("Male");
-                        registrationModel.setPostalCode("1234");
+                        registrationModel.setPostalCode(binding.getProfileModel().getPostalCode());
                         registrationModel.setDateOfBirth(binding.getProfileModel().getDob());
                         registrationModel.setState(binding.getProfileModel().getProvince());
                         registrationModel.setAddress(binding.getProfileModel().getAddress1());
@@ -186,7 +186,7 @@ public class CreateProviderProfileActivity extends AppCompatActivity implements 
         registrationModel.setFirstName(binding.getProfileModel().getFirstName());
         registrationModel.setLastName(binding.getProfileModel().getLastName());
         registrationModel.setGender("Male");
-        registrationModel.setPostalCode("1234");
+        registrationModel.setPostalCode(binding.getProfileModel().getPostalCode());
         registrationModel.setDateOfBirth(binding.getProfileModel().getDob());
         registrationModel.setState(binding.getProfileModel().getProvince());
         registrationModel.setAddress(binding.getProfileModel().getAddress1());

@@ -15,6 +15,16 @@ public class ProfileModel extends BaseObservable implements Serializable {
     private String dob;
     private String hourlyRate;
     private String experience;
+
+    public String getPostalCode() {
+        return postalCode;
+    }
+
+    public void setPostalCode(String postalCode) {
+        this.postalCode = postalCode;
+    }
+
+    private String postalCode;
     private int isEmpty = 0;
 
     public int getIsEmpty() {
