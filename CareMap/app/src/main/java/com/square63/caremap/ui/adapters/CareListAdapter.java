@@ -67,6 +67,13 @@ public class CareListAdapter extends RecyclerView.Adapter<com.square63.caremap.u
 
         }
     }
+    public void setSelectedData(){
+        for (int i = 0; i < filteredData.size(); i++) {
+            filteredData.get(i).setSelected(true);
+        }
+        iSelectedLanguages.selectedLanguages(filteredData);
+        notifyDataSetChanged();
+    }
 
     @Override
     public int getItemCount() {

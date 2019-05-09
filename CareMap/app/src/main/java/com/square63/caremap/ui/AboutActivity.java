@@ -63,8 +63,10 @@ public class AboutActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (ApplicationState.getInstance().isFromEdit()) {
-                    UIHelper.openActivity(AboutActivity.this, DaysSelectionActivity.class);
-                    insertAbout();
+                    if (validations.validateTagline(txtTagLine) == Constants.SUCCESS) {
+                        UIHelper.openActivity(AboutActivity.this, DaysSelectionActivity.class);
+                        insertAbout();
+                    }
                     //UIHelper.openActivity(AboutActivity.this, DaysSelectionActivity.class);
                 } else {
                     if (validations.validateTagline(txtTagLine) == Constants.SUCCESS) {

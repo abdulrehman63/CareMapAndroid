@@ -165,12 +165,13 @@ public class PersonalInfoActivity extends AppCompatActivity {
         toolbarTitleRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                insertExperience();
+                if(validations.validatePersonelProfile(binding.edtHourlyRate,binding.edtExperience,binding.txtHourlyRate,binding.txtExp) == Constants.SUCCESS) {
+                    insertExperience();
                 /*if (ApplicationState.getInstance().isFromEdit())
                     UIHelper.openActivity(PersonalInfoActivity.this, DaysSelectionActivity.class);
                 else*/
                     UIHelper.openActivity(PersonalInfoActivity.this, AboutActivity.class);
+                }
             }
         });
     }

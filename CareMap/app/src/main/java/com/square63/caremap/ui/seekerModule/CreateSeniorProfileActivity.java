@@ -9,6 +9,7 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -42,6 +43,7 @@ import com.square63.caremap.models.seekerModels.CreateSeekerRequest;
 import com.square63.caremap.models.seekerModels.CreateSeniorRequest;
 import com.square63.caremap.models.seekerModels.SeniorLanguageModel;
 import com.square63.caremap.ui.HomeActivity;
+import com.square63.caremap.ui.SkillsActivity;
 import com.square63.caremap.ui.adapters.CareListAdapter;
 import com.square63.caremap.ui.adapters.ColorSchemeAdapter;
 import com.square63.caremap.ui.adapters.InterestAdapter;
@@ -107,12 +109,17 @@ public class CreateSeniorProfileActivity extends AppCompatActivity implements Vi
     private CircleImageView imgProfile;
     private boolean isLocation;
     private ArrayList<LanguageModel> reasonForCareList = new ArrayList<>();
+    private ConstraintLayout txtReason,txtInterest;
+    private boolean isReasonChanged = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_create_senior_profile);
         imgProfile = binding.getRoot().findViewById(R.id.imgProfile);
+        txtReason = binding.getRoot().findViewById(R.id.selectAllReason);
+        txtInterest = binding.getRoot().findViewById(R.id.selectAllInterest);
+
         if(ApplicationState.getInstance().isFromEdit()) {
            /* Glide.with(this)
                     .load(Constants.BASE_IMAGE_URL_SENIOR + PreferenceHelper.getInstance().getString(Constants.SENIOR_ID, "") + ".png")
@@ -132,7 +139,19 @@ public class CreateSeniorProfileActivity extends AppCompatActivity implements Vi
                     .networkPolicy(NetworkPolicy.NO_CACHE)
                     .into(imgProfile);
         }
+        txtReason.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                careListAdapter.setSelectedData();
 
+            }
+        });
+        txtInterest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                interestAdapter.setSelectedData();
+            }
+        });
         init();
 
     }
@@ -231,10 +250,17 @@ public class CreateSeniorProfileActivity extends AppCompatActivity implements Vi
                         binding.city, binding.province, binding.addres1, binding.unitNumber, binding.number, binding.txtName, binding.txtAge, binding.edtStreet, binding.street) == Constants.SUCCESS) {
                     if (getIntent() != null && getIntent().getStringExtra(Constants.TYPE) != null) {
                         if (getIntent().getStringExtra(Constants.TYPE).equalsIgnoreCase("Edit")) {
-                            insertSenior();
+                            handleSelection();
+
                         }
                     } else {
-                        insertSenior();
+                       if(encodedImage !=null){
+                           handleSelection();
+
+                        }else {
+                           UIHelper.showAlert(Constants.PHOTO,Constants.PHOTO_SELECTION,CreateSeniorProfileActivity.this);
+                       }
+
 
                     }
 
@@ -457,6 +483,7 @@ public class CreateSeniorProfileActivity extends AppCompatActivity implements Vi
             languageModel.setId(reasonForCareIdArr[i]);
             languageModelArrayList.add(languageModel);
         }
+        reasonForCareList = languageModelArrayList;
         setRecyclerView(languageModelArrayList);
     }
 
@@ -550,6 +577,7 @@ public class CreateSeniorProfileActivity extends AppCompatActivity implements Vi
             @Override
             public void selectedLanguages(ArrayList<LanguageModel> languageModels) {
                 reasonForCareList = languageModels;
+                isReasonChanged = true;
             }
         });
         recyclerView.setAdapter(careListAdapter);
@@ -620,6 +648,48 @@ public class CreateSeniorProfileActivity extends AppCompatActivity implements Vi
                 break;
         }
 
+    }
+    private void handleSelection(){
+        boolean isSelected = false;
+        for (LanguageModel skillsModel:reasonForCareList){
+            if(skillsModel.isSelected()){
+                isSelected = true;
+                break;
+            }
+        }
+        if(!isSelected){
+            UIHelper.showAlert(Constants.FORM_TITLE,"Please select Reason for care",CreateSeniorProfileActivity.this);
+            return;
+        }
+        if(binding.getProfileModel().getMobilityID() == null){
+            UIHelper.showAlert(Constants.FORM_TITLE,"Please select Mobility",CreateSeniorProfileActivity.this);
+            return;
+        }
+        isSelected = false;
+        for (InterestModel skillsModel:interestModelArrayList){
+            if(skillsModel.isSelected()){
+                isSelected = true;
+                break;
+            }
+        }
+        if(!isSelected){
+            UIHelper.showAlert(Constants.FORM_TITLE,"Please select Interest",CreateSeniorProfileActivity.this);
+            return;
+        }
+
+
+        isSelected = false;
+        for (LanguageModel skillsModel:modelArrayList){
+            if(skillsModel.isSelected()){
+                isSelected = true;
+                break;
+            }
+        }
+        if(!isSelected){
+            UIHelper.showAlert(Constants.FORM_TITLE,"Please select language",CreateSeniorProfileActivity.this);
+            return;
+        }
+        insertSenior();
     }
 
     public void onLanguageSelectionClick(View view) {
@@ -748,6 +818,7 @@ public class CreateSeniorProfileActivity extends AppCompatActivity implements Vi
                 dayModel.setIcone(interestIcons[i]);
                 data.add(dayModel);
             }
+            interestModelArrayList  =data;
             setInterestRecyclerView(data);
         } else {
             ArrayList<InterestModel> data = new ArrayList<>();

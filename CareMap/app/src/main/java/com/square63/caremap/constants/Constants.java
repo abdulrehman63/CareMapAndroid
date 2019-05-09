@@ -14,7 +14,13 @@ public class Constants {
     public static final String SEEKER= "SEEKER";
     public static final String PROVIDER= "PROVIDER";
     public static final String FORM= "FORM";
+    public static final String FORM_TITLE= "FORM";
+
+    public static final String PHOTO= "Photo";
+    public static final String PHOTO_SELECTION= "Please select photo before continuing.";
+
     public static final String MSG= "Please fill out all mandatory fields before continuing.";
+    public static final String MANDATORY_MSG= "Please fill out all mandatory field before continuing.";
     public static final String INVALID_EMAIL= "Please enter valid email address before continuing.";
 
     public static  final  boolean IS_SUCCESS = true;

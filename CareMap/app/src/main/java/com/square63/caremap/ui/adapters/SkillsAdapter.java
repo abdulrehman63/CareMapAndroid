@@ -30,6 +30,7 @@ public class SkillsAdapter extends RecyclerView.Adapter<SkillsAdapter.Viewholder
     private ArrayList<SkillsModel> data;
     private ISkills iSkills;
     private ArrayList<SkillsModel> filteredData;
+    private boolean isCredential = false;
 
     public SkillsAdapter(Context context, ArrayList<SkillsModel> data) {
         this.context = context;
@@ -43,6 +44,13 @@ public class SkillsAdapter extends RecyclerView.Adapter<SkillsAdapter.Viewholder
         this.data = data;
         this.filteredData = data;
         this.iSkills = iSkills;
+    }
+    public SkillsAdapter(Context context, ArrayList<SkillsModel> data,ISkills iSkills,boolean isCredential) {
+        this.context = context;
+        this.data = data;
+        this.filteredData = data;
+        this.iSkills = iSkills;
+        this.isCredential =true;
     }
 
     @Override
@@ -65,6 +73,10 @@ public class SkillsAdapter extends RecyclerView.Adapter<SkillsAdapter.Viewholder
             holder.relMain.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    if(isCredential){
+                        setDeSelectAll();
+                    }
+
                     if(filteredData.get(position).isSelected()){
                         filteredData.get(position).setSelected(false);
                     }else {
@@ -77,6 +89,22 @@ public class SkillsAdapter extends RecyclerView.Adapter<SkillsAdapter.Viewholder
                 }
             });
         }
+    }
+    public void setSelectAll(){
+        for (int i = 0; i < filteredData.size(); i++){
+            filteredData.get(i).setSelected(true);
+        }
+        iSkills.selectedSkills(filteredData);
+        notifyDataSetChanged();
+
+    }
+    public void setDeSelectAll(){
+        for (int i = 0; i < filteredData.size(); i++){
+            filteredData.get(i).setSelected(false);
+        }
+        iSkills.selectedSkills(filteredData);
+        notifyDataSetChanged();
+
     }
 
     @Override

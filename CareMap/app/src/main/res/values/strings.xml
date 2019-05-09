@@ -2,7 +2,7 @@
     <string name="app_name">Caremap</string>
 
     <string name="empty_field_error">%1$s field must not be empty</string>
-    <string name="minimum_field_error">Minimum 30 characters required</string>
+    <string name="minimum_field_error">Minimum 35 characters required</string>
     <string name="match_password">%1$s does not match</string>
     <string name="email">Email</string>
     <string name="phone">Phone</string>

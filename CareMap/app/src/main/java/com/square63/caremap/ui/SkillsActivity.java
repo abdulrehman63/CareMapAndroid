@@ -1,5 +1,6 @@
 package com.square63.caremap.ui;
 
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 
 import com.square63.caremap.ApplicationState;
 import com.square63.caremap.R;
+import com.square63.caremap.constants.Constants;
 import com.square63.caremap.listeners.RecyclerItemClickListener;
 import com.square63.caremap.models.InterestModel;
 import com.square63.caremap.models.LanguageModel;
@@ -33,7 +35,7 @@ import java.util.ArrayList;
 public class SkillsActivity extends AppCompatActivity implements SkillsAdapter.ISkills {
 
     private RecyclerView recyclerView;
-    private SkillsAdapter daysAdapter;
+    private SkillsAdapter daysAdapter, skillsAdapter, serviceAdapter, credentialsAdapter;
     private RecyclerView recyclerViewServices;
     private ImageButton imgBack;
     private TextView titileToolbar, toolbarTitleRight;
@@ -45,42 +47,57 @@ public class SkillsActivity extends AppCompatActivity implements SkillsAdapter.I
     private String credentialsArr[] = {"Volunteer", "Companion Keeper", "Personal Support Worker (PSW)", "Registered Nurse Practitioner (RNP)"};
     private String servicesArr[] = {"Bathing and Toileting", "Transportation", "Meal Preparation", "Light HouseKeeping"};
     private String skillsArr[] = {"Old Age", "Alzheimers", "Dementia", "Parkinsons", "Pallative Care"};
+    private ConstraintLayout selectAllService, selectAllSkills;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_skills);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        selectAllService = findViewById(R.id.selectAllService);
+        selectAllSkills = findViewById(R.id.selectAllSkills);
         recyclerViewServices = (RecyclerView) findViewById(R.id.recyclerViewServices);
         recyclerViewSkills = (RecyclerView) findViewById(R.id.recyclerViewSkills);
         PreferenceHelper.getInstance().init(this);
         initToolBar();
         apiGetSkills();
 
+        selectAllService.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                serviceAdapter.setSelectAll();
+            }
+        });
+        selectAllSkills.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                skillsAdapter.setSelectAll();
+            }
+        });
     }
 
     private void setRecyclerView(ArrayList<SkillsModel> data, ArrayList<SkillsModel> dataServices, final ArrayList<SkillsModel> dataSkills) {
-        daysAdapter = new SkillsAdapter(this, data, new SkillsAdapter.ISkills() {
+        credentialsAdapter = new SkillsAdapter(this, data, new SkillsAdapter.ISkills() {
             @Override
             public void selectedSkills(ArrayList<SkillsModel> data) {
                 skillsMainArrayList = data;
             }
-        });
-        recyclerView.setAdapter(daysAdapter);
-        daysAdapter = new SkillsAdapter(this, dataServices, new SkillsAdapter.ISkills() {
+        }, true);
+        recyclerView.setAdapter(credentialsAdapter);
+        serviceAdapter = new SkillsAdapter(this, dataServices, new SkillsAdapter.ISkills() {
             @Override
             public void selectedSkills(ArrayList<SkillsModel> data) {
-                skillsServiceArrayList =data;
+                skillsServiceArrayList = data;
             }
         });
-        recyclerViewServices.setAdapter(daysAdapter);
-        daysAdapter = new SkillsAdapter(this, dataSkills, new SkillsAdapter.ISkills() {
+        recyclerViewServices.setAdapter(serviceAdapter);
+        skillsAdapter = new SkillsAdapter(this, dataSkills, new SkillsAdapter.ISkills() {
             @Override
             public void selectedSkills(ArrayList<SkillsModel> data) {
                 skillsDataArrayList = data;
             }
         });
-        recyclerViewSkills.setAdapter(daysAdapter);
+        recyclerViewSkills.setAdapter(skillsAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true));
         recyclerViewServices.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true));
         recyclerViewSkills.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true));
@@ -109,49 +126,103 @@ public class SkillsActivity extends AppCompatActivity implements SkillsAdapter.I
     }
 
     private void updateSkills() {
-        /*ArrayList<SkillsMainModel> selectedSkills = ApplicationState.getInstance().getSkillsModelArrayList();
-        boolean isUnSelect = false;
-        if (selectedSkills.size() > 0) {
-            for (SkillsMainModel skillsMainModel : selectedSkills) {
-                for (SkillsModel skillsModel : skillsModelArrayList) {
-                    if (skillsMainModel.getSkill().getId().equalsIgnoreCase(skillsModel.getId()) && !skillsModel.isSelected()) {
-                        InsertGiverSkilsRequest skilsRequest = new InsertGiverSkilsRequest();
-                        skilsRequest.setSkillID(skillsModel.getId());
-                        apiDeleteSkills(skilsRequest);
-                        isUnSelect = true;
-                        break;
-                    }
-                }
+        boolean isSelected = false;
+        for (SkillsModel skillsModel : skillsMainArrayList) {
+            if (skillsModel.isSelected()) {
+                isSelected = true;
             }
-            if (!isUnSelect) {
-                insertSkills();
-            }
-        } else {
-            insertSkills();
-        }*/
-        skillsModelArrayList.clear();
-        skillsModelArrayList.addAll(skillsMainArrayList);
-        skillsModelArrayList.addAll(skillsServiceArrayList);
-        skillsModelArrayList.addAll(skillsDataArrayList);
-        if(skillsModelArrayList.size() > 0){
-            InsertGiverSkilsRequest skilsRequest = new InsertGiverSkilsRequest();
-            skilsRequest.setSkillID(skillsModelArrayList.get(0).getId());
-            apiDeleteSkills(skilsRequest);
         }
+        if (!isSelected) {
+            UIHelper.showAlert(Constants.FORM_TITLE, "Please select credential", SkillsActivity.this);
+            return;
+        }
+        isSelected = false;
+        for (SkillsModel skillsModel : skillsServiceArrayList) {
+            if (skillsModel.isSelected()) {
+                isSelected = true;
+            }
+        }
+        if (!isSelected) {
+            UIHelper.showAlert(Constants.FORM_TITLE, "Please select service", SkillsActivity.this);
+            return;
+        }
+        isSelected = false;
+        for (SkillsModel skillsModel : skillsDataArrayList) {
+            if (skillsModel.isSelected()) {
+                isSelected = true;
+            }
+        }
+        if (!isSelected) {
+            UIHelper.showAlert(Constants.FORM_TITLE, "Please select skill", SkillsActivity.this);
+            return;
+        }
+        if(ApplicationState.getInstance().isFromEdit()){
+            skillsModelArrayList.clear();
+            skillsModelArrayList.addAll(skillsMainArrayList);
+            skillsModelArrayList.addAll(skillsServiceArrayList);
+            skillsModelArrayList.addAll(skillsDataArrayList);
+            if (skillsModelArrayList.size() > 0) {
+                InsertGiverSkilsRequest skilsRequest = new InsertGiverSkilsRequest();
+                skilsRequest.setSkillID(skillsModelArrayList.get(0).getId());
+                apiDeleteSkills(skilsRequest);
+            }
+        }
+
     }
 
     private void insertSkills() {
+
+        handleSelection();
+
+    }
+
+    private void handleSelection() {
+        if(!ApplicationState.getInstance().isFromEdit()) {
+            boolean isSelected = false;
+            for (SkillsModel skillsModel : skillsMainArrayList) {
+                if (skillsModel.isSelected()) {
+                    isSelected = true;
+                }
+            }
+            if (!isSelected) {
+                UIHelper.showAlert(Constants.FORM_TITLE, "Please select credential", SkillsActivity.this);
+                return;
+            }
+            isSelected = false;
+            for (SkillsModel skillsModel : skillsServiceArrayList) {
+                if (skillsModel.isSelected()) {
+                    isSelected = true;
+                }
+            }
+            if (!isSelected) {
+                UIHelper.showAlert(Constants.FORM_TITLE, "Please select service", SkillsActivity.this);
+                return;
+            }
+            isSelected = false;
+            for (SkillsModel skillsModel : skillsDataArrayList) {
+                if (skillsModel.isSelected()) {
+                    isSelected = true;
+                }
+            }
+            if (!isSelected) {
+                UIHelper.showAlert(Constants.FORM_TITLE, "Please select skill", SkillsActivity.this);
+                return;
+            }
+        }
+
         skillsModelArrayList.clear();
         skillsModelArrayList.addAll(skillsMainArrayList);
         skillsModelArrayList.addAll(skillsServiceArrayList);
         skillsModelArrayList.addAll(skillsDataArrayList);
         for (SkillsModel skillsModel : skillsModelArrayList) {
-            if(skillsModel.isSelected()) {
+            if (skillsModel.isSelected()) {
                 InsertGiverSkilsRequest skilsRequest = new InsertGiverSkilsRequest();
                 skilsRequest.setSkillID(skillsModel.getId());
                 apiInsertSkills(skilsRequest);
             }
         }
+        UIHelper.openActivity(SkillsActivity.this, InterestsActivity.class);
+
     }
 
     private void setData(ArrayList<SkillsModel> skillsModelArrayList) {
@@ -183,7 +254,8 @@ public class SkillsActivity extends AppCompatActivity implements SkillsAdapter.I
                     dataSkills.add(skillsModelArrayList.get(i));
                 }
             }
-                skillsMainArrayList =data;
+
+            skillsMainArrayList = data;
             skillsServiceArrayList = dataService;
             skillsDataArrayList = dataSkills;
 
@@ -231,7 +303,7 @@ public class SkillsActivity extends AppCompatActivity implements SkillsAdapter.I
                     insertSkills();
                 }
 
-                UIHelper.openActivity(SkillsActivity.this, InterestsActivity.class);
+
             }
         });
     }

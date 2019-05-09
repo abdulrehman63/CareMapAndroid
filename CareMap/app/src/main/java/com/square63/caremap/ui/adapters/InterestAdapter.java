@@ -75,6 +75,14 @@ public class InterestAdapter extends RecyclerView.Adapter<InterestAdapter.Viewho
             });
         }
     }
+    public void setSelectedData(){
+        for (int i = 0; i < filteredData.size(); i++) {
+            filteredData.get(i).setSelected(true);
+        }
+        iSkills.selectedSkills(filteredData);
+        notifyDataSetChanged();
+    }
+
 
     @Override
     public int getItemCount() {

@@ -59,6 +59,7 @@ public class Validations {
 
         return isValidate;
     }
+
     public int validateForgotPassword(EditText edtEmail,ImageView imageView){
 
         Resources res = context.getResources();
@@ -97,7 +98,7 @@ public class Validations {
             edtEmail.setError(Html.fromHtml("<font color='red'>" + text + "</font>"));
             isValidate =  Constants.EMPTY_EMAIL_FIELD;
         }*/
-        if (edtEmail.getText().toString().trim().length() < 30) {
+        if (edtEmail.getText().toString().trim().length() < 35) {
 
             text = res.getString(R.string.minimum_field_error);
             edtEmail.setError(Html.fromHtml("<font color='red'>" + text + "</font>"));
@@ -172,18 +173,18 @@ public class Validations {
             setDrawableEnd(lName);
             isValidate = Constants.EMPTY_EMAIL_FIELD;
         }
-        if (edtDob.getText().toString().trim().length() == 0) {
-           /* text = String.format(res.getString(R.string.empty_field_error), context.getString(R.string.date_of_brith));
-            edtDob.setError(Html.fromHtml("<font color='red'>" + text + "</font>"));*/
+        /*if (edtDob.getText().toString().trim().length() == 0) {
+           *//* text = String.format(res.getString(R.string.empty_field_error), context.getString(R.string.date_of_brith));
+            edtDob.setError(Html.fromHtml("<font color='red'>" + text + "</font>"));*//*
             setDrawableEnd(dob);
             isValidate = Constants.EMPTY_EMAIL_FIELD;
-        }
-        if (phoneNumber.getText().toString().trim().length() == 0) {
-           /* text = String.format(res.getString(R.string.empty_field_error), context.getString(R.string.phone_number));
-            phoneNumber.setError(Html.fromHtml("<font color='red'>" + text + "</font>"));*/
+        }*/
+        /*if (phoneNumber.getText().toString().trim().length() == 0) {
+           *//* text = String.format(res.getString(R.string.empty_field_error), context.getString(R.string.phone_number));
+            phoneNumber.setError(Html.fromHtml("<font color='red'>" + text + "</font>"));*//*
             setDrawableEnd(pNumber);
             isValidate = Constants.EMPTY_EMAIL_FIELD;
-        }
+        }*/
         if (edtCity.getText().toString().trim().length() == 0) {
            /* text = String.format(res.getString(R.string.empty_field_error), context.getString(R.string.city));
             edtCity.setError(Html.fromHtml("<font color='red'>" + text + "</font>"));*/
@@ -196,12 +197,43 @@ public class Validations {
             setDrawableEnd(province);
             isValidate = Constants.EMPTY_EMAIL_FIELD;
         }
-        if (edtAddress1.getText().toString().trim().length() == 0) {
-           /* text = String.format(res.getString(R.string.empty_field_error), context.getString(R.string.address_1));
-            edtAddress1.setError(Html.fromHtml("<font color='red'>" + text + "</font>"));*/
+       /* if (edtAddress1.getText().toString().trim().length() == 0) {
+           *//* text = String.format(res.getString(R.string.empty_field_error), context.getString(R.string.address_1));
+            edtAddress1.setError(Html.fromHtml("<font color='red'>" + text + "</font>"));*//*
             setDrawableEnd(address);
             isValidate = Constants.EMPTY_EMAIL_FIELD;
+        }*/
+        if(isValidate != Constants.SUCCESS){
+            UIHelper.showAlert(Constants.FORM,Constants.MSG,context);
         }
+        return isValidate;
+    }
+    public int validatePersonelProfile(EditText edtFirstName, EditText edtLastName,
+                                     TextView fName, TextView lName) {
+        Resources res = context.getResources();
+        String text;
+        int isValidate = Constants.SUCCESS;
+
+        if (edtFirstName.getText().toString().trim().length() == 0) {
+             /*text = String.format(res.getString(R.string.empty_field_error), context.getString(R.string.first_name));
+            edtFirstName.setError(Html.fromHtml("<font color='red'>" + text + "</font>"));*/
+            setDrawableEnd(fName);
+            isValidate = Constants.EMPTY_EMAIL_FIELD;
+
+        }
+        if (edtLastName.getText().toString().trim().length() == 0) {
+          /*  text = String.format(res.getString(R.string.empty_field_error), context.getString(R.string.last_name));
+            edtLastName.setError(Html.fromHtml("<font color='red'>" + text + "</font>"));*/
+            setDrawableEnd(lName);
+            isValidate = Constants.EMPTY_EMAIL_FIELD;
+        }
+        /*if (edtDob.getText().toString().trim().length() == 0) {
+         *//* text = String.format(res.getString(R.string.empty_field_error), context.getString(R.string.date_of_brith));
+            edtDob.setError(Html.fromHtml("<font color='red'>" + text + "</font>"));*//*
+            setDrawableEnd(dob);
+            isValidate = Constants.EMPTY_EMAIL_FIELD;
+        }*/
+
         if(isValidate != Constants.SUCCESS){
             UIHelper.showAlert(Constants.FORM,Constants.MSG,context);
         }
@@ -242,6 +274,7 @@ public class Validations {
 
         return Constants.SUCCESS;
     }
+
     private void setDrawableEnd(TextView textView){
         textView.setCompoundDrawablesRelativeWithIntrinsicBounds(0,0,R.drawable.error_small,0);
 
@@ -266,6 +299,11 @@ public class Validations {
             setDrawableEnd(txtLastName);
             isValidate = Constants.EMPTY_EMAIL_FIELD;
             //return Constants.EMPTY_EMAIL_FIELD;
+        }
+        if (phoneNumber.getText().toString().trim().length() == 0) {
+            setDrawableEnd(txtPhoneNumber);
+            isValidate = Constants.EMPTY_EMAIL_FIELD;
+            // return Constants.EMPTY_EMAIL_FIELD;
         }
       /*  if (edtEmergencyNumber.getText().toString().trim().length() == 0) {
           *//*  text = String.format(res.getString(R.string.empty_field_error), context.getString(R.string.emergency_number));

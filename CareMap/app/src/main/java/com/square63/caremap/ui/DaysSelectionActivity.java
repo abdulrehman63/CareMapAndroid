@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.square63.caremap.ApplicationState;
 import com.square63.caremap.R;
+import com.square63.caremap.constants.Constants;
 import com.square63.caremap.listeners.RecyclerItemClickListener;
 import com.square63.caremap.models.DayModel;
 import com.square63.caremap.models.InterestModel;
@@ -110,6 +111,8 @@ public class DaysSelectionActivity extends AppCompatActivity implements DaysAdpa
           InsertAvailabilityRequest insertUserInterestRequest = new InsertAvailabilityRequest();
           insertUserInterestRequest.setDayOfWeek(data.get(0).getDayTime());
           deleteAvailability(insertUserInterestRequest);
+      }else {
+          UIHelper.openActivity(DaysSelectionActivity.this,SkillsActivity.class);
       }
     }
     private void setRecyclerView(ArrayList<DayModel> data) {
@@ -170,19 +173,26 @@ public class DaysSelectionActivity extends AppCompatActivity implements DaysAdpa
                }else {
                    insertAvailabilities();
                }
-                UIHelper.openActivity(DaysSelectionActivity.this,SkillsActivity.class);
+
             }
         });
     }
     private void insertAvailabilities(){
+        boolean isSelected = false;
         for (DayModel dayModel : data){
             if(dayModel.isSelected()) {
+                isSelected = true;
                 InsertAvailabilityRequest insertAvailabilityRequest = new InsertAvailabilityRequest();
                 insertAvailabilityRequest.setFromHour(dayModel.getDayTime());
                 insertAvailabilityRequest.setToHour(dayModel.getDayTime());
                 insertAvailabilityRequest.setDayOfWeek(dayModel.getDay());
                 insertAvailability(insertAvailabilityRequest);
             }
+        }
+        if(isSelected){
+            UIHelper.openActivity(DaysSelectionActivity.this,SkillsActivity.class);
+        }else {
+            UIHelper.showAlert(Constants.FORM_TITLE, Constants.MANDATORY_MSG,this);
         }
     }
 
