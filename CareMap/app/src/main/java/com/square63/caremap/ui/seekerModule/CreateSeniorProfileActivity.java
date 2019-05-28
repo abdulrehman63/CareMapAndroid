@@ -88,8 +88,8 @@ public class CreateSeniorProfileActivity extends AppCompatActivity implements Vi
 
     private String mobilityArr[] = {"Independent", "Mobile + Cane", "Mobility + Walker", "Low Mobility", "Wheelchair", "Non Mobile"};
     private String mobilityIdArr[] = {"5D1214C1-12BA-47E8-BB4F-A78494380C94", "CFE24824-4702-4487-99B6-254777BCE18C", "0F599DB0-061F-450A-9329-CC8607C40BB1", "C566CD2C-51DC-443D-B354-0C5BFC7D7759", "0A43A4D7-CBBC-47D8-9504-2D4E2734E973", "D4E904E1-89D1-4D87-835C-D9E4EF65E528"};
-    String interestArr[] = {"Arts & Crafts", "Church Events", "Cooking", "Computers", "Gardening", "Movies", "Pets", "Playing Cards", "Reading", "Sewing", "Shopping", "Spiritualism", "Sports", "Travelling"};
-    private String interestIds[] = {"bedb971f-c5e4-4aa1-9017-d8c1114186e5", "ff1e5484-c763-474e-a0a6-f7303025798c", "ad1590e6-264e-4cb5-ad48-9e1e7e484424", "45254526-b8b6-49d4-a396-bf3a2edae66f", "e9efd7a6-6e88-4954-a846-2885c334add6", "43c3627e-9505-4cfe-90dd-9a585b63b210", "943ed09f-775a-4d0d-a709-261edae15e2e", "791784a4-2004-43f2-94ff-e9caaf5e8dc6", "b83b1611-9107-43a6-83a8-06f10e416b32", "87c09be2-7c26-4cb9-814d-c927f0c465d4", "0e840008-311f-4d01-9a99-49a7063f6111", "8aa319a1-b941-425a-a9e2-5ea87620ce52", "ff1e5484-c763-474e-a0a6-f7303025798c", "b76b0867-75ba-4b44-9246-2a6e515f424d"};
+    String interestArr[] = {"Arts & Crafts", "Church Events", "Cooking", "Computers", "Gardening", "Movies", "Pets", "Playing Cards", "Reading", "Sewing", "Shopping", "Spiritualism", "Exercise", "Travelling"};
+    private String interestIds[] = {"bedb971f-c5e4-4aa1-9017-d8c1114186e5", "ff1e5484-c763-474e-a0a6-f7303025798c", "ad1590e6-264e-4cb5-ad48-9e1e7e484424", "45254526-b8b6-49d4-a396-bf3a2edae66f", "e9efd7a6-6e88-4954-a846-2885c334add6", "43c3627e-9505-4cfe-90dd-9a585b63b210", "943ed09f-775a-4d0d-a709-261edae15e2e", "791784a4-2004-43f2-94ff-e9caaf5e8dc6", "b83b1611-9107-43a6-83a8-06f10e416b32", "87c09be2-7c26-4cb9-814d-c927f0c465d4", "0e840008-311f-4d01-9a99-49a7063f6111", "8aa319a1-b941-425a-a9e2-5ea87620ce52", "b76b0867-75ba-4b44-9246-2a6e515f424d", "b76b0867-75ba-4b44-9246-2a6e515f424d"};
 
     private Integer interestIcons[] = {R.drawable.artscrafts, R.drawable.churchactivities, R.drawable.cooking, R.drawable.computertech, R.drawable.gardening, R.drawable.movies, R.drawable.pets, R.drawable.playingcards, R.drawable.reading, R.drawable.sewing, R.drawable.shopping, R.drawable.spiritualism, R.drawable.sports, R.drawable.travelling};
 
@@ -111,6 +111,7 @@ public class CreateSeniorProfileActivity extends AppCompatActivity implements Vi
     private ArrayList<LanguageModel> reasonForCareList = new ArrayList<>();
     private ConstraintLayout txtReason,txtInterest;
     private boolean isReasonChanged = false;
+    private TextView txtReasonSelect,txtInterestSelect;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,6 +120,8 @@ public class CreateSeniorProfileActivity extends AppCompatActivity implements Vi
         imgProfile = binding.getRoot().findViewById(R.id.imgProfile);
         txtReason = binding.getRoot().findViewById(R.id.selectAllReason);
         txtInterest = binding.getRoot().findViewById(R.id.selectAllInterest);
+        txtReasonSelect = txtReason.findViewById(R.id.txtSelectAll);
+        txtInterestSelect = txtInterest.findViewById(R.id.txtSelectAll);
 
         if(ApplicationState.getInstance().isFromEdit()) {
            /* Glide.with(this)
@@ -142,14 +145,35 @@ public class CreateSeniorProfileActivity extends AppCompatActivity implements Vi
         txtReason.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                careListAdapter.setSelectedData();
+
+
+                if (careListAdapter != null) {
+                    if(txtReasonSelect.getText().toString().equalsIgnoreCase( Constants.SELECT_ALL) ){
+                        careListAdapter.setSelectedData();
+                        txtReasonSelect.setText(Constants.UNSELECT_ALL);
+                    }else {
+                        careListAdapter.setUnSelectedData();
+                        txtReasonSelect.setText(Constants.SELECT_ALL);
+                    }
+
+                }
+
 
             }
         });
         txtInterest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                interestAdapter.setSelectedData();
+                if (interestAdapter != null) {
+                    if(txtInterestSelect.getText().toString().equalsIgnoreCase( Constants.SELECT_ALL) ){
+                        interestAdapter.setSelectedData();
+                        txtInterestSelect.setText(Constants.UNSELECT_ALL);
+                    }else {
+                        interestAdapter.setUnSelectedData();
+                        txtInterestSelect.setText(Constants.SELECT_ALL);
+                    }
+
+                }
             }
         });
         init();
@@ -465,6 +489,7 @@ public class CreateSeniorProfileActivity extends AppCompatActivity implements Vi
         ArrayList<LanguageModel> languageModelArrayList = new ArrayList<>();
         ArrayList<SkillsMainModel> skillsMainModels = ApplicationState.getInstance().getSeniorSkillsArrayList();
         boolean isSelected;
+        boolean isAll =false;
         for (int i = 0; i < reasonForCareArr.length; i++) {
             isSelected = false;
             for (int j = 0; j < skillsMainModels.size(); j++) {
@@ -479,9 +504,15 @@ public class CreateSeniorProfileActivity extends AppCompatActivity implements Vi
             LanguageModel languageModel = new LanguageModel();
             if (isSelected)
                 languageModel.setSelected(true);
+            else {
+                isAll = true;
+            }
             languageModel.setName(reasonForCareArr[i]);
             languageModel.setId(reasonForCareIdArr[i]);
             languageModelArrayList.add(languageModel);
+        }
+        if(!isAll){
+            txtReasonSelect.setText(Constants.UNSELECT_ALL);
         }
         reasonForCareList = languageModelArrayList;
         setRecyclerView(languageModelArrayList);
@@ -797,6 +828,7 @@ public class CreateSeniorProfileActivity extends AppCompatActivity implements Vi
         if (ApplicationState.getInstance().isFromEdit()) {
             ArrayList<InterestModel> interestModels = ApplicationState.getInstance().getInterestModelArrayList();
             boolean isSelected = false;
+            boolean isAll = false;
             ArrayList<InterestModel> data = new ArrayList<>();
             for (int i = 0; i < interestArr.length; i++) {
 
@@ -812,11 +844,16 @@ public class CreateSeniorProfileActivity extends AppCompatActivity implements Vi
                 InterestModel dayModel = new InterestModel();
                 if (isSelected) {
                     dayModel.setSelected(true);
+                }else {
+                    isAll = true;
                 }
                 dayModel.setInterestID(interestIds[i]);
                 dayModel.setName(interestArr[i]);
                 dayModel.setIcone(interestIcons[i]);
                 data.add(dayModel);
+            }
+            if(!isAll){
+                txtInterestSelect.setText(Constants.UNSELECT_ALL);
             }
             interestModelArrayList  =data;
             setInterestRecyclerView(data);

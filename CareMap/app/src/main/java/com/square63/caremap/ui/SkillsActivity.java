@@ -48,6 +48,7 @@ public class SkillsActivity extends AppCompatActivity implements SkillsAdapter.I
     private String servicesArr[] = {"Bathing and Toileting", "Transportation", "Meal Preparation", "Light HouseKeeping"};
     private String skillsArr[] = {"Old Age", "Alzheimers", "Dementia", "Parkinsons", "Pallative Care"};
     private ConstraintLayout selectAllService, selectAllSkills;
+    private TextView txtServic,txtSkills;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +57,11 @@ public class SkillsActivity extends AppCompatActivity implements SkillsAdapter.I
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         selectAllService = findViewById(R.id.selectAllService);
         selectAllSkills = findViewById(R.id.selectAllSkills);
+        txtServic = selectAllService.findViewById(R.id.txtSelectAll);
+        txtSkills = selectAllSkills.findViewById(R.id.txtSelectAll);
+
+
+
         recyclerViewServices = (RecyclerView) findViewById(R.id.recyclerViewServices);
         recyclerViewSkills = (RecyclerView) findViewById(R.id.recyclerViewSkills);
         PreferenceHelper.getInstance().init(this);
@@ -65,13 +71,28 @@ public class SkillsActivity extends AppCompatActivity implements SkillsAdapter.I
         selectAllService.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                serviceAdapter.setSelectAll();
+                if(txtServic.getText().toString().equalsIgnoreCase( Constants.SELECT_ALL) ){
+                    serviceAdapter.setSelectAll();
+                    txtServic.setText(Constants.UNSELECT_ALL);
+                }else {
+                    serviceAdapter.setDeSelectAll();
+                    txtServic.setText(Constants.SELECT_ALL);
+                }
+
+
             }
         });
         selectAllSkills.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                skillsAdapter.setSelectAll();
+               // skillsAdapter.setSelectAll();
+                if(txtSkills.getText().toString().equalsIgnoreCase( Constants.SELECT_ALL) ){
+                    skillsAdapter.setSelectAll();
+                    txtSkills.setText(Constants.UNSELECT_ALL);
+                }else {
+                    skillsAdapter.setDeSelectAll();
+                    txtSkills.setText(Constants.SELECT_ALL);
+                }
             }
         });
     }
@@ -188,16 +209,7 @@ public class SkillsActivity extends AppCompatActivity implements SkillsAdapter.I
                 UIHelper.showAlert(Constants.FORM_TITLE, "Please select credential", SkillsActivity.this);
                 return;
             }
-            isSelected = false;
-            for (SkillsModel skillsModel : skillsServiceArrayList) {
-                if (skillsModel.isSelected()) {
-                    isSelected = true;
-                }
-            }
-            if (!isSelected) {
-                UIHelper.showAlert(Constants.FORM_TITLE, "Please select service", SkillsActivity.this);
-                return;
-            }
+
             isSelected = false;
             for (SkillsModel skillsModel : skillsDataArrayList) {
                 if (skillsModel.isSelected()) {
@@ -206,6 +218,16 @@ public class SkillsActivity extends AppCompatActivity implements SkillsAdapter.I
             }
             if (!isSelected) {
                 UIHelper.showAlert(Constants.FORM_TITLE, "Please select skill", SkillsActivity.this);
+                return;
+            }
+            isSelected = false;
+            for (SkillsModel skillsModel : skillsServiceArrayList) {
+                if (skillsModel.isSelected()) {
+                    isSelected = true;
+                }
+            }
+            if (!isSelected) {
+                UIHelper.showAlert(Constants.FORM_TITLE, "Please select service", SkillsActivity.this);
                 return;
             }
         }
@@ -232,6 +254,8 @@ public class SkillsActivity extends AppCompatActivity implements SkillsAdapter.I
             ArrayList<SkillsModel> dataSkills = new ArrayList<>();
             ArrayList<SkillsMainModel> selectedSkills = ApplicationState.getInstance().getSkillsModelArrayList();
             boolean isSelected = false;
+            boolean isAllService = false;
+            boolean isAllSkills = false;
             for (int i = 0; i < skillsModelArrayList.size(); i++) {
                 isSelected = false;
                 for (int j = 0; j < selectedSkills.size(); j++) {
@@ -241,18 +265,31 @@ public class SkillsActivity extends AppCompatActivity implements SkillsAdapter.I
                 }
 
                 if (skillsModelArrayList.get(i).getCategory() == 0) {
-                    if (isSelected)
+                    if (isSelected) {
                         skillsModelArrayList.get(i).setSelected(true);
+                    }
                     data.add(skillsModelArrayList.get(i));
                 } else if (skillsModelArrayList.get(i).getCategory() == 2) {
-                    if (isSelected)
+                    if (isSelected) {
                         skillsModelArrayList.get(i).setSelected(true);
+                    }else {
+                        isAllService = true;
+                    }
                     dataService.add(skillsModelArrayList.get(i));
                 } else if (skillsModelArrayList.get(i).getCategory() == 1) {
-                    if (isSelected)
+                    if (isSelected) {
                         skillsModelArrayList.get(i).setSelected(true);
+                    }else {
+                        isAllSkills = true;
+                    }
                     dataSkills.add(skillsModelArrayList.get(i));
                 }
+            }
+            if(!isAllService){
+                txtServic.setText(Constants.UNSELECT_ALL);
+            }
+            if(!isAllSkills){
+                txtSkills.setText(Constants.UNSELECT_ALL);
             }
 
             skillsMainArrayList = data;

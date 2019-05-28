@@ -83,6 +83,14 @@ public class InterestAdapter extends RecyclerView.Adapter<InterestAdapter.Viewho
         notifyDataSetChanged();
     }
 
+    public void setUnSelectedData(){
+        for (int i = 0; i < filteredData.size(); i++) {
+            filteredData.get(i).setSelected(false);
+        }
+        iSkills.selectedSkills(filteredData);
+        notifyDataSetChanged();
+    }
+
 
     @Override
     public int getItemCount() {

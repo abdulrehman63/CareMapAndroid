@@ -141,6 +141,7 @@ public class CreateProviderProfileActivity extends AppCompatActivity implements 
                 profileModel.setLastName(caregiver.getUser().getLastName());
                 profileModel.setDob(caregiver.getUser().getDateOfBirth());
                 profileModel.setCity(caregiver.getUser().getCity());
+                profileModel.setPostalCode(caregiver.getUser().getPostalCode());
                 profileModel.setProvince(caregiver.getUser().getState());
                 profileModel.setPhoneNumber(caregiver.getUser().getPhone());
                 profileModel.setAddress1(caregiver.getUser().getAddress());
