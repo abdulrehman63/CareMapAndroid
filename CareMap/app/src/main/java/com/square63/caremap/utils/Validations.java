@@ -154,8 +154,8 @@ public class Validations {
 
         return isValidate;
     }
-    public int validateCreateProfile(EditText edtFirstName, EditText edtLastName, EditText edtDob, EditText phoneNumber, EditText edtCity, EditText edtProvince, EditText edtAddress1,
-                                     TextView fName, TextView lName,  TextView dob,  TextView pNumber,  TextView city, TextView province, TextView address) {
+    public int validateCreateProfile(EditText edtFirstName, EditText edtLastName, EditText edtPostalCode, EditText phoneNumber, EditText edtCity, EditText edtProvince, EditText edtAddress1,
+                                     TextView fName, TextView lName,  TextView txtPostalCode,  TextView pNumber,  TextView city, TextView province, TextView address) {
         Resources res = context.getResources();
         String text;
         int isValidate = Constants.SUCCESS;
@@ -179,12 +179,12 @@ public class Validations {
             setDrawableEnd(dob);
             isValidate = Constants.EMPTY_EMAIL_FIELD;
         }*/
-        /*if (phoneNumber.getText().toString().trim().length() == 0) {
-           *//* text = String.format(res.getString(R.string.empty_field_error), context.getString(R.string.phone_number));
-            phoneNumber.setError(Html.fromHtml("<font color='red'>" + text + "</font>"));*//*
+        if (phoneNumber.getText().toString().trim().length() == 0) {
+           // text = String.format(res.getString(R.string.empty_field_error), context.getString(R.string.phone_number));
+            //phoneNumber.setError(Html.fromHtml("<font color='red'>" + text + "</font>"));
             setDrawableEnd(pNumber);
             isValidate = Constants.EMPTY_EMAIL_FIELD;
-        }*/
+        }
         if (edtCity.getText().toString().trim().length() == 0) {
            /* text = String.format(res.getString(R.string.empty_field_error), context.getString(R.string.city));
             edtCity.setError(Html.fromHtml("<font color='red'>" + text + "</font>"));*/
