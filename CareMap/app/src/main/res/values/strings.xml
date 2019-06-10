@@ -2,7 +2,15 @@
     <string name="app_name">Caremap</string>
 
     <string name="empty_field_error">%1$s field must not be empty</string>
-    <string name="minimum_field_error">Minimum 35 characters required</string>
+    <string name="min_field_exp">%1$s must be between 0-100</string>
+    <string name="min_field_phone">%1$s field must equal 10 digits</string>
+    <string name="hourly_rate">Hourly wage</string>
+    <string name="age">Age</string>
+    <string name="exp">Year of experience</string>
+    <string name="min_field_wage">%1$s must equal digits between 0-200</string>
+    <string name="min_field_error">%1$s must equal a combination of 6 characters letters and numbers</string>
+
+    <string name="minimum_field_error">min 35 characters with a 50 characters max required</string>
     <string name="match_password">%1$s does not match</string>
     <string name="email">Email</string>
     <string name="phone">Phone</string>
@@ -11,6 +19,7 @@
     <string name="first_name">First Name</string>
     <string name="last_name">Last Name</string>
     <string name="date_of_brith">Date of Brith</string>
+    <string name="postal_code">Postal Code</string>
     <string name="phone_number">Phone Number</string>
     <string name="city">City</string>
     <string name="province">Province</string>

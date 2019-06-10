@@ -160,7 +160,6 @@
                         style="@style/edit_text_style_profile"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        
                         android:hint=""
                         android:inputType="numberDecimal"
                         android:text="@={profileModel.phoneNumber}" />

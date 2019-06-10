@@ -98,7 +98,7 @@ public class Validations {
             edtEmail.setError(Html.fromHtml("<font color='red'>" + text + "</font>"));
             isValidate =  Constants.EMPTY_EMAIL_FIELD;
         }*/
-        if (edtEmail.getText().toString().trim().length() < 35) {
+        if (edtEmail.getText().toString().trim().length() < 35 || edtEmail.getText().toString().trim().length() > 50) {
 
             text = res.getString(R.string.minimum_field_error);
             edtEmail.setError(Html.fromHtml("<font color='red'>" + text + "</font>"));
@@ -154,8 +154,9 @@ public class Validations {
 
         return isValidate;
     }
-    public int validateCreateProfile(EditText edtFirstName, EditText edtLastName, EditText edtPostalCode, EditText phoneNumber, EditText edtCity, EditText edtProvince, EditText edtAddress1,
-                                     TextView fName, TextView lName,  TextView txtPostalCode,  TextView pNumber,  TextView city, TextView province, TextView address) {
+    public int validateCreateProfile(EditText edtFirstName, EditText edtLastName, EditText edtDob
+            , EditText phoneNumber, EditText edtCity, EditText edtProvince, EditText edtAddress1,EditText edtPostalCode,
+                                     TextView fName, TextView lName,  TextView txtDob,  TextView pNumber,  TextView city, TextView province, TextView address,TextView txtPostalCode) {
         Resources res = context.getResources();
         String text;
         int isValidate = Constants.SUCCESS;
@@ -173,12 +174,12 @@ public class Validations {
             setDrawableEnd(lName);
             isValidate = Constants.EMPTY_EMAIL_FIELD;
         }
-        /*if (edtDob.getText().toString().trim().length() == 0) {
-           *//* text = String.format(res.getString(R.string.empty_field_error), context.getString(R.string.date_of_brith));
-            edtDob.setError(Html.fromHtml("<font color='red'>" + text + "</font>"));*//*
-            setDrawableEnd(dob);
+        if (edtPostalCode.getText().toString().trim().length() != 6 ) {
+            text = String.format(res.getString(R.string.min_field_error), context.getString(R.string.postal_code));
+            edtPostalCode.setError(Html.fromHtml("<font color='red'>" + text + "</font>"));
+            setDrawableEnd(txtPostalCode);
             isValidate = Constants.EMPTY_EMAIL_FIELD;
-        }*/
+        }
         if (phoneNumber.getText().toString().trim().length() == 0) {
            // text = String.format(res.getString(R.string.empty_field_error), context.getString(R.string.phone_number));
             //phoneNumber.setError(Html.fromHtml("<font color='red'>" + text + "</font>"));
@@ -214,16 +215,16 @@ public class Validations {
         String text;
         int isValidate = Constants.SUCCESS;
 
-        if (edtFirstName.getText().toString().trim().length() == 0) {
-             /*text = String.format(res.getString(R.string.empty_field_error), context.getString(R.string.first_name));
-            edtFirstName.setError(Html.fromHtml("<font color='red'>" + text + "</font>"));*/
+        if (edtFirstName.getText().toString().trim().length() == 0 || edtFirstName.getText().toString().length() > 200) {
+             text = String.format(res.getString(R.string.min_field_wage), context.getString(R.string.hourly_rate));
+            edtFirstName.setError(Html.fromHtml("<font color='red'>" + text + "</font>"));
             setDrawableEnd(fName);
             isValidate = Constants.EMPTY_EMAIL_FIELD;
 
         }
-        if (edtLastName.getText().toString().trim().length() == 0) {
-          /*  text = String.format(res.getString(R.string.empty_field_error), context.getString(R.string.last_name));
-            edtLastName.setError(Html.fromHtml("<font color='red'>" + text + "</font>"));*/
+        if (edtLastName.getText().toString().trim().length() == 0 || Integer.parseInt(edtLastName.getText().toString().trim()) <= 0 ||  Integer.parseInt(edtLastName.getText().toString().trim()) > 100) {
+            text = String.format(res.getString(R.string.min_field_exp), context.getString(R.string.exp));
+            edtLastName.setError(Html.fromHtml("<font color='red'>" + text + "</font>"));
             setDrawableEnd(lName);
             isValidate = Constants.EMPTY_EMAIL_FIELD;
         }
@@ -300,7 +301,9 @@ public class Validations {
             isValidate = Constants.EMPTY_EMAIL_FIELD;
             //return Constants.EMPTY_EMAIL_FIELD;
         }
-        if (phoneNumber.getText().toString().trim().length() == 0) {
+        if (phoneNumber.getText().toString().trim().length() != 10 ) {
+            text = String.format(res.getString(R.string.min_field_phone), context.getString(R.string.phone_number));
+            edtLastName.setError(Html.fromHtml("<font color='red'>" + text + "</font>"));
             setDrawableEnd(txtPhoneNumber);
             isValidate = Constants.EMPTY_EMAIL_FIELD;
             // return Constants.EMPTY_EMAIL_FIELD;
@@ -379,9 +382,10 @@ public class Validations {
             isValidate = Constants.EMPTY_EMAIL_FIELD;
             //return Constants.EMPTY_EMAIL_FIELD;
         }
-        if (edtAge.getText().toString().trim().length() == 0) {
-           /* text = String.format(res.getString(R.string.empty_field_error), context.getString(R.string.province));
-            edtProvince.setError(Html.fromHtml("<font color='red'>" + text + "</font>"));*/
+        if (edtAge.getText().toString().trim().length() == 0 || Integer.parseInt(edtAge.getText().toString().trim()) <= 0 ||  Integer.parseInt(edtAge.getText().toString().trim()) > 100) {
+
+           text = String.format(res.getString(R.string.min_field_wage), context.getString(R.string.age));
+            edtProvince.setError(Html.fromHtml("<font color='red'>" + text + "</font>"));
             setDrawableEnd(txtAge);
             isValidate = Constants.EMPTY_EMAIL_FIELD;
             //return Constants.EMPTY_EMAIL_FIELD;
@@ -401,9 +405,11 @@ public class Validations {
             isValidate = Constants.EMPTY_EMAIL_FIELD;
             //return Constants.EMPTY_EMAIL_FIELD;
         }
-        if (edtAddress1.getText().toString().trim().length() == 0) {
+        if (edtAddress1.getText().toString().trim().length() != 6) {
            /* text = String.format(res.getString(R.string.empty_field_error), context.getString(R.string.address_1));
             edtAddress1.setError(Html.fromHtml("<font color='red'>" + text + "</font>"));*/
+            text = String.format(res.getString(R.string.min_field_error), context.getString(R.string.postal_code));
+            edtAddress1.setError(Html.fromHtml("<font color='red'>" + text + "</font>"));
             setDrawableEnd(txtAddress1);
             isValidate = Constants.EMPTY_EMAIL_FIELD;
 

@@ -166,9 +166,11 @@
                         style="@style/edit_text_style_profile"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-
+                        android:onClick="showDatePickerDialog"
                         android:layout_marginEnd="5dp"
                         android:hint="mm/dd/yyyy"
+                        android:focusable="false"
+                        android:focusableInTouchMode="false"
                         android:text="@={profileModel.dob}" />
                 </LinearLayout>
 
@@ -254,7 +256,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textAllCaps="true"
-                        android:inputType="textVisiblePassword"
+                        android:inputType="textCapWords"
                         android:hint=""
                         android:text="@={profileModel.postalCode}" />
                 </LinearLayout>
@@ -323,6 +325,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:layout_weight="1"
+                    android:visibility="gone"
                     android:orientation="vertical">
 
                     <TextView

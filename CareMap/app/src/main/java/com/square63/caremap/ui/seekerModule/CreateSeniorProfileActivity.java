@@ -29,6 +29,7 @@ import com.square63.caremap.R;
 import com.square63.caremap.constants.Constants;
 import com.square63.caremap.databinding.ActivityCreateSeekerProfileBinding;
 import com.square63.caremap.databinding.ActivityCreateSeniorProfileBinding;
+import com.square63.caremap.dialoges.DatePickerFragment;
 import com.square63.caremap.dialoges.LanguageSelectionDialoge;
 import com.square63.caremap.listeners.IPermissionsCallback;
 import com.square63.caremap.listeners.IPickerCallBack;
@@ -967,6 +968,16 @@ public class CreateSeniorProfileActivity extends AppCompatActivity implements Vi
            skilsRequest.setSkillID(reasonForCareList.get(0).getId());
            apiDeleteSeniorSkills(skilsRequest);
        }
+    }
+    public void showDatePickerDialog(View v){
+        DatePickerFragment newFragment = new DatePickerFragment();
+        newFragment.setiDateSelected(new DatePickerFragment.IDateSelected() {
+            @Override
+            public void getDate(String date) {
+                binding.edtJobStart.setText(date);
+            }
+        });
+        newFragment.show(getSupportFragmentManager(), "datePicker");
     }
 
 

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Base64;
@@ -18,6 +19,7 @@ import com.square63.caremap.ApplicationState;
 import com.square63.caremap.R;
 import com.square63.caremap.constants.Constants;
 import com.square63.caremap.databinding.ActivityCreateProviderProfileBinding;
+import com.square63.caremap.dialoges.DatePickerFragment;
 import com.square63.caremap.listeners.IPermissionsCallback;
 import com.square63.caremap.listeners.IPickerCallBack;
 import com.square63.caremap.models.ProfileModel;
@@ -99,7 +101,7 @@ public class CreateProviderProfileActivity extends AppCompatActivity implements 
             public void onClick(View v) {
 
                 if (validations.validateCreateProfile(binding.txtFirstName, binding.edtLastName, binding.edtDob, binding.edtPhone, binding.edtCity, binding.edtProvince, binding.edtAddress1
-                        , binding.fName, binding.lName, binding.dob, binding.pNumber, binding.city, binding.province, binding.addres1) == Constants.SUCCESS) {
+                        ,binding.edtPostalCode, binding.fName, binding.lName, binding.dob, binding.pNumber, binding.city, binding.province, binding.addres1,binding.txtPostalCode) == Constants.SUCCESS) {
 
                     if (ApplicationState.getInstance().isFromEdit()) {
                         apiUpdateGiver();
@@ -129,6 +131,7 @@ public class CreateProviderProfileActivity extends AppCompatActivity implements 
                 // UIHelper.openActivity(CreateProviderProfileActivity.this,);
             }
         });
+
     }
 
     private void setData() {
@@ -274,6 +277,16 @@ public class CreateProviderProfileActivity extends AppCompatActivity implements 
             permissionsHelper.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
         }
 
+    }
+    public void showDatePickerDialog(View v){
+        DatePickerFragment newFragment = new DatePickerFragment();
+        newFragment.setiDateSelected(new DatePickerFragment.IDateSelected() {
+            @Override
+            public void getDate(String date) {
+                binding.edtDob.setText(date);
+            }
+        });
+        newFragment.show(getSupportFragmentManager(), "datePicker");
     }
 
 

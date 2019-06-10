@@ -24,6 +24,7 @@ import com.square63.caremap.models.giverModels.UserLanguage;
 import com.square63.caremap.ui.AboutActivity;
 import com.square63.caremap.ui.DaysSelectionActivity;
 import com.square63.caremap.ui.adapters.LanguagesAdapater;
+import com.square63.caremap.ui.seekerModule.CreateSeniorProfileActivity;
 import com.square63.caremap.utils.PreferenceHelper;
 import com.square63.caremap.utils.UIHelper;
 import com.square63.caremap.utils.Validations;
@@ -44,6 +45,8 @@ public class PersonalInfoActivity extends AppCompatActivity {
     ActivityPersonalInfoBinding binding;
     private ArrayList<LanguageModel> langArrayList = new ArrayList<>();
     private int progress = 0;
+    private boolean isSelected;
+    private ArrayList<LanguageModel> languageModelArrayList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -166,6 +169,17 @@ public class PersonalInfoActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(validations.validatePersonelProfile(binding.edtHourlyRate,binding.edtExperience,binding.txtHourlyRate,binding.txtExp) == Constants.SUCCESS) {
+                    isSelected = false;
+                    for (LanguageModel skillsModel:languageModelArrayList){
+                        if(skillsModel.isSelected()){
+                            isSelected = true;
+                            break;
+                        }
+                    }
+                    if(!isSelected){
+                        UIHelper.showAlert(Constants.FORM_TITLE,"Please select language",PersonalInfoActivity.this);
+                        return;
+                    }
                     insertExperience();
                 /*if (ApplicationState.getInstance().isFromEdit())
                     UIHelper.openActivity(PersonalInfoActivity.this, DaysSelectionActivity.class);
@@ -183,7 +197,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
             @Override
             public void selectedLanguages(ArrayList<LanguageModel> languageModels) {
                 String languages = "";
-                ArrayList<LanguageModel> languageModelArrayList = new ArrayList<>();
+                languageModelArrayList = new ArrayList<>();
                 for (LanguageModel languageModel : languageModels) {
                     if (languageModel.isSelected()) {
                         languages = languages + languageModel.getName() + ",";
